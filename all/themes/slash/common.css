@@ -1,0 +1,567 @@
+/* $Id: common.css,v 1.13 2008/09/12 19:06:09 frjo Exp $ */
+
+body {
+  color: #000;
+  font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+  font-size: 100%; /* Fixes exaggerated text resizing in IE6 and IE7 */
+  min-width: 600px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* Make the admin pages as wide as necessary. */
+body.page-admin {
+  min-width: 0;
+  max-width: 10000px;
+}
+
+#body-wrapper {
+  margin: 8px;
+  font-size: 0.875em; /* 16px x 0.875 = 14px */
+}
+
+h1, h2, h3, h4 {
+  margin-top: 1em;
+}
+
+h2.title {
+  font-size: 1.7em;
+  margin: 0 0 0.5em 0;
+}
+
+pre, code {
+  font-size: 1em;
+  font-family: monospace;
+}
+
+blockquote {
+  background: url(blockquote.png) no-repeat top left;
+  padding-left: 30px;
+  margin-left: 0;
+  font-style: italic;
+}
+
+/* Header */
+
+#logo {
+  padding: 5px 15px 5px 5px;
+  float: left;
+}
+#site-name {
+  margin: 0;
+  padding-top: 25px;
+  font-size: 2.5em;
+}
+#site-name a:link, #site-name a:visited, #site-name a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+#site-slogan {
+  font-size: 1em;
+  color: #eee;
+  font-style: italic;
+  font-weight: bold;
+}
+
+/* Navigation */
+
+#top-nav {
+  background: #fff;
+  padding: 0.5em 0 0 189px;
+}
+#top-nav2 {
+  background: #fff;
+  border: 1px solid #660000;
+  border-width: 0 1px 1px 1px;
+  padding: 0.5em 0 0 189px;
+}
+ul#primary {
+  float: left;
+  clear: left;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+#primary li {
+  float: left;
+  font-size: 1.2em;
+  margin-right: 5px;
+}
+#primary a:link, 
+#primary a:visited, 
+#primary a:hover, 
+#primary a:active {
+  display: block;
+  color: #fff;
+  font-weight: bold;
+  padding: 1px 6px;
+  text-decoration: none;
+}
+ul#secondary {
+  float: left;
+  clear: left;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+#secondary li {
+  float: left;
+  margin-right: 5px;
+}
+#secondary a:link, 
+#secondary a:visited,
+#secondary a:hover, 
+#secondary a:active {
+  display: block;
+  color: #fff;
+  font-weight: bold;
+  padding: 1px 6px;
+  text-decoration: none;
+}
+
+/* Admin Styles */
+
+/* Add white background to admin and node add/edit pages */
+.section-node-add #main,
+.section-node-edit #main,
+.page-admin #main {
+  background: #fff;
+  padding: 0.5em;
+}
+div.admin .compact-link {
+  margin: 0 0 1em 1em;
+}
+div.admin .compact-link a {
+  border: 1px solid #ccc;
+  margin-bottom: 1em;
+  padding: 0.2em 0.3em;
+}
+div.admin .compact-link a:hover {
+  background: #eee;
+  text-decoration: none;
+}
+div.admin-panel {
+  margin: 0 0 1.5em 0;
+  padding: 0;
+}
+div.admin-panel .body {
+  background: #fff;
+  border: 1px solid #999;
+}
+div.admin-panel h3 {
+  background: #999;
+  color: #fff;
+  margin: 0;
+  padding: 0.2em 0.5em;
+}
+div.admin-panel dt a {
+  font-weight: bold;
+}
+div.admin-panel dd,
+div.admin-panel .description {
+  color: #666;
+  margin-bottom: 0.5em;
+}
+div.admin-panel dd {
+  margin-left: 1.5em;
+}
+div.admin-panel ul {
+  padding-left: 1em;
+}
+div.admin-panel .item-list ul{
+  padding-left: 0;
+}
+
+/* Links */
+
+a:link, a:visited {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+a:active {
+  text-decoration: underline;
+}
+
+.node .content a:link, .comment .content a:link {
+  text-decoration: underline;
+}
+.node .content a:visited, .comment .content a:visited {
+  text-decoration: underline;
+}
+.node .content a:hover, .comment .content a:hover {
+  text-decoration: underline;
+}
+.node .content a:active, .comment .content a:active {
+  text-decoration: underline;
+}
+
+/* Form styles */
+
+.form-text, .form-password, .textarea, .form-file, select {
+  border: 1px solid #666;
+}
+fieldset {
+  border: 1px solid #666;
+}
+
+/* Node styles */
+
+.node h1.title {
+  background: transparent;
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 0;
+  padding: 2px 10px 2px 10px;
+}
+.node h1.title a:link, 
+.node h1.title a:visited, 
+.node h1.title a:hover, 
+.node h1.title a:active {
+  background: transparent;
+  color: #fff;
+} /* Fixing IE6 bug, ".node h1.title a" work in standard compatible browsers */
+.node .meta {
+  background: #e6e6e6;
+  padding: 4px 10px 4px 10px;
+  border-bottom: 1px solid #006666;
+  color: #666;
+}
+.node .content {
+  background: #fff;
+  padding: 1px 10px 1px 10px;
+}
+.node div.links {
+  padding: 4px 10px 4px 10px;
+  color: #666;
+}
+.node .node_read_more {
+  font-weight: bold;
+}
+.node pre, .node code {
+  overflow: auto;
+}
+
+/* Comment styles */
+
+.comment {
+  background: #fff;
+  padding: 2px 5px 5px 5px;
+  border: 1px solid #666;
+}
+.comment h3.title, .comment h3.title a {
+  background: transparent;
+  margin: 0;
+  color: #000;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+.comment .new {
+  float: right;
+  position: relative;
+  font-weight: bold;
+  color: red;
+}
+.comment .submitted {
+  background: transparent;
+  color: #666;
+}
+.comment .links ul {
+  display: inline;
+}
+
+/* Block styles */
+
+.block .title1 {
+  margin: 0px 10px 0px 5px;
+}
+.block h2 {
+  background: transparent;
+  font-size: 0.92em;
+  font-weight: bold;
+  color: #fff;
+  padding: 0px 10px 1px 10px;
+  margin: 0;
+}
+.block .content {
+  background: #fff;
+  padding: 5px;
+  font-size: 0.92em;
+}
+.block .item-list ul li {
+  margin: 0 0 0.25em 0.5em;
+}
+
+/* Box styles */
+
+.box {
+  background: #fff;
+  padding: 5px;
+}
+.box h2 {
+  font-size: 1.2em;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+#mission, #footer {
+  background: #fff;
+  padding: 5px;
+}
+
+/* Page layout */
+
+#header {
+  min-height: 60px;
+}
+#header-block .block {
+  display: block;
+  float: left;
+  width: 180px;
+  margin-right: 8px;
+}
+#content-both, #content-left, #content-right {
+  width: 100%;
+  margin: 1em 0;
+}
+#main {
+  vertical-align: top;
+}
+#sidebar-left {
+  vertical-align: top;
+  width: 180px;
+  padding-right: 8px;
+}
+#sidebar-right {
+  vertical-align: top;
+  width: 180px;
+  padding-left: 8px;
+}
+#footer {
+  clear: both;
+  text-align: center;
+}
+
+/* Tables */
+
+table {
+  font-size: 1em; /* make <td> sizes relative to body size! */
+  margin: 0.5em 0;
+  width: 100%;
+}
+thead th {
+  background: #fff;
+  border-bottom: 2px solid #d3e7f4;
+  color: #333;
+  font-weight: bold;
+}
+
+th a:link, th a:visited {
+  font-weight: bold;
+}
+
+td, th {
+  padding: 0.3em 0.5em;
+}
+
+tr.even, tr.odd, tbody th {
+  border: solid #d3e7f4;
+  border-width: 1px 0;
+}
+
+tr.odd, tr.info {
+  background: #edf5fa;
+}
+
+tr.even {
+  background: #fff;
+}
+
+tr.odd td.active {
+  background: #ddecf5;
+}
+
+tr.even td.active {
+  background: #e6f1f7;
+}
+
+td.region, td.module, td.container {
+  border-top: 1.5em solid #fff;
+  border-bottom: 1px solid #b4d7f0;
+  background: #d4e7f3;
+}
+td.region a, td.module a, td.container a {
+  font-weight: bold;
+}
+
+tr:first-child td.region, tr:first-child td.module, tr:first-child td.container {
+  border-top-width: 0;
+}
+tbody#content-main {
+  border-top: none;
+}
+
+/* Menu styles */
+
+.menu ul {
+  font-size: 1em;
+}
+.menu li a.active, .menu li a:hover {
+  text-decoration: underline;
+}
+
+/* Lists */
+
+.item-list h3 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+.item-list ul {
+  font-size: 1em;
+}
+.content ul {
+  padding-left: 1.5em;
+}
+.content ol {
+  padding-left: 2em;
+}
+
+
+/* Messages */
+
+div.messages {
+  font-weight: bold;
+  padding: 0.3em;
+  margin: 0.5em 0;
+}
+div.messages ul {
+  padding: 0 0 0 15px;
+  margin: 0;
+}
+div.status {
+  background: #dfd url(dialog-information.gif) no-repeat 4px 50%;
+  border: 1px solid #3a3;
+  color: #3a3;
+  padding: 10px 5px 10px 40px;
+}
+div.error {
+  background: #fdd url(dialog-warning.gif) no-repeat 4px 50%;
+  border: 1px solid #d77;
+  color: red;
+  padding: 10px 5px 10px 40px;
+}
+
+form-item input.error {
+  border: 1px solid red;
+  color: red;
+  background: #fff;
+}
+
+/* Search */
+
+#search {
+  float: right;
+  padding: 30px 20px 5px 5px;
+  white-space: nowrap;
+}
+#search .form-text {
+  font-size: 1em;
+  margin-right: 5px;
+}
+#search .form-submit {
+  font-size: 1em;
+  margin: 0;
+}
+.search-results .search-info {
+  color: #666;
+}
+.search-results strong {
+  background: #fdf6B9;
+}
+
+/* Pager styles */
+
+.pager {
+  padding: 0.5em 0 1em 0;
+}
+.item-list .pager li {
+  margin: 0;
+  padding: 0;
+}
+.pager a, .pager li.pager-current {
+  padding: 0.2em 0.3em;
+  margin: 0 0.2em;
+  background: #eee;
+  border: 1px solid #ccc;
+  white-space: nowrap;
+  line-height: 2em;
+}
+.pager a:hover {
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid #666;
+}
+.pager li.pager-current {
+  background: #666;
+  color: #fff;
+}
+
+/* Images */
+
+.block .xml-icon, .block .feed-icon {
+  display: block;
+  text-align: center;
+  padding: 0.5em 0;
+}
+#main .xml-icon, #main .feed-icon {
+  display: block;
+  text-align: right;
+  padding: 0.5em;
+}
+
+.node img.topic {
+  float: right;
+  clear: right;
+  margin: 10px 0 5px 5px;
+  border: 0;
+}
+
+.node .picture img, .comment .picture img { 
+  float: right;
+  clear: right;
+  border: 1px solid #000;
+  margin: 10px;
+  padding: 0;
+}
+
+/* CSS tricks */
+
+br.clear {
+  clear: both;
+  height: 0;
+}
+.center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.strike {
+  text-decoration: line-through;
+}
+
+/* Misc */
+
+.breadcrumb {
+  padding-bottom: 0.5em;
+  text-align: left;
+  font-weight: bold;
+}
+#mission, .node .content, .comment .content {
+  line-height: 1.4;
+}
+#mission, .node, .comment, .block, .box, #footer {
+  margin-bottom: 1em;
+}

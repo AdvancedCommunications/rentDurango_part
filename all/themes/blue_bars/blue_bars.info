@@ -1,0 +1,13 @@
+name = Blue Bars
+description = Simple fixed width 2 column
+core = 6.x
+engine = phptemplate
+screenshot = screenshot.png
+
+
+; Information added by drupal.org packaging script on 2008-01-30
+version = "6.x-1.2"
+core = "6.x"
+project = "blue_bars"
+datestamp = "1201707604"
+

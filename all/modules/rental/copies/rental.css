@@ -1,0 +1,112 @@
+#iconlinks { position: relative; top: 51px; left: -60px }
+#iconlinks a { margin-right: 15px }
+#iconlinks a:hover { color: green }
+
+div#list { margin-left: 120px; font-size: 1.1em }
+div#list h3, div.step h4 { font-family: Arial, Helvetica, sans-serif;
+              font-size: 1.2em; color: #054b81; font-weight:900}
+div.step h4 { text-decoration: underline }
+div.step { padding: 0 0 40px 40px }
+div#list p { padding-left: 40px; text-align: justify }
+div.step p { font-family: Arial, Helvetica, sans-serif;
+                  float: clear; font-style: italic }
+
+div#list img.right_float { margin: 0 0 0 20px; float: right; height: 130px }
+div#list img.left_float  { margin: 0 20px 0 0; float: left;  height: 130px }
+ 
+div.wrapper #primary div#sitemission p {
+  font-family:Georgia,"Times New Roman",Times,serif;
+  font-size:1.4em; font-style:italic; line-height:120%; text-align:center }
+
+div.wrapper fieldset {border: 1px solid #054b81;}
+
+table#teasers { margin: 0; padding: 0; width: 100%; font-size: .8em }
+table#teasers tr.even { background-color: #fca }
+table#teasers tr.even:hover { background-color: #ffe }
+table#teasers tr.odd { background-color:#fed }
+table#teasers tr.odd:hover { background-color:#ffe }
+table#teasers div.browse_post { width: 130px }
+table#teasers div.browse_post span { 
+  display: inline-block; width: 45px; text-align: right; font-weight: bold }
+img.thumb { height: 50px }
+
+fieldset.ad_post { padding: 20px 12px; font-size: 1.6em; line-height: 1.4em;
+                   font: arial }
+fieldset.ad_post span { font-weight: bold }
+fieldset.ad_unit { padding: 20px 12px; font-size: 1.2em; line-height: 1.2em; }
+ 
+table#rental { line-height: 0; font-size: .9em }
+table#rental tbody,
+table.rental tbody,
+table#post tbody,
+table.contact tbody { border-style: none; margin: 0; padding: 0 }
+table.rental th { font-size: .8em; text-align: center }
+table.rental .rate { font-size: .7em; text-align: left }
+td.cb { border: 1px; vertical-align: top; margin: 0; padding: 0 10px;}
+td.cb > div { border: 1px solid #054b81; }
+td.cb div label { padding: 5px; color: white; background-color: #054b81; }
+td.cb label.option { padding: 1px 0; font-size: .7em; 
+                     color: #054b81; background-color: white; }
+.fillin { vertical-align: top; padding: 0 10px; margin: 0 }
+#edit-square-feet-wrapper label, #edit-acreage-wrapper label { margin: 0;
+    padding: 5px 0 5px 30px; font-size: .8em; font-weight: normal; float: left }
+#edit-square-feet, #edit-acreage { margin: 0 0 0 5px; float: right }
+#edit-section-8-wrapper label { margin: 5px 0 5px 30px; 
+          float: left; font-size: .8em; font-weight: normal; }
+#edit-section-8-wrapper label input { margin: -5px 0 0 25px; float: right }
+
+table#rental .form-radios, table#rental .form-checkboxes { padding: 0 5px 1px}
+table#rental .form-item { vertical-align: middle; line-height: .6em }
+#edit-street-address-wrapper { margin: 15px 0 0 0; line-height: 100% } 
+#edit-street-address-wrapper label { line-height: 120% } 
+#edit-street-address-wrapper .description { line-height: 100% }
+
+td.cb .form-checkboxes .form-item, td.cb .form-radios .form-item { margin: 1px 0}
+td.cb .form-checkboxes, td.cb .form-radios { margin: 1px 0 }
+td.expense .form-checkboxes .form-item, td.expense .form-radios .form-item { margin: 1px 0}
+td.expense .form-checkboxes, td.expense .form-radios { margin: 1px 0 }
+td.expense .form-item { margin: 0 }
+
+table.contact td.label { text-align: right; font-weight: bold }
+table.rental td, table.contact td { padding: 1px 10px }
+.end-fieldset { margin: 15px 10px 0 0 }
+.standout { margin: 50px }
+.street { font-weight: bold }
+
+#rental-quick-search-form .form-item { margin: 0; padding: 0; line-height: 1em }
+#rental-quick-search-form label { margin: 1px; width: 110px; 
+                    display: inline-block; text-align: right; font-size: .8em; }
+#rental-quick-search-form input { margin: 1px; padding: 0; font-size: .8em;
+                     display: inline; text-align: right; }
+#rental-quick-search-form #edit-search,
+#rental-quick-search-form #edit-custom { font-size: .6em }
+
+#rental-image-form span,
+  #ad_post_images span { float: left; font-size: .8em }
+#rental-image-form span input,
+  #ad_post_images span input { font-size: .8em }
+#rental-image-form span.image,
+  #ad_post_images span.image { margin:5px; text-align:center }
+#rental-image-form img.thumb { height: 60px; margin: 5px 0px }
+#ad_post_images img.thumb    { height: 80px; margin: 5px 0px }
+#xxrental-image-form div.hovertip img,
+  #xxad_post_images div.hovertip img { height: 300 }
+
+div#landlords, div#tenants { line-height: 1.3em; font-size: 1.1em }
+.hovertip, .hoverinfo {	width: auto; }
+
+#rental-post-form h2 { margin: 10px 0 20px }
+#edit-rent-wrapper,
+#edit-deposit-wrapper,
+#edit-date-available-wrapper {
+            width: 240px; height: 30px }
+#edit-rent-wrapper label,
+#edit-deposit-wrapper label,
+#edit-date-available-wrapper label { 
+     margin: 0; padding: 0; text-align: right; float: left }
+#edit-rent, #edit-deposit, #edit-date-available { margin: 0; float: right }
+#edit-for-sale-wrapper label, #edit-ap-required-wrapper label,
+#edit-last-month-wrapper label {
+     margin: 0; padding: 5px 0 5px 30px; float: left; width: 300px }
+#edit-for-sale, #edit-last-month, #edit-ap-required { 
+     margin: 0 15px 0 5px; float: right }

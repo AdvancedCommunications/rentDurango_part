@@ -1,0 +1,10 @@
+; $Id$
+name = "Rental"
+description = "Application for listing and browsing available rental housing."
+package = "Aardvark"
+core = 6.x
+
+dependencies[] = jquery_ui
+dependencies[] = rental_blocks
+dependencies[] = rental_lister
+dependencies[] = rental_looker

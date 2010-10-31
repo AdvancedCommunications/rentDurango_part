@@ -1,0 +1,5 @@
+; $Id$
+name = "Rental Blocks"
+description = "Blocks used in the rental housing application."
+package = "Aardvark"
+core = 6.x

@@ -1,0 +1,377 @@
+<?php
+/* 
+*@file
+*Rental advertising service.
+*/
+function rental_search_form () { // ----------- full search form -------
+  global $user, $process, $edit;
+  $sid = $user->uid > 0? $user->uid : session_id();
+  $s = "SELECT COUNT(sid) FROM {renter} WHERE sid = '%s'";
+  $c = db_result(db_query($s, $sid));
+  $s = "SELECT * FROM {renter} WHERE sid = '%s' or sid = 'zzz' ORDER BY sid";
+  $q = db_query($s, $sid);
+  $r = db_fetch_object($q);
+  if ($c > 0) { $edit = $r; } else { $process = 'add'; }
+  $from = array(0=>'0', 500=>'500', 1000=>'1,000', 1500=>'1,500',
+             2000=>'2,000', 2500=>'2,500');
+  $to   = array(500=>'500', 1000=>'1,000', 1500=>'1,500', 2000=>'2,000',
+               3000=>'3,000', 999999=>'  Any');
+  $bed  = $bath = array(0=>'  Any ', 1=>'1 or more', 2=>'2 or more',
+                  3=>'3 or more', 4=>'4 or more', 5=>'5 or more');
+  $foot = array(0=>'  Any ', 500=>'500 or more', 1000=>'1,000 or more',
+           1500=>'1,500 or more', 2000=>'2,000 or more', 3000=>'3,000 or more');
+  $acre = array(0=>'  Any ', 1=>'1 or more', 3=>'3 or more', 5=>'5 or more',
+                    10 =>'10 or more', 30=>'30 or more', 50=>'50 or more');
+  $form['rent_from']   = rental_select($from,  'Monthly Rent From', $r->rent_from);
+  $form['rent_to']     = rental_select($to,                   'To', $r->rent_to);
+  $form['bedroom']     = rental_select($bed,            'Bedrooms', $r->bedroom);
+  $form['bathroom']    = rental_select($bath,          'Bathrooms', $r->bathroom);
+  $form['square_feet'] = rental_select($foot,     'Square footage', $r->square_feet);
+  $form['acreage']     = rental_select($acre,            'Acreage', $r->acreage );
+//  $form['section_8']   = rental_no_yes($r->section_8,'Section 8 OK?');
+  $form['student']     = rental_no_yes($r->student,   'Students OK?');
+  $form['pet']         = rental_no_yes($r->pet,           'Pets OK?');
+  $form['smoker']      = rental_no_yes($r->smoker,     'Smokers OK?');
+  $form['before_after']= rental_before_after($r->before_after, 'Available');
+  $form['date_available']      = rental_date($r->date_available, '');
+  $form['lease']   = rental_box('cb', 'lease', 'Lease terms including', NULL,1);
+
+  $form['building']   = rental_box('cb', 'building', 'Include only');
+  $form['furnishing'] = rental_box('radios','furnishing','Include only',NULL,1);
+  $form['area']       = rental_box('cb', 'area', 'Limit to these areas');
+  $form['appliance']  = rental_box('cb','appliance', 
+                        'Must have appliances',NULL,1);
+  $form['feature']    = rental_box('cb','feature', 'Must have features');
+  $form['parking']    = rental_box('radios', 'parking', 'Must have');
+  $form['storage']    = rental_box('radios', 'storage', 'Must have');
+  
+  $form['search']   = array('#type' => 'submit', '#value' => t('Search') );
+  $form['clear']    = array('#type' => 'submit', '#value' => t('Clear') );
+  return $form;
+}
+function rental_search_form_validate($form) {
+}
+function rental_search_form_submit($form, &$form_state) {
+  $f = $form_state['values'];   //  dsm($fsv);
+  if ($f['op'] == 'Clear') {
+     db_query("DELETE FROM {renter} WHERE sid = '%s'", session_id());
+     return; }
+  $d = $f['date_available'];
+  $dav = strtotime(substr($d,6,4).'-'.substr($d,0,2).'-'.substr($d,3,2));
+  $result = db_query("DELETE FROM {renter} WHERE sid = '%s'", session_id());
+  $s = "INSERT INTO {renter}"
+     . " (sid, time_of_last_update,"
+     . " rent_from, rent_to, bedroom, bathroom, square_feet, acreage,"
+     . " renter_student, renter_smoker, renter_pet, section_8,"
+     . " before_after, date_available, lease,"
+     . " building, furnishing, area, appliance, feature, parking, storage)"
+     . " VALUES ('%s', %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d,
+           %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')";
+  $result = db_query($s, session_id(), time(), $f['rent_from'], $f['rent_to'],
+              $f['bedroom'], $f['bathroom'], $f['square_feet'], $f['acreage'],
+              $f['student'], $f['smoker'], $f['pet'], $f['section_8'],
+              $f['before_after'], $dav, repack($f['lease']),  
+              repack($f['building']), $f['furnishing'], repack($f['area']),
+              repack($f['appliance']), repack($f['feature']),
+              $f['parking'], $f['storage'] );
+  $form_state['redirect'] = '/';
+}
+function theme_rental_search_form($form) {
+  jquery_ui_add('ui.datepicker');
+  drupal_add_js('$(function() {$(".datepicker").datepicker();});','inline');
+  return "\n<h2>Detailed Search</h2>\n"
+  . '<table id="search">'
+  . '  <tr>'
+  . '    <td class="fillin">'
+  . drupal_render($form['rent_from'])
+  . drupal_render($form['rent_to'])
+  . drupal_render($form['bedroom'])
+  . drupal_render($form['bathroom'])
+  . drupal_render($form['square_feet'])
+  . drupal_render($form['acreage'])
+  . '    </td>'
+  . '    <td id="permits">'
+  .   drupal_render($form['student'])
+  .   drupal_render($form['smoker'])
+  .   drupal_render($form['pet'])
+  .   drupal_render($form['section_8'])
+  . '    </td>'
+  . '    <td class="cb" rowspan=2>' . drupal_render($form['area']) . '</td>'
+  . '    <td class="cb" rowspan=2>' . drupal_render($form['appliance']) .'</td>'
+  . '    <td class="cb" rowspan=2>' . drupal_render($form['feature'])  . '</td>'
+  . '  </tr>'
+  . '  <tr>'
+  . '    <td> </td>'
+  . '    <td id="available">'
+  .              drupal_render($form['before_after'])
+  .              drupal_render($form['date_available']) . '</td>'
+  . '  </tr>'
+  . '  <tr>'
+  . '    <td class="cb">' . drupal_render($form['lease'])      . '</td>'
+  . '    <td class="cb">' . drupal_render($form['building'])   . '</td>'
+  . '    <td class="cb">' . drupal_render($form['furnishing']) . '</td>'
+  . '    <td class="cb">' . drupal_render($form['parking'])    . '</td>'
+  . '    <td class="cb">' . drupal_render($form['storage'])    . '</td>'
+  . '  </tr>'
+  . '</table>'
+  . '<div>' . drupal_render($form) . '</div>';
+}
+function rental_browse() {  // ------------------------------------------------
+ global $base_root, $user;
+ if (in_array('lister', $user->roles)) { drupal_goto("user/" . $user->uid); } // landlords don't belong here
+ // 1st, store this URL for returning from a full ad
+ variable_set('URL' . session_id(), $base_root . request_uri());
+ $f = rental_selection_array( rental_criteria() );
+ $m = sizeof($f['selected']);
+ $a = $f['available'];
+ $c = $m == 1? 'match' : 'matches';
+ $n = 10; // items shown per page
+ $l = $_GET['page'];
+ $u = $l * $n +1; // starting number on current page
+ $v = $u + $n -1; // ending number
+ $v = ($v > $m)? $m : $v;
+ $k = ($v == $u)? "Item $u" : "Items $u to $v";
+ print "<h3>$k of $m $c selected from $a available rentals</h3>";
+ if ($m == 0) { return; } 
+ $s = "SELECT * FROM { post } JOIN { rental } "
+    . "  WHERE post.rid = rental.rid and pid IN (%s) ORDER BY post.rent";
+ $q = pager_query(db_rewrite_sql($s, 'post', 'pid'), 10, 0, NULL, implode(',',$f['selected']));
+ while ($p = db_fetch_object($q)) {
+   $i++;
+   $return = trim($_SERVER["REDIRECT_URL"], '/');
+   $url = 'http://rentdurango.net/ad/' . $p->pid;
+   $r[] = array(
+    'data' => array(
+           rental_browse_image($p, $i), 
+           rental_browse_post($p, $i),
+           rental_browse_unit($p, $i) ),
+    'onclick' => "document.location.href='$url';", 'style'=> 'cursor:pointer');}
+ $a = array('id' => 'teasers', 'align' => 'center');
+ print theme('table', NULL, $r, $a);
+ print theme('pager', NULL, 10, 0);
+}
+function rental_selection_array($t) {
+ $x = time() - 30 * 24 * 60 * 60; // expired activations
+ $s = "SELECT * FROM { post } p JOIN { rental } r"
+    . "  WHERE p.rid = r.rid and cancelled = 0 and activated > %d";
+ $q = db_query($s, $x);
+ $f['selected'] = array();
+ $f['available']= 0;
+ while ($p = db_fetch_object($q)) {
+   $f['available']++;
+   if ( rental_rejected($p, $t) ) { continue; }  
+   $f['selected'][] = $p->pid; }
+ return $f; 
+}
+function rental_criteria() {
+  global $user;
+  $sid = $user->uid > 0? $user->uid : session_id();
+  $s = "SELECT * FROM {renter} WHERE sid = '%s' or sid = 'zzz' ORDER BY sid";
+  $q = db_query($s, $sid);
+  return db_fetch_object($q);
+}
+function rental_rejected($p, $t) {
+  if ( $p->rent < $t->rent_from ) { return TRUE; }
+  if ( $p->rent > $t->rent_to   ) { return TRUE; }
+  $bed = substr($p->bedroom,0,1) > 0? substr($p->bedroom,0,1) : 0;
+  if ( $bed < $t->bedroom ) { return TRUE; } 
+  $ba = substr($p->bathroom,0,1) > 0? substr($p->bathroom,0,1) : 0;
+  if ( $ba < $t->bathroom ) { return TRUE; } 
+
+  if ( $p->square_feet < $t->square_feet ) { return TRUE; }
+  if ( $p->acreage     < $t->acreage     ) { return TRUE; }
+
+  if ($t->student == 1   and $p->student   == 'no students') { return TRUE; } 
+  if ($t->smoker == 1    and $p->smoker    == 'no smokers')  { return TRUE; } 
+  if ($t->pet == 1       and $p->pet       == 'no pets')     { return TRUE; } 
+  if ($p->section_8    < $t->section_8   ) { return TRUE; } 
+  if ($t->before_after == 'before' and
+                  $t->date_available < $p->date_available ) { return TRUE; }
+  if ($t->before_after == 'after' and
+                  $t->date_available > $p->date_available ) { return TRUE; }
+  foreach ( array('lease','building','furnishing','area','parking','storage')
+          as $o ) {
+    if (rental_option_not_selected($t, $p, $o)) { return TRUE; } }
+  foreach ( array('appliance', 'feature') as $o ) {
+    if (rental_option_not_offered($t, $p, $o)) { return TRUE; } }
+}
+function rental_option_not_selected($t, $p, $o) { // single option on posting
+  if ($t->$o == '') { return FALSE; }  
+  if (!in_array($p->$o, explode(', ',$t->$o))) { return TRUE; }  
+}
+function rental_option_not_offered($t, $p, $o) { // multiple offerings possible 
+  if ($t->$o == '') { return FALSE; }
+  $optionsDesired = explode(', ',$t->$o);
+  $optionsOffered = explode(', ',$p->$o);
+  foreach ( $optionsDesired as $o ) {   
+    if ( !in_array( $o, $optionsOffered ) ) { return TRUE; } }
+}
+// --------------------------------- view a specific rental unit ad -----------
+function rental_ad_title($pid) {
+ // to do: if not contactable, return t( "Ad# $pid" ); }
+ $s = "SELECT * FROM { post } p JOIN { rental } r"
+    . "  WHERE p.rid = r.rid and pid = %d";
+ $q = db_query($s, $pid);
+ while ( $p = db_fetch_object( $q )) {
+   return t( "Ad# $pid --- " . $p->street_address ); }
+ return 'Page not found';
+}
+function rental_ad($pid) {
+ global $user;
+ $s = "SELECT * FROM { post } p JOIN { rental } r"
+    . "  WHERE p.rid = r.rid and pid = %d";
+ $q = db_query($s, $pid);
+ $returnURL = variable_get('URL' . session_id(), '');
+ while ($p = db_fetch_object($q)) {
+   $ad = array(rental_ad_image($p),
+               rental_ad_post($p),
+               rental_ad_unit($p),
+               rental_ad_contact($p),
+               rental_ad_print($p) );
+   // if user is admin, add buttons to:
+   //   1) return to search 2) de-activate this ad post // otherwise,
+   $ad[] = $p->uid == $user->uid? 
+           rental_button('Return to Account Summary', 'user/' . $user->uid) 
+         : rental_button('Return to Browse Ads', $returnURL);
+   return implode('', $ad);
+ }
+ return t('This ad may be no longer active');
+}
+function rental_ad_image($p) {
+  $default_image = variable_get('rental_no_picture',
+                                'no_picture_available.jpg');
+  $src = '/images/' . $default_image;
+  $image   = "<div><img id='img$row' class='thumb' src='$src' />\n</div>\n";
+  $hover   = "<div class='hovertip' target='img$row'>\n"
+           . "  <img src='$src' />\n</div>\n";
+  $gallery = rental_gallery('Images', $p->rid, 'show');
+  return strlen($gallery) > 0? "<div id='ad_post_images'>$gallery</div>"
+          : "$image $hover";
+}
+function rental_ad_post($p) {
+  $date_avail = date('M d', (int) $p->date_available);
+  $lease = ucfirst($p->lease) . ' lease';
+  return "\n<fieldset class='ad_post'>\n"
+       . "  <div><span>Rent:</span> " . number_format($p->rent) . "</div>\n"
+       . "  <div><span>Deposit:</span> ".number_format($p->deposit)."</div>\n"
+       . "  <div>Available $date_avail</div>\n"
+       . "  <div>$lease</div>\n</fieldset>\n";
+}
+function rental_ad_unit($p) {
+  $sf = $p->square_feet > 0? "$p->square_feet sq.ft. " : '';
+  $ac = $p->acreage > 1? " with $p->acreage acres" : ''; 
+
+  $line1 = array( $p->area, $p->bedroom, $p->bathroom, 
+                  $sf . "$p->furnishing $p->building" . $ac);
+  if (isset($p->parking)) { $line1[] = $p->parking; }
+  if (isset($p->storage)) { $line1[] = $p->storage; }
+  $line1 = "  <div>" . implode(', ', $line1) . ".</div>\n";
+  $line2 = (isset($p->feature) and strlen($p->feature) > 0)?
+           "  <div>" .ucfirst($p->feature).".</div>\n" : '';
+  $restricts = ucfirst(implode(', ',array($p->student,$p->smoker,$p->pet)));
+  $line3 = "  <div>$restricts.</div>\n";
+  $line4 = (isset($p->info) and strlen($p->info) > 0)?
+           "  <div>$p->info</div>\n" : '';
+  return "\n<fieldset class='ad_unit'>\n"
+       . " $line1 $line2 $line3 $line4 </fieldset>\n"; 
+}
+function rental_ad_contact($p) {
+  $u = $p->uid;
+  $r = db_query("SELECT mail FROM {users} WHERE uid = %d", $u);
+  while ($e = db_fetch_object($r)) {$email = $e->mail; }
+  $fields = db_query("SELECT title FROM {profile_fields}");
+  while ($f = db_fetch_object($fields)) { $fName[] = $f->title; }
+  $values = db_query("SELECT value FROM {profile_values} WHERE uid = %d", $u);
+  $i = 0;
+  $rows = '';
+  while ($v = db_fetch_object($values)) { 
+    $rows .= "  <tr>\n"
+           . rental_td( $fName[$i++] . ':', 'label' )
+           . rental_td( $v->value )
+           . "  </tr>\n"; }
+  $rows .= "  <tr>\n"
+           . rental_td( t('Email Address:'), 'label' )
+           . rental_td( $email )
+           . "  </tr>\n";
+  return '<fieldset class=" collapsible ad_contact">' . "\n"
+       . '  <legend>Contact Information</legend>' . "\n"
+       . '    <table class="contact">' . "\n" . $rows . '    </table>' . "\n"
+       . '</fieldset>' . "\n";
+}
+function rental_ad_print($p) {
+  $url = 'ad/' . $p->pid;
+  return '<div class="links">'
+       . ' <ul class="links inline">'
+       . '  <li class="print_html first">'
+       . '   <a href="/print/' . $url . '"'
+       . '    title="Display a printer-friendly version of this page." '
+       . ' class="print-page" onclick="window.open(this.href); return false" '
+       . ' rel="nofollow"> '
+       . '<img src="/sites/all/modules/print/icons/print_icon.gif" '
+       . ' alt="Printer-friendly version" title="Printer-friendly version" '
+       . ' width="16" height="16" '
+       . ' class="print-icon print-icon-margin" />'
+       . 'Printer-friendly version</a></li>'
+       . '  <li class="print_mail last">'
+       . '<a href="/printmail/' . $url . '"'
+       . ' title="Send this page by e-mail."'
+       . ' class="print-mail" rel="nofollow">'
+       . '<img src="/sites/all/modules/print/icons/mail_icon.gif"'
+       . ' alt="Send to friend" title="Send to friend"'
+       . ' width="16" height="16"'
+       . 'class="print-icon print-icon-margin" />'
+       . 'Send to friend</a></li>'
+       . '</ul></div>';
+}
+ 
+// --------------------------------- browse the rental ad postings ------------
+function rental_browse_image($p, $i) {
+  $default_image = array(
+    'apartment'=>'apt_for_rent3',
+    'duplex' => 'duplex_for_rent',
+    'condo'=>'condo_for_rent_sign',
+    'house'=>'house_for_rent2', 
+    'mobile home'=>'mobile_home_for_rent1',
+    'townhouse'=>'townhouse_for_rent2');
+  $thumb = '/images/' . $default_image["$p->building"] . '.jpg';
+
+  $teaser_image = rental_gallery('Image', $p->rid, 'teaser', $i);
+  return strlen($teaser_image) > 0? $teaser_image
+       : "<div><img class='thumb' src='$thumb' /></div>";
+}
+function rental_browse_post($p, $i) {
+  $date_avail = date('M d', (int) $p->date_available);
+  $lease = ucfirst($p->lease) . ' lease';
+  return "\n<div class='browse_post'\n>"
+       . "  <div><span>Rent:</span> " . number_format($p->rent) . "</div>\n"
+       . "  <div><span>Deposit:</span> ".number_format($p->deposit)."</div>\n"
+       . "  <div>Available $date_avail</div>\n"
+       . "  <div>$lease</div>\n</div>\n";
+}
+function rental_browse_unit($p, $i) {
+  $p->desc = ($p->square_feet > 0? "$p->square_feet sq.ft. " : '')
+           . "$p->furnishing $p->building"
+           . ($p->acreage > 1? " with $p->acreage acres" : '');
+  $a = array( 'area', 'bedroom', 'bathroom', 'desc', 'parking', 'storage');
+  foreach ($a as $i) {
+    if (isset($p->$i) and strlen($p->$i) > 0) { $desc[] = $p->$i; } }
+  return "\n<div class='browse_unit'>\n"
+           . rental_line(implode(', ', $desc))
+           . rental_line(ucfirst($p->feature))
+           . rental_line($p->info)
+           . "</div>\n";
+}
+function rental_line(&$i) {
+  if (isset($i) and strlen($i) > 0) { return "  <div>$i.</div>\n"; }
+  return '';
+}
+/* add to themes/<theme name>/style.css
+#pagelist .published, .unpublished, .sticky, .promoted {
+               background-color: inherit;
+               background-repeat: no-repeat;
+               background-position: center }
+.published    {background-image: url(/misc/watchdog-ok.png)}
+.unpublished  {background-image: url(/misc/watchdog-error.png)}
+.sticky       {background-image: url(/misc/forum-sticky.png)}
+.promoted     {background-image: url(/misc/watchdog-warning.png)}
+*/

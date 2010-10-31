@@ -1,0 +1,166 @@
+<?php
+// $Id: rental.install,v 1.0 2010/05/06 15:06:56 LLL Exp $
+/*
+function rental_install() {
+ drupal_install_schema('rental');
+ drupal_install_schema('area');
+ drupal_install_schema('appliance');
+ drupal_install_schema('feature');
+}
+function rental_uninstall() {
+ drupal_uninstall_schema('rental');
+ drupal_uninstall_schema('area');
+ drupal_uninstall_schema('appliance');
+ drupal_uninstall_schema('feature');
+}
+
+// Implementation of hook_schema().
+function rental_schema() {
+  $schema['rental'] = array(
+    'description' => 'Stores descriptions of rental units.',
+    'fields' => array(
+      'rid' => array(
+        'type' => 'serial',
+        'size' => 'small',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique access ID.',
+      ),
+      'lid' => array(
+        'type' => 'int',
+        'size' => 'small',
+        'not null' => FALSE,
+        'description' => 'Reference to lister account ID.',
+      ),
+      'info' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'description' => 'Additional text info about a rental unit.',
+      ),
+      'street_address' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'description' => 'Street address of the rental unit.',
+      ),
+      'city_state_zip' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'description' => 'City, state, and zipcode.',
+      ),
+      'building_type' => array(
+        'type' => 'varchar',
+        'length' => 16,
+        'description' => 'Building type of the rental unit.',
+      ),
+      'square_footage' => array(
+        'type' => 'int',
+        'size' => 'small',
+        'not null' => FALSE,
+        'description' => 'Rentable living space.',
+      ),
+      'furnish' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'description' => 'Status of furnishing of the rental unit.',
+      ),
+      'bedrooms' => array(
+        'type' => 'varchar',
+        'length' => 16,
+        'description' => 'Number of bedrooms in the rental unit.',
+      ),
+      'bathrooms' => array(
+        'type' => 'varchar',
+        'length' => 16,
+        'description' => 'Number of bathrooms in the rental unit.',
+      ),
+      'parking' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'description' => 'Parking available at the rental unit.',
+      ),
+      'acreage' => array(
+        'type' => 'varchar',
+        'length' => 16,
+        'description' => 'Extra land that goes with the rental unit.',
+      ),
+      'area' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'description' => 'Location by market area of the rental unit.',
+      ),
+      'features' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'description' => 'Comma-separated list of common extra features of the rental unit.',
+      ),
+      'appliances' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'description' => 'Comma-separated list of appliances in the rental unit.',
+      ),
+      'utilities_paid_by' => array(
+        'type' => 'varchar',
+        'length' => 12,
+        'not null' => TRUE,
+        'default' => 'rr ooorrrr  ',
+        'description' => 'Gas,Electric,Propane,Water,Sewer,Trash,Telephone,TV access,Internet access,Snow removal,Lawn care,Association dues',
+      ),
+      'primary_heat_source' => array(
+        'type' => 'varchar',
+        'length' => 8,
+        'description' => 'Gas, Electric, Propane, Wood, Pellets, Solar.',
+      ),
+    ),
+    'primary key' => array('rid'),
+    'indexes' => array(
+       'rid' => array('rid'),
+       'lid' => array('lid', 'street_address'),
+       'street_address' => array('street_address')),
+  );
+
+  $schema['area'] = array(
+    'description' => 'List of selections for the area field of rentals.',
+    'fields' => array(
+      'area' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'A specific area within the market of this site.',
+      ),
+    ),
+  );
+  $schema['appliance'] = array(
+    'description' => 'List of appliance selections for the rental unit.',
+    'fields' => array(
+      'appliance' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'description' => 'A specific appliance.',
+      ),
+      'included' => array(
+        'type' => 'int',
+        'size' => tiny,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'A specific appliance.',
+      ),
+    ),
+  );
+  $schema['feature'] = array(
+    'description' => 'List of feature selections for the rental unit.',
+    'fields' => array(
+      'feature' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'A specific feature.',
+      ),
+    ),
+  );
+
+  return $schema;
+}
+*/

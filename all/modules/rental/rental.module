@@ -1,0 +1,231 @@
+<?php
+/* 
+*@file
+*Rental advertising service.
+*/
+function rental_init() { // ---------------- hook init ------------------------
+  drupal_add_css(drupal_get_path('module', 'rental')  .'/rental.css');
+}
+function rental_menu() { // ---------------- hook menu ------------------------
+    $items['rental'] = array(
+        'type' => MENU_CALLBACK,
+        'title' => 'Rental Housing Unit Description',
+        'page callback' => 'rental_unit',
+        'access arguments' => array('access content') );
+    $items['list'] = array(
+        'type' => MENU_CALLBACK,
+        'title' => 'Posting a Rental Ad',
+        'page callback' => 'rental_post',
+        'access callback' => TRUE,
+        'access arguments' => array('access content') );
+    $items['browse'] = array(
+        'type' => MENU_CALLBACK,
+        'title' => 'Rental Ad Browsing',
+        'page callback' => 'rental_browse',
+        'access arguments' => array('access content') );
+    $items['ad/%'] = array(
+        'title' => 'Rental Ad',
+        'title callback' => 'rental_ad_title',
+        'title arguments' => array(1),
+        'page callback' => 'rental_ad',
+        'page arguments' => array(1),
+        'access arguments' => array('access content') );
+    return $items;
+}
+function rental_perm() { // ---------------- hook perm ------------------------
+  return array('rental list', 'rental look');
+}
+function rental_theme() { // --------------- hook theme -----------------------
+  return array( 'rental_form' => array( 'arguments' => array() ),
+                'rental_search_form' => array( 'arguments' => array() ),
+                'rental_quick_search_form' => array( 'arguments' => array() ),
+                'rental_image_form' => array( 'arguments' => array() ),
+                'rental_post_form' => array( 'arguments' => array() ),
+              );
+}
+// ----------------------------------------- hook user ------------------------
+function rental_user ($op, &$edit, &$account, $category = NULL) {
+  global $user, $array;
+  $u = $user->uid;
+  switch($op) {
+    case 'register':   // looker=4, lister=5 ----------
+      if ((arg(2) == 'role') and (in_array(arg(3), array(4,5)) ) ) {
+        $fields['role'] = array( '#type' => 'value', '#value' => arg(3) );
+        return $fields; }
+    case 'insert':
+      $s = "INSERT INTO {users_roles} (uid, rid) VALUES (%d, %d)";
+      if (in_array($edit['role'], array(4,5))) {  
+         db_query($s, $account->uid, $edit['role']); }
+      break;
+    case 'login':  // successful login
+      break;
+    case 'load':
+      break;
+    case 'view':
+      $scan     = rental_button('Scan Competitive Ads',"scan");
+      $sales    = rental_button('Sales Leads', "lead");
+      $browse   = rental_button('Browse Ads',  "");
+      if (has_role('lister') or has_role('looker'))   { 
+         unset( $account->content );}
+      if (has_role('lister'))           { $content = array(
+         rental_contact_info_list($u, $account),
+         rental_unit_list($u),
+         rental_posting_list($u) ); }
+      if (has_role('looker'))           { $content = array(
+         // short list
+         rental_contact_info_list($u, $account),
+         // personal profile (pets/students/smokers, employment, 
+         //   current residence..)
+         // rental preferences
+         // references
+         ); }
+      if (has_role('sales'))         { $content = array($sales); }
+      if (has_role('sales support')) {
+         $content = array($scan,$sales,$browse,
+         rental_unit_list($u), rental_posting_list($u) ); }
+      if (has_role('customer support')) { $content = array($scan); }
+      if (has_role('tech support'))  { $content = array($scan); }
+      if (has_role('administrator')) { $content = array($scan, $sales); }   
+      $content[] = rental_button('Sign off',"logout",'end-fieldset');
+      foreach($content as $part) {
+        $account->content[] = 
+           array('#type'=>'user_profile_item',
+                '#value'=>$part,
+               '#weight'=>$w++); }
+  }
+}
+// ----------------------------------------- rental function library ----------
+function has_role($role) { 
+  global $user;
+  if (in_array($role, $user->roles)) { return TRUE; }
+  return FALSE;
+}
+function rental_get_pick_list($table, $v_name, $value) {
+  $s = "SELECT $v_name FROM {$table} WHERE $v_name LIKE('%%%s%')";
+  $r = db_query($s, $value);
+  $a = array();
+  while ($row = db_fetch_array($r)) { $a[$row[$v_name]] = $row[$v_name]; }
+  drupal_json($a); 
+}
+function rental_insert_when_new($table, $id_name, $v_name, $value) {
+  global $user;
+  $s = "SELECT $id_name FROM {$table} WHERE $v_name = '%s'"; 
+  $i = "INSERT INTO {$table} (uid, $v_name) VALUES (%d, '%s')";
+  $ID = db_result(db_query($s, $value)); 
+  if ( ! $ID ) {
+    db_query($i, $user->uid, $value);
+    $ID = db_result(db_query($s, $value)); } 
+  return $ID;
+}
+function rental_date_convert($d) {
+  return strtotime(substr($d,6,4).'-'.substr($d,0,2).'-'.substr($d,3,2));
+}
+function rental_td($content, $class = NULL) {
+  $class = isset($class)? " class='$class'" : '';
+  return "    <td$class>$content</td>\n";
+}
+function rental_button($label, $url, $class = NULL) {
+  $c = " class='butt" . (isset($class)? " $class'" : "'");
+  $page  = (substr($url,0,4) == 'http'? '' : '/') . $url;
+  return "<a href='$page' $c onclick='this.blur();'><span>$label</span></a>";
+//  <a class="button" href="#" onclick="this.blur();"> … </a>  
+//  return "<a href='$page'><input type='button' value='$label'$class></a>";
+}
+function rental_non_functional() {
+  global $user;
+  $msg = 'Sorry, this page is not yet functional . . .';
+  return "<h1>$msg</h1><br />" . rental_button('Go back', "user/$user->uid");
+}
+function repack($data) {
+  $dList = array();
+  foreach ( $data as $key=>$value ) {if ($value != '0') { $dList[] = $value; }}
+  return implode(', ', $dList);
+}
+function rental_box($type, $labels, $heading = NULL, $db = NULL, $df = NULL) {
+  global $edit, $process;
+  $options = array();
+  if ($type == 'cb') { $default = array(); }
+  $result = db_query('SELECT * FROM { %s }', $labels );
+  while ($b = db_fetch_object($result)) {
+    $options[$b->value] = t(ucfirst("$b->value"));
+    if ($b->default == 1 and $df != 1) {
+      if ($type == 'cb') { $default[] = $b->value; }
+      else { $default =  $b->value; } } }
+  $db = $db? $db : $labels;
+  $heading = $heading? $heading : $labels;
+  if ($process == 'add') { $df = $default; }
+  else {
+    if ( $type == 'cb' ) {
+       if (isset($edit->$db)) { $df = explode(', ', $edit->$db); } }
+    else {
+       if (isset($edit->$db)) { $df = $edit->$db; } } }
+  $box = array( '#type' => $type == 'cb'? 'checkboxes' : $type,
+               '#title' => t(ucfirst($heading)), '#options' => $options);
+  if (isset($df)) { $box['#default_value'] = $df; }
+  return $box;
+}
+function rental_no_yes($default, $label) {
+  $a = array( '#type' => 'radios',
+               '#title' => t($label),
+             '#options' => array( '0'=>'No', '1'=>'Yes' ));
+  if ($default == '0' or $default == '1') {
+       $a['#default_value'] = $default; }
+  return $a;
+}
+function rental_before_after($default, $label) {
+  $a = array( '#type' => 'radios',
+               '#title' => t($label),
+             '#options' => array( '0'=>'Before', '1'=>'After' ) );
+  if ($default == '0' or $default == '1') {
+       $a['#default_value'] = $default; }
+  return $a;
+}
+function rental_date($default, $label) {
+  $a = array( '#type' => 'textfield',
+               '#title' => $label,
+               '#size'  => 8,
+          '#attributes' => array('class' => 'datepicker'));
+  $a['#default_value'] = $default > 0?
+             date('m/d/Y', (int) $default) : date('m/d/Y', time() ); 
+  return $a;
+}
+function rental_gallery($legend, $rid, $use = NULL, $count = NULL) {
+  $r = db_query("SELECT * FROM {image} WHERE rid = %d ORDER BY iid", $rid);
+  while ($img = db_fetch_object($r)) {
+    $i++;
+    $row = $use == 'teaser'? $count : $i;
+    $cap= "        <div>" . $img->caption . "</div>\n";
+    $rem= "rental/remove/" . $rid . "/image/" . $img->iid;
+    $rButton = $use == 'edit'?
+               "<div>" . rental_button('Remove',$rem) ."</div>\n" :'';
+    $src= '/' . $img->filename;
+    $iLink   = $use == 'edit'?
+               "<div><a href='$src'>$i</a></div>\n" :'';
+    $image   = "<div><img id='img$row' class='thumb' src='$src' />\n</div>\n";
+    $hover   = "<div class='hovertip' target='img$row'>\n"
+             . "  <img src='$src' />\n$cap</div>\n";
+    if ($use == 'teaser') { return $image . $hover; }
+    $c .= "<span class='image'>\n $iLink $image $rButton $hover</span>\n"; }
+  return $i > 0? "<fieldset>\n<legend>$legend</legend>\n$c</fieldset>\n" : '';
+}
+// the following processes non-sql data arrays w/ a drupal pager
+function rental_show_page($data) {
+  global $pager_page_array, $pager_total;
+  $p = 0; // There can be multiple pagers on the page. The first is number 0. 
+  $pager_total[$p] = 12;  // number_of_pages
+  $i  = 8;               // items_per_page
+  $output = '';
+  $page = isset($_GET['page']) ? $_GET['page'] : '';
+  $pager_page_array = explode(',', $page);
+  foreach (rental_sift_page($data, $page, $i) as $row) { $output .= $row; }
+  $pager_page_array[$p] =
+    max(0, min( (int)$pager_page_array[$p], ((int)$pager_total[$p]) - 1) );
+  $output .= theme('pager', NULL, $i, $p);
+  return $output;
+}
+function rental_sift_page($data, $page, $items_per_page) {
+  for ($j = 0; $j < $items_per_page; $j++) {
+    $result[$j] = $data[$page * $items_per_page + $j];  }
+  return $result;
+}
+// ---------------------------------------------------------------------------

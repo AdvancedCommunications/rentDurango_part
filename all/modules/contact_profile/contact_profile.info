@@ -1,0 +1,12 @@
+name = Contact profile
+description = Adds user profile data to the contact form message
+core = 6.x
+package = Other
+core = "6.x"
+project = "Contact profile"
+; Information added by drupal.org packaging script on 2009-01-11
+version = "6.x-1.1"
+core = "6.x"
+project = "contact_profile"
+datestamp = "1231682412"
+

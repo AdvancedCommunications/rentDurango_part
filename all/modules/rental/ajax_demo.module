@@ -1,0 +1,83 @@
+<?php
+function ajax_demo_menu(){
+  return array(
+    'demo' => array( // First register the menu path to our form, and tell Drupal what to do when we visit the path
+      'access arguments' => array('access content'),  // Anybody should be able to access this URL
+      'page callback' => 'drupal_get_form',           // Tell Drupal to render a form
+      'page arguments' => array('ajax_demo_form'),    // Which form to render
+      'title' => 'Ajax demo',
+      'type' => MENU_NORMAL_ITEM,        ),           // This is a normal item for the navigation menu
+    'ajax/get-node-titles' => array(  // Let Drupal know what to do when our auto-complete element asks for data
+      'access arguments' => array('access content'),
+      'page callback' => 'ajax_demo_get_node_titles', // The function to execute when this path is requested
+      'type' => MENU_CALLBACK, ),     // This is a utility URL not to be displayed anywhere in the menu system 
+    'ajax/getdata' => array(          // We register a path where our nifty form can retrieve node data from
+      'access arguments' => array('access content'),
+      'page callback' => 'ajax_demo_get_data',        // Which function should respond to this path
+      'type' => MENU_CALLBACK ) );    // This is a utility URL not to be displayed anywhere in the menu system 
+}
+/* ---- Forms ---- */
+function ajax_demo_form(){  // The function that tells drupal what our form should contain
+                            // Add the Javascript/JQuery to handle the node fetching when the button is clicked
+  drupal_add_js(drupal_get_path('module', 'ajax_demo') . '/ajax-demo.js');
+  return array(
+    'node-autocomplete' => array( // Tell Drupal that this is an autocomplete field and where to fetch auto-complete suggestions
+      '#autocomplete_path' => 'ajax/get-node-titles',  // this attribute differentiates normal textfield vs auto-complete field definition.
+      '#title' => t('Type part of a node title'),
+      '#type' => 'textfield' ),
+    'get-node' => array(    // The button to trigger fetching of node data
+      '#value' => t('Click to fetch the node'),
+      '#type' => 'button', ),
+    array( '#value' => '<div id="node-area"></div>' ) ); // Add an empty div at the end of the form to hold fetched nodes
+}
+/* ---- Callbacks ---- */
+function ajax_demo_get_node_titles($part){
+  $results = array();
+  $rows = db_query("SELECT source FROM {lead_source} WHERE source LIKE('%%%s%');", $part);
+  while ($row = db_fetch_array($rows)) { $r[$row['source']] = $row['source']; }
+      /*  The values of this array will be displayed to the user, while the
+          keys will be used to replace what the user typed on selection.  */
+  drupal_json($r);     //  Format the response to be acceptible to javascript 
+}
+function ajax_demo_get_data($title) {  // Fetch and return the rendered node
+  $nid = db_result(db_query("SELECT nid FROM {node} WHERE title='%s'", $title));
+  if ($nid){
+    $node = node_load($nid);      // Load and render the node
+    print node_view($node);       // print the rendered output as is to the response:
+  } else {
+    print t('No node with that title could be found!');
+  }
+}
+  /* We can filter to sources that start with the text by changing:        LIKE('%%%s%') to: LIKE('%s%') 
+  Because we mapped ajax/get-node-titles to this function, any additional
+  'path elements' will be passed as variables to the function. eg.
+  ajax/get-node-titles/bla   will cause the value of $part to be 'bla'  */
+
+/* ajax_demo.info
+name = AJAX demo
+description = Demonstrates the use of AJAX requests and Drupal autocomplete
+package = Demo
+version = "6.x-0.0"
+core = 6.x
+*/
+/* ajax-demo.js
+Drupal.behaviors.ajax_demo = function(){
+  $('#edit-get-node').unbind().click(
+      function(){
+        var nodeTitle = $('#edit-node-autocomplete').val();
+        $.get('/ajax/getdata/' + nodeTitle, null, insertData);
+        return false;
+      }
+  );
+  function insertData(data){
+    $('#node-area')
+      .fadeOut(
+        'medium', 
+        function(){
+          $(this).html(data)
+        }
+      )
+      .fadeIn();
+  }
+}
+*/

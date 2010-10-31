@@ -1,0 +1,178 @@
+/* $Id: style.css,v 1.17.2.1 2009/01/07 05:53:44 frjo Exp $ */
+
+/* slash_red */
+
+body {
+  background: #ddd;
+}
+
+/* Header */
+
+#header {
+  background: #660000 url(header_bg.png) repeat top left;
+  border: 1px solid #660000;
+}
+
+/* Navigation */
+
+#top-nav {
+  border: 1px solid #660000;
+  border-width: 0 1px 1px 1px;
+}
+#primary li {
+  background: #660000 url(cl.png) no-repeat top left;
+}
+#primary li:hover {
+  background: #900000 url(cl.png) no-repeat top left;
+}
+#primary a:link,
+#primary a:visited,
+#primary a:hover,
+#primary a:active {
+  background: transparent url(cr.png) no-repeat top right;
+}
+#secondary li {
+  background: #660000;
+}
+#secondary li:hover {
+  background: #900000;
+}
+
+/* Admin Styles */
+
+div.admin .compact-link {
+  margin: 0 0 1em 1em;
+}
+div.admin .compact-link a {
+  border: 1px solid #ccc;
+  margin-bottom: 1em;
+  padding: 0.2em 0.3em;
+}
+div.admin .compact-link a:hover {
+  background: #eee;
+  text-decoration: none;
+}
+div.admin-panel {
+  margin: 0 0 1.5em 0;
+  padding: 0;
+}
+div.admin-panel .body {
+  background: #fff;
+  border: 1px solid #999;
+}
+div.admin-panel h3 {
+  background: #999;
+  color: #fff;
+  margin: 0;
+  padding: 0.2em 0.5em;
+}
+div.admin-panel dt a {
+  font-weight: bold;
+}
+div.admin-panel dd,
+div.admin-panel .description {
+  color: #666;
+  margin-bottom: 0.5em;
+}
+div.admin-panel dd {
+  margin-left: 1.5em;
+}
+div.admin-panel ul {
+  padding-left: 1em;
+}
+div.admin-panel .item-list ul{
+  padding-left: 0;
+}
+
+/* Links */
+
+a:link, a:visited {
+  color: #660000;
+}
+a:hover {
+  color: #006666;
+}
+a:active {
+  color: #ff0000;
+}
+
+.node .content a:link, .comment .content a:link {
+  color: #660000;
+}
+.node .content a:visited, .comment .content a:visited {
+  color: #333;
+}
+.node .content a:hover, .comment .content a:hover {
+  color: #006666;
+}
+.node .content a:active, .comment .content a:active {
+  color: #ff0000;
+}
+
+/* Node, comment and title styles */
+
+.node .title1 {
+  background: #660000 url(cl.png) no-repeat top left;
+}
+.node .title2 {
+  background: transparent url(cr.png) no-repeat top right;
+}
+.node .meta {
+  border-left: 1px solid #660000;
+  border-right: 1px solid #660000;
+}
+.node .content,
+.node div.links {
+  border: 1px solid #660000;
+  border-width: 0 1px 1px 1px;
+}
+.node div.links {
+  background: #ccc;
+}
+
+/* Block styles */
+
+.block .title1 {
+  background: #660000 url(cl.png) no-repeat top left;
+}
+.block .title2 {
+  background: transparent url(cr.png) no-repeat top right;
+}
+.block .content {
+  border: 1px solid #660000;
+}
+
+/* Box styles */
+
+.box {
+  border: 1px solid #660000;
+}
+
+#mission, #footer {
+  border: 1px solid #660000;
+}
+
+/* Modules */
+
+.profile {
+  border: 1px solid #660000;
+}
+
+/* CSS tricks */
+
+br.clear {
+  clear: both;
+  height: 0;
+}
+.center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.strike {
+  text-decoration: line-through;
+}
+abbr, acronym, .hoverhelp {
+  border-bottom: 1px dotted #333;
+  cursor: help;
+}

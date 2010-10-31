@@ -1,0 +1,5 @@
+name = Rental scan
+description = Scanning competitive rental ads looking for sales leads
+package = Aardvark
+version = "6.x-0.0"
+core = 6.x

@@ -1,0 +1,7 @@
+<?php
+// $Id: rental_lister.install,v 1.0 2010/05/06 15:06:56 LLL Exp $
+
+function rental_lister_install() {
+}
+function rental_lister_uninstall() {
+}

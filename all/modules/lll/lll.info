@@ -1,0 +1,4 @@
+; $Id$
+name = "LLL"
+description = "Lists content by selected content type."
+core = 6.x

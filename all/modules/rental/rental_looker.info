@@ -1,0 +1,5 @@
+; $Id$
+name = "Rental Looker"
+description = "Renter components of the rental housing application."
+package = "Aardvark"
+core = 6.x

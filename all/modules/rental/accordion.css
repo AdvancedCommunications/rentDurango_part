@@ -1,0 +1,28 @@
+/* accordian.css */
+.capt, .capb { 
+ background: url("http://rentdurango.net/sites/all/modules/jquery_ui/jquery.ui/demos/real-world/accordion-drawers/images/caps.gif") no-repeat;
+        height:4px; width:100%; z-index:100; margin:0px; padding:0px }
+.capt { position:absolute; background-position:0 -4px }
+.capb { margin-top:-19px }
+.drawers-wrapper {position:relative; width:188px; float:left; margin:10px }
+.drawers { margin-bottom:15px; color:#76797C; font-size:11px; line-height:18px}
+.drawer {
+        background:transparent url(http://rentdurango.net/sites/all/modules/jquery_ui/jquery.ui/demos/real-world/accordion-drawers/images/sideboxlight_bg.gif) repeat-y scroll 0pt;
+        color:#76797C; font-size:11px; line-height:1.3em; height:1%; /* for IE6 & 7 */}
+.drawer-handle { 
+        background:#939393 url(http://rentdurango.net/sites/all/modules/jquery_ui/jquery.ui/demos/real-world/accordion-drawers/images/slider_handlebg.png) no-repeat scroll 0pt;
+        color:#333333; cursor:default; height:25px; line-height:25px;
+        text-indent:15px; font-size:12px; width:100% }
+.drawer-handle.open {
+        background-color:#72839D; background-position:-188px 0pt; color:#FFFFFF }
+
+        /* nasty, but it fixes the indent on the first one. */
+h2.drawer-handle span { }
+.drawer ul { padding: 0 12px; padding-bottom:0pt }
+        /* for IE6 - to override the colour set by .drawer-handle.open (IE6 cannot handle class concatinations) */
+* html .drawer ul { background-color: #FFFFFF; margin: 0 1px }
+.drawer li { border-bottom:1px solid #E5E5E5; line-height:16px; padding:6px 0pt }
+.drawer-content ul { padding-top: 7px }
+.drawer-content li a { display:block; overflow:hidden }
+.alldownloads li { border:0pt none; line-height:18px; padding:0pt }
+.drawers a { color:#666666; text-decoration:none; font-family:"Lucida Grande",Geneva,Arial,Verdana,sans-serif }

@@ -1,0 +1,102 @@
+/* $Id: modules.css,v 1.12.2.1 2009/01/07 05:53:44 frjo Exp $ */
+
+div#aggregator {
+  background: #fff;
+  padding: 5px;
+  border: 1px solid #fff;
+}
+#aggregator div.title {
+  font-size: 1.2em;
+}
+#aggregator .source, #aggregator .categories {
+  clear: both;
+}
+
+#forum thead th {
+  border-bottom: 2px solid #ccc;
+}
+#forum tr td.container {
+  border-bottom: 1px solid #ccc;
+  background: #706A58;
+  color: #fff;
+  padding: 0.5em;
+}
+#forum tr td.container a {
+  color: #fff;
+}
+
+#profile .profile {
+  clear: both;
+  background: #fff;
+  padding: 0.5em;
+  border: 1px solid #ccc;
+}
+#profile .profile:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+#profile .profile .name {
+  font-size: 1.2em;
+  font-weight: bold;
+  padding-bottom: 0.5em;
+}
+
+div.codeblock {
+  padding: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  white-space: pre;
+  overflow: auto;
+  max-height: 200px;
+  max-width: 450px;
+}
+.node pre, .node code {
+  overflow: auto;
+}
+
+.node .content .read-more {
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+#main .adsense {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.node .content .book .nav a {
+  font-weight: bold;
+  text-decoration: none;
+}
+.node .content .book .nav a:hover {
+  text-decoration: underline;
+}
+
+.term_popular {
+  text-align: justify;
+}
+.site-map .box,
+#frontpage .box {
+  border: 1px solid #706A58;
+}
+.ed_button {
+  width: 16px;
+  height: 16px;
+  background-color: #fff;
+  padding: 0;
+  margin: 0 1px 0 0;
+  border: 1px solid #8cacbb;
+  cursor: pointer;
+}
+
+table#attachments {
+  clear: both;
+}
+
+/* Hide fake comment field from normal users. */
+#comment-form .form-item #edit-message {
+  display: none;
+}

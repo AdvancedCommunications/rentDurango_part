@@ -1,0 +1,113 @@
+/* $Id: style.css,v 1.14 2008/09/12 19:06:09 frjo Exp $ */
+
+/* slash_black */
+
+body {
+  background: #ddd;
+}
+
+/* Header */
+
+#header {
+  background: #000 url(header_bg.png) repeat top left;
+  border: 1px solid #000;
+}
+
+/* Navigation */
+
+#top-nav {
+  border: 1px solid #000;
+  border-width: 0 1px 1px 1px;
+}
+#primary li {
+  background: #000 url(cl.png) no-repeat top left;
+}
+#primary li:hover {
+  background: #333 url(cl.png) no-repeat top left;
+}
+#primary a:link, 
+#primary a:visited, 
+#primary a:hover, 
+#primary a:active {
+  background: transparent url(cr.png) no-repeat top right;
+}
+#secondary li {
+  background: #000;
+}
+#secondary li:hover {
+  background: #333;
+}
+
+/* Links */
+
+a:link, a:visited {
+  color: #000080;
+}
+a:hover {
+  color: #ff0000;
+}
+a:active {
+  color: #ff0000;
+}
+
+.node .content a:link, .comment .content a:link {
+  color: #000080;
+}
+.node .content a:visited, .comment .content a:visited {
+  color: #333;
+}
+.node .content a:hover, .comment .content a:hover {
+  color: #ff0000;
+}
+.node .content a:active, .comment .content a:active {
+  color: #ff0000;
+}
+
+/* Node styles */
+
+.node .title1 {
+  background: #000 url(cl.png) no-repeat top left;
+}
+.node .title2 {
+  background: transparent url(cr.png) no-repeat top right;
+}
+.node .meta {
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
+}
+.node .content,
+.node div.links {
+  border: 1px solid #000;
+  border-width: 0 1px 1px 1px;
+}
+.node div.links {
+  background: #ccc;
+}
+
+/* Block styles */
+
+.block .title1 {
+  background: #000 url(cl.png) no-repeat top left;
+}
+.block .title2 {
+  background: transparent url(cr.png) no-repeat top right;
+}
+.block .content {
+  border: 1px solid #000;
+}
+
+/* Box styles */
+
+.box {
+  border: 1px solid #000;
+}
+
+#mission, #footer {
+  border: 1px solid #000;
+}
+
+/* Modules */
+
+.profile {
+  border: 1px solid #000;
+}

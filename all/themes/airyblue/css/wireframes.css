@@ -1,0 +1,27 @@
+/* $Id: wireframes.css,v 1.1 2009/10/31 22:51:31 geerlingguy Exp $ */
+
+/**
+ * @file
+ * Wireframes Styling
+ *
+ * Add wireframes to the basic layout elements.
+ */
+
+
+.with-wireframes #header-inner,
+.with-wireframes #content-inner,
+.with-wireframes #content-inner>*,
+.with-wireframes .region-navbar,
+.with-wireframes #sidebar-first-inner,
+.with-wireframes #sidebar-second-inner,
+.with-wireframes .region-footer {
+  margin: 1px;
+  padding: 2px;
+  border: 1px solid #ccc;
+}
+
+.with-wireframes #closure-blocks {
+  margin-top: 1px;
+  padding: 2px;
+  border: 1px solid #ccc;
+}

@@ -1,0 +1,64 @@
+<?php
+/* 
+*@file
+*Rental service administration.
+*/
+function rental_sales_lead_form() {   // ----- Rental sales lead form ---------
+  global $edit;
+  $form['source']       = array('#type'  => 'textfield', '#size'  => 6,
+               '#title' => t('Source'),
+         '#description' => t('Enter the source of this ad lead.') );
+  $form['contact']      = array('#type'  => 'textfield', '#size'  => 60,
+               '#title' => t('Contact information (start with phone number)'),
+         '#description' => t('Enter a caption for this image.') );
+  $form['ad copy']      = array('#type'  => 'textfield', '#size'  => 60,
+               '#title' => t('Caption'),
+         '#description' => t('Enter the ad verbatim.') );
+  $form['search']       = array('#type' => 'submit', '#value' => t('Search') );
+  $form['update']       = array('#type' => 'submit', '#value' => t('Update') );
+  $form['new lead']     = array('#type' => 'submit', '#value' => t('New lead'));
+  return $form;
+}
+function rental_sales_lead_form_validate($form, &$form_state) {
+  global $rid, $edit;
+  $f = $form_state['values'];
+  $image_folder = variable_get('rental_image_folder', '/rental' );
+  if ($f['op'] == 'Search') {
+    // use $f['contact'] to 
+    // get any sales lead ads that contain the contact info and 
+    // display them as a list w/ the "Match" button beside it
+    return FALSE; }
+}
+function rental_sales_lead_form_submit($form, $form_state) {
+  global $rid;
+  $f = $form_state['values'];
+  $q = "INSERT INTO { image } (rid, filename, caption) VALUES (%d, '%s', '%s')";
+  db_query($q, $rid, $f['filename'], $f['caption']); 
+}
+function theme_rental_sales_lead_form($form) {
+  global $rid, $edit, $user;
+  $result = db_query("SELECT * FROM {sales_lead_ad} WHERE aid REGEXP %d", $aid);
+  $ad = db_fetch_object($result);
+  $title  = "<h2>Sales Lead Generation</h2>";
+  $leads  = rental_leads('Current Images', $rid, 'edit');
+  $getNewImg= rental_get_new_image($form);
+  $rButton = rental_button("Return to Account Summary", "/user/$user->uid");
+  return "\n$title\n$gallery\n$getNewImg $rButton\n"; 
+}
+function rental_get_new_sales_lead($form) {
+  $maxImages= variable_get('rental_maximum_images_per_unit', 8);
+  $nLegend  = "<legend>Add a new image</legend>";
+  return $i < $maxImages?
+              "<fieldset>\n  $nLegend\n"
+            . drupal_render($form['image_upload'])
+            . drupal_render($form['caption'])
+            . drupal_render($form)
+            . "\n</fieldset>\n" : '';
+}
+function rental_remove_sales_lead($iid) { 
+  $result = db_query("SELECT * FROM {image} WHERE iid = %d", $iid);
+  while ($image = db_fetch_object($result)) { 
+    if (file_exists($image->filename)) { unlink($image->filename); }} 
+  db_query("DELETE FROM {image} WHERE iid = %d", $iid); 
+  return drupal_get_form('rental_image_form'); 
+}

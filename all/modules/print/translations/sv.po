@@ -1,0 +1,947 @@
+# $Id: sv.po,v 1.2.2.15 2009/11/19 19:44:04 seals Exp $
+#
+# Swedish translation of Drupal (print)
+# Generated from files:
+#  print.admin.inc,v 1.1.2.29 2009/10/03 15:18:23 jcnventura
+#  print.pages.inc,v 1.1.2.56 2009/10/14 22:54:52 jcnventura
+#  print_mail.admin.inc,v 1.1.2.14 2009/07/09 12:00:52 jcnventura
+#  print_pdf.admin.inc,v 1.1.2.21 2009/10/13 21:52:30 jcnventura
+#  print.module,v 1.25.2.77 2009/10/13 00:04:25 jcnventura
+#  print_mail.module,v 1.1.2.42 2009/10/15 23:43:27 jcnventura
+#  print_pdf.module,v 1.1.2.45 2009/10/13 00:04:25 jcnventura
+#  print.info,v 1.3.2.5 2009/07/03 11:53:30 jcnventura
+#  print_mail.info,v 1.1.2.2 2008/08/21 22:03:40 jcnventura
+#  print_pdf.info,v 1.1.2.2 2008/08/21 22:03:40 jcnventura
+#  print.install,v 1.1.4.19 2009/10/03 15:18:24 jcnventura
+#  print_mail.inc,v 1.2.2.26 2009/10/03 16:52:09 jcnventura
+#  print_pdf.pages.inc,v 1.3.2.58 2009/10/13 21:52:30 jcnventura
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Print 6.x\n"
+"POT-Creation-Date: 2009-11-19 17:46+0100\n"
+"PO-Revision-Date: 2009-11-19 20:41+0100\n"
+"Last-Translator: Magnus Gunnarsson <seals@passagen.se>\n"
+"Language-Team: drupalsverige.se\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Poedit-Language: Swedish\n"
+"X-Poedit-Country: SWEDEN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: print.admin.inc:22
+msgid "Common Settings"
+msgstr "Gemensamma inställningar"
+
+#: print.admin.inc:27
+msgid "Stylesheet URL"
+msgstr "Webbadress till stilmall"
+
+#: print.admin.inc:31
+msgid "The URL to your custom print cascading stylesheet, if any. When none is specified, the default module CSS file is used."
+msgstr "Webbadressen till din anpassade utskrifts stilmall om den finns. Om ingen är angiven kommer modulens förinställda CSS-fil att användas."
+
+#: print.admin.inc:32
+msgid "Macros: %b (base path: \"%base\"), %t (path to theme: \"%theme\")"
+msgstr "Makros: %b (sökväg till rot: \"%base\"), %t (sökväg till tema: \"%theme\")"
+
+#: print.admin.inc:33
+msgid "Requires the <em>administer site configuration</em> permission."
+msgstr "Kräver rättigheten <em>hantera webbplatsens inställningar</em>."
+
+#: print.admin.inc:39
+msgid "Printer-friendly URLs list"
+msgstr "Utskriftvänlig visning av webbadresser "
+
+#: print.admin.inc:41
+msgid "If set, a list of the destination URLs for the page links will be displayed at the bottom of the page."
+msgstr "Om angiven kommer webbadressen för sidlänken att visas längst ned på sidan."
+
+#: print.admin.inc:42
+msgid "Note that you can enable/disable the URL list for each content type individually from the !url."
+msgstr "Observera att du individuellt kan aktivera/inaktivera URL-listan för varje innehållstyp från !url."
+
+#: print.admin.inc:42
+msgid "Content Types page"
+msgstr "Sidan för innehållstyper"
+
+#: print.admin.inc:47
+msgid "Include comments in printer-friendly version"
+msgstr "Inkludera kommentarer i utskriftsvänlig version."
+
+#: print.admin.inc:49
+msgid "When this option is active, user comments are also included in the printer-friendly version. Requires the comment module."
+msgstr "När det här alternativet är aktiverat så är även kommentarer inkluderade i den utskriftsvänliga versionen. Kräver modulen Comment."
+
+#: print.admin.inc:54
+msgid "New window method"
+msgstr "Metod för att öppna nytt fönster"
+
+#: print.admin.inc:55
+msgid "Use HTML target (does not validate as XHTML Strict)"
+msgstr "Använd HTML som riktmärke (valideras inte som XHTML Strict)"
+
+#: print.admin.inc:55
+msgid "Use Javascript (requires browser support)"
+msgstr "Använd JavaScript (kräver stöd av webbläsaren)"
+
+#: print.admin.inc:57
+msgid "Choose the method used to open pages in a new window/tab."
+msgstr "Välj metod som skall användas för att öppna sidor i ett nytt fönster/flik."
+
+#: print.admin.inc:62
+msgid "Logo options"
+msgstr "Alternativ för logga"
+
+#: print.admin.inc:69
+msgid "Logo type"
+msgstr "Typ av logga"
+
+#: print.admin.inc:70;101
+msgid "None (Disabled)"
+msgstr "Ingen (avaktiverad)"
+
+#: print.admin.inc:70
+msgid "Current theme's logo"
+msgstr "Nuvarande logga för temat"
+
+#: print.admin.inc:70;101;108
+msgid "User-specified"
+msgstr "Specificerad av användare"
+
+#: print.admin.inc:72
+msgid "Select the type of logo to display on the printer-friendly version. In case of a user-specified location, insert the path or URL below."
+msgstr "Välj den typ av logga som skall visas på den utskriftsvänliga versionen. Ange sökvägen eller URL:en nedan om det är en plats specificerad av användare."
+
+#: print.admin.inc:77
+msgid "Logo URL"
+msgstr "URL till logga"
+
+#: print.admin.inc:85
+msgid "Upload logo"
+msgstr "Ladda upp logga"
+
+#: print.admin.inc:88
+msgid "If you don't have direct file access to the server, use this field to upload your logo."
+msgstr "Om du inte har direkt tillgång till filerna på servern, använd detta fält för att ladda upp din logga."
+
+#: print.admin.inc:93
+msgid "Footer options"
+msgstr "Alternativ för sidfot"
+
+#: print.admin.inc:100
+msgid "Footer type"
+msgstr "Typ av sidfot"
+
+#: print.admin.inc:101
+msgid "Site's footer"
+msgstr "Webbplatsens sidfot"
+
+#: print.admin.inc:103
+msgid "Select the type of footer to display on the printer-friendly version. In case of a user-specified footer, insert it below."
+msgstr "Välj vilken typ av sidfot som skall visas på den utskriftsvänliga versionen. Ange sidfot nedan om den skall specificeras av användare."
+
+#: print.admin.inc:116;361
+#: print.pages.inc:280
+msgid "Source URL"
+msgstr "Källa till webbadress"
+
+#: print.admin.inc:123
+msgid "Display source URL"
+msgstr "Visa källans webbadress"
+
+#: print.admin.inc:125
+msgid "When this option is selected, the URL for the original page will be displayed at the bottom of the printer-friendly version."
+msgstr "När det här alternativet är valt kommer webbadressen för originalsidan att visas längst ned på den utskriftvänliga versionen."
+
+#: print.admin.inc:130
+msgid "Add current time/date to the source URL"
+msgstr "Lägg till aktuell tid/datum till webbadressens källa."
+
+#: print.admin.inc:132
+msgid "Display the current date and time in the Source URL line."
+msgstr "Visa det aktuella datumet och tiden i källan till webbadressen."
+
+#: print.admin.inc:137
+msgid "Force use of node ID in source URL"
+msgstr "Tvinga användning av nodens ID i webbadressen källa"
+
+#: print.admin.inc:139
+msgid "Drupal will attempt to use the page's defined alias in case there is one. To force the use of the fixed URL, activate this option."
+msgstr "Drupal kommer att försöka använda sidans definierade alias om det finns något. Aktivera den här inställningen för att tvinga användandet av fastställd webbadress."
+
+#: print.admin.inc:171
+msgid "Stylesheet URL must be a relative path or start with the site's base URL"
+msgstr "URL till CSS måste vara en relativ sökväg eller börja med webbplatsen rotsökväg"
+
+#: print.admin.inc:184
+msgid "Web page options"
+msgstr "Alternativ för webbsida"
+
+#: print.admin.inc:189
+msgid "Printer-friendly page link"
+msgstr "Utskriftsvänlig sidlänk"
+
+#: print.admin.inc:191
+#: print_mail/print_mail.admin.inc:29
+#: print_pdf/print_pdf.admin.inc:41
+msgid "Links area"
+msgstr "Länkområde"
+
+#: print.admin.inc:191
+#: print_mail/print_mail.admin.inc:29
+#: print_pdf/print_pdf.admin.inc:41
+msgid "Content corner"
+msgstr "Hörn för innehåll"
+
+#: print.admin.inc:192
+msgid "Choose the location of the link(s) to the printer-friendly page. The Links area is usually below the node content, whereas the Content corner is placed in the upper-right corner of the node content. Unselect all options to disable the link. Even if the link is disabled, you can still view the print version of a node by going to !path/nid where nid is the numeric id of the node."
+msgstr "Välj plats för länk(ar) till den utskriftsvänliga sidan. Länkområdet är vanligtvis nedanför nodinnehåll, och hörn för innehåll är placerat i det övre högra hörnet för nodens innehåll. Avbocka alla alternativ för att inaktivera länken. Även om länken är inaktiverad så kan du fortfarande visa den utskriftsvänliga versionen av en nod genom att gå till !path/nid där nid är det numeriska ID:et för en nod."
+
+#: print.admin.inc:197
+#: print_mail/print_mail.admin.inc:35
+#: print_pdf/print_pdf.admin.inc:47
+msgid "Advanced link options"
+msgstr "Utökade inställningar för länkar"
+
+#: print.admin.inc:204
+#: print_mail/print_mail.admin.inc:42
+#: print_pdf/print_pdf.admin.inc:54
+msgid "Link style"
+msgstr "Stil på länk"
+
+#: print.admin.inc:206
+#: print_mail/print_mail.admin.inc:44
+#: print_pdf/print_pdf.admin.inc:56
+msgid "Text only"
+msgstr "Enbart text"
+
+#: print.admin.inc:206
+#: print_mail/print_mail.admin.inc:44
+#: print_pdf/print_pdf.admin.inc:56
+msgid "Icon only"
+msgstr "Enbart ikon"
+
+#: print.admin.inc:206
+#: print_mail/print_mail.admin.inc:44
+#: print_pdf/print_pdf.admin.inc:56
+msgid "Icon and Text"
+msgstr "Ikon och text"
+
+#: print.admin.inc:207
+#: print_mail/print_mail.admin.inc:45
+#: print_pdf/print_pdf.admin.inc:57
+msgid "Select the visual style of the link."
+msgstr "Välj den visuella stilen för länken."
+
+#: print.admin.inc:212
+#: print_mail/print_mail.admin.inc:50
+#: print_pdf/print_pdf.admin.inc:62
+msgid "Use URL alias instead of node ID"
+msgstr "Använd URL-alias istället för ID för nod"
+
+#: print.admin.inc:214
+#: print_mail/print_mail.admin.inc:52
+#: print_pdf/print_pdf.admin.inc:64
+msgid "Enabling this will create the link using the URL alias instead of the node ID."
+msgstr "Aktiveras detta så kommer en länk skapas genom att använda URL-alias istället för ID för noden."
+
+#: print.admin.inc:219
+#: print_mail/print_mail.admin.inc:57
+#: print_pdf/print_pdf.admin.inc:69
+msgid "Link class"
+msgstr "Klass för länk"
+
+#: print.admin.inc:223
+#: print_mail/print_mail.admin.inc:61
+#: print_pdf/print_pdf.admin.inc:73
+msgid "This can be used by themers to change the link style or by jQuery modules to open in a new window (e.g. greybox or thickbox). Multiple classes can be specified, separated by spaces."
+msgstr "Detta kan användas av temautvecklare för att ändra stil på länken eller av modulen jQuery för att öppna i ett nytt fönster (till exempel Greybox eller Thickbox). Flera klasser kan anges separerade av mellanslag."
+
+#: print.admin.inc:228
+#: print_mail/print_mail.admin.inc:66
+#: print_pdf/print_pdf.admin.inc:78
+msgid "Link visibility"
+msgstr "Synlighet för länk"
+
+#: print.admin.inc:230;255
+#: print_mail/print_mail.admin.inc:68;93
+#: print_pdf/print_pdf.admin.inc:80;105
+msgid "Show on every page except the listed pages."
+msgstr "Visa block på alla sidor förutom de sidor som finns i listan."
+
+#: print.admin.inc:230;255
+#: print_mail/print_mail.admin.inc:68;93
+#: print_pdf/print_pdf.admin.inc:80;105
+msgid "Show on only the listed pages."
+msgstr "Visa endast på de sidor som finns i listan."
+
+#: print.admin.inc:237;263
+#: print_mail/print_mail.admin.inc:75;101
+#: print_pdf/print_pdf.admin.inc:87;113
+msgid "Enter one page per line as Drupal paths. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page."
+msgstr "Ange en sida per rad i form av Drupalsökvägar. Jokertecken är '*'. Sökvägsexempel: %blog för sidan blogg, %blog-wildcard för alla personliga bloggar. %front är startsidan."
+
+#: print.admin.inc:247;271
+#: print_mail/print_mail.admin.inc:85;109
+#: print_pdf/print_pdf.admin.inc:97;121
+msgid "Show if the following PHP code returns <code>TRUE</code> (PHP-mode, experts only)."
+msgstr "Visa om följande PHP-kod returnerar <code>SANT</code> (PHP-läge, bara för experter)."
+
+#: print.admin.inc:248;272
+#: print_mail/print_mail.admin.inc:86;110
+#: print_pdf/print_pdf.admin.inc:98;122
+msgid "If the PHP-mode is chosen, enter PHP code between %php. Note that executing incorrect PHP-code can break your Drupal site."
+msgstr "Om PHP är valt skriver du PHP-kod mellan %php. Observera att felaktig PHP-kod kan förstöra din Drupal-webbplats när den körs."
+
+#: print.admin.inc:253
+#: print_mail/print_mail.admin.inc:91
+#: print_pdf/print_pdf.admin.inc:103
+msgid "Show link in system (non-content) pages"
+msgstr "Visa länk i systemsidor (icke innehåll)"
+
+#: print.admin.inc:262
+msgid "Setting this option will add a printer-friendly version page link on pages created by Drupal or the enabled modules."
+msgstr "Genom att välja det här alternativet läggs en länk till på en utskriftsvänlig sidversion på de sidor som skapats av Drupal eller de aktiverade modulerna."
+
+#: print.admin.inc:277
+#: print_mail/print_mail.admin.inc:115
+#: print_pdf/print_pdf.admin.inc:127
+msgid "Link in book hierarchy nodes"
+msgstr "Länk i bokhierarkiska noder"
+
+#: print.admin.inc:279
+msgid "Book module link not modified"
+msgstr "Länk för modulen Bok är inte ändrad"
+
+#: print.admin.inc:279
+#: print_mail/print_mail.admin.inc:117
+#: print_pdf/print_pdf.admin.inc:129
+msgid "Current page and sub-pages"
+msgstr "Nuvarande sida och undersidor"
+
+#: print.admin.inc:279
+#: print_mail/print_mail.admin.inc:117
+#: print_pdf/print_pdf.admin.inc:129
+msgid "Current page only"
+msgstr "Enbart nuvarande sida"
+
+#: print.admin.inc:284
+msgid "Open the printer-friendly version in a new window"
+msgstr "Öppna den utskriftsvänliga versionen i ett nytt fönster."
+
+#: print.admin.inc:286
+msgid "Setting this option will make the printer-friendly version open in a new window/tab."
+msgstr "Används den här inställningen öppnas den utskriftsvänliga versionen i ett nytt fönster/flik."
+
+#: print.admin.inc:291
+msgid "Send to printer"
+msgstr "Skicka till skrivare"
+
+#: print.admin.inc:293
+msgid "Automatically calls the browser's print function when the printer-friendly version is displayed."
+msgstr "Kalla automatiskt på webbläsarens utskriftsfunktion när den utskriftsvänliga versionen visas."
+
+#: print.admin.inc:298
+msgid "Close window after sending to printer"
+msgstr "Stäng fönster efter att ha skickat till skrivare"
+
+#: print.admin.inc:300
+msgid "When the above options are enabled, this option will close the window after its contents are printed."
+msgstr "När ovanstående inställning är aktiverad så kommer denna inställning att stänga fönstret efter att innehållet skrivits ut."
+
+#: print.admin.inc:305
+msgid "Robots META tags"
+msgstr "META-taggar för robotar"
+
+#: print.admin.inc:312
+msgid "Add noindex"
+msgstr "Lägg till noindex (inget index)"
+
+#: print.admin.inc:314
+msgid "Instruct robots to not index printer-friendly pages. Recommended for good search engine karma."
+msgstr "Instruera robotar att inte indexera utskriftsvänliga sidor. Rekommenderas för att underlätta för sökmotorerna."
+
+#: print.admin.inc:319
+msgid "Add nofollow"
+msgstr "Lägg till nofollow (följ inte efter)"
+
+#: print.admin.inc:321
+msgid "Instruct robots to not follow outgoing links on printer-friendly pages."
+msgstr "Instruera robotar att inte följa utgående länkar på utskriftsvänliga sidor."
+
+#: print.admin.inc:326
+msgid "Add noarchive"
+msgstr "Lägg till noarchive (inget arkiv)"
+
+#: print.admin.inc:328
+msgid "Non-standard tag to instruct search engines to not show a \"Cached\" link for your printer-friendly pages. Recognized by Googlebot."
+msgstr "Icke standardiserad tagg för att instruera sökmotorer att inte visa \"cachade\" länkar för dina utskriftsvänliga sidor. Känns igen av Googlebot."
+
+#: print.admin.inc:340;381
+#: print_mail/print_mail.admin.inc:160
+#: print_pdf/print_pdf.admin.inc:291
+msgid "Saving these strings will disable their translation via Drupal's language system. Use the reset button to return them to the original state."
+msgstr "Sparas dessa strängas så inaktiveras deras översättning genom Drupals översättningssystem. Använd återställningsknappen för att återställa dem till deras ursprungliga läge."
+
+#: print.admin.inc:344;385
+#: print.module:135;158
+#: print_mail/print_mail.admin.inc:164
+#: print_mail/print_mail.module:84
+#: print_pdf/print_pdf.admin.inc:295
+#: print_pdf/print_pdf.module:111
+msgid "Text strings"
+msgstr "Textsträng"
+
+#: print.admin.inc:349
+#: print.pages.inc:256
+msgid "Published on %site_name"
+msgstr "Publicerad på %site_name"
+
+#: print.admin.inc:353
+#: print.pages.inc:291
+msgid "By %author"
+msgstr "Av %author"
+
+#: print.admin.inc:357
+#: print.pages.inc:295
+msgid "Created %date"
+msgstr "Skapad %date"
+
+#: print.admin.inc:365
+#: print.pages.inc:276
+msgid "retrieved on %date"
+msgstr "erhållen %date"
+
+#: print.admin.inc:369
+#: print.pages.inc:332
+msgid "Links"
+msgstr "Länkar"
+
+#: print.admin.inc:390
+#: print_mail/print_mail.admin.inc:169
+#: print_pdf/print_pdf.admin.inc:300
+msgid "Link text"
+msgstr "Länktext"
+
+#: print.admin.inc:391
+#: print.module:380;589
+msgid "Printer-friendly version"
+msgstr "Utskriftsvänlig version"
+
+#: print.admin.inc:392
+msgid "Text used in the link to the printer-friendly version."
+msgstr "Text som används för länken till den utskriftsvänliga versionen."
+
+#: print.pages.inc:292
+msgid "Anonymous"
+msgstr "Gäst"
+
+#: print.pages.inc:612
+msgid "Post new comment"
+msgstr "Skriv ny kommentar"
+
+#: print.module:176;372;417;117
+#: print.info:0
+#: print_mail/print_mail.info:0
+#: print_pdf/print_pdf.info:0
+msgid "Printer, e-mail and PDF versions"
+msgstr "Utskrifts, e-post- och PDF-versioner"
+
+#: print.module:177;206
+msgid "Most printed"
+msgstr "Flest gånger utskriven"
+
+#: print.module:385
+#: print_mail/print_mail.module:244
+#: print_pdf/print_pdf.module:294
+msgid "Show link"
+msgstr "Visa länk"
+
+#: print.module:389
+#: print_mail/print_mail.module:248
+#: print_pdf/print_pdf.module:298
+msgid "Show link in individual comments"
+msgstr "Visa länk i varje individuell kommentar"
+
+#: print.module:393
+#: print_mail/print_mail.module:252
+#: print_pdf/print_pdf.module:302
+msgid "Show Printer-friendly URLs list"
+msgstr "Visa utskriftsvänlig sida för URL:er"
+
+#: print.module:400
+msgid "The settings below only apply when some of the corresponding module-wide link settings are enabled."
+msgstr "Inställningarna nedan gäller enbart om någon av de tillhörande inställningarna för andra moduler är aktiverade."
+
+#: print.module:407
+msgid "The settings below only apply in case the corresponding type-specific setting is also enabled (except for the \"Show link in individual comments\")."
+msgstr "Inställningarna nedan gäller enbart om den tillhörande inställningen för specificerad typ är aktiverad (förutom för \"Visa länk i individuella kommentarer\")."
+
+#: print.module:418
+msgid "Print module form."
+msgstr "Formulär för modulen Print"
+
+#: print.module:430;433
+msgid "Print"
+msgstr "Skriv ut"
+
+#: print.module:592
+msgid "Display a printer-friendly version of this page."
+msgstr "Visa en utskriftsvänlig version av den här sidan."
+
+#: print.module:86
+msgid "access print"
+msgstr "komma åt utskrift"
+
+#: print.module:86
+msgid "administer print"
+msgstr "administrera utskrift"
+
+#: print.module:86
+msgid "node-specific print configuration"
+msgstr "nodspecifik utskriftskonfiguration"
+
+#: print.module:86
+msgid "use PHP for link visibility"
+msgstr "använd PHP för synlighet av länk"
+
+#: print.module:107
+msgid "Printer-friendly"
+msgstr "Utskriftsvänlig"
+
+#: print.module:118
+#: print.info:0
+msgid "Adds a printer-friendly version link to content and administrative pages."
+msgstr "Lägger till en länk för utskriftsvänlig version av innehåll och administrativa sidor."
+
+#: print.module:125
+msgid "Web page"
+msgstr "Webbsida"
+
+#: print.module:130;153
+#: print_mail/print_mail.module:79
+#: print_pdf/print_pdf.module:106
+msgid "Options"
+msgstr "Alternativ"
+
+#: print.module:144
+msgid "Settings"
+msgstr "Inställningar"
+
+#: (duplicate) print.install:18
+msgid "Printer-friendly Page settings are available under !link"
+msgstr "Inställningar för utskriftsvänliga sida finns på !link"
+
+#: (duplicate) print.install:19
+msgid "Administer > Site configuration > Printer-friendly Pages"
+msgstr "Administrera > Inställningar > Utskriftsvänliga sidor"
+
+#: print.info:0
+msgid "Printer-friendly pages"
+msgstr "Utskriftsvänliga sidor"
+
+#: print_mail/print_mail.admin.inc:22
+msgid "Send by e-mail options"
+msgstr "Alternativ för att skicka per e-post"
+
+#: print_mail/print_mail.admin.inc:27
+msgid "Send by e-mail link"
+msgstr "Länk för att skicka per e-post"
+
+#: print_mail/print_mail.admin.inc:30
+msgid "Choose the location of the link(s) to the send by e-mail page. The Links area is usually below the node content, whereas the Content corner is placed in the upper-right corner of the node content. Unselect all options to disable the link. Even if the link is disabled, you can still send a node by e-mail by going to !path/nid where nid is the numeric id of the node."
+msgstr "Välj plats för länk(ar) till att skicka sidan per e-post. Länkområdet är vanligtvis nedanför nodinnehåll, och hörn för innehåll är placerat i det övre högra hörnet för nodens innehåll. Avbocka alla alternativ för att inaktivera länken. Även om länken är inaktiverad så kan du fortfarande skicka en nod per e-post genom att gå till !path/nid där nid är det numeriska ID-numret för en nod."
+
+#: print_mail/print_mail.admin.inc:100
+msgid "Setting this option will add a send by e-mail link on pages created by Drupal or the enabled modules."
+msgstr "Anges denna inställning så läggs en länk till för att \"skicka per e-post\" på sidor skapade av Drupal eller av aktiverade moduler."
+
+#: print_mail/print_mail.admin.inc:117
+#: print_pdf/print_pdf.admin.inc:129
+msgid "No link"
+msgstr "Ingen länk"
+
+#: print_mail/print_mail.admin.inc:122
+msgid "Hourly threshold"
+msgstr "Tröskelvärde per timme"
+
+#: print_mail/print_mail.admin.inc:125
+msgid "The maximum number of e-mails a user can send per hour."
+msgstr "Maximalt antal e-postmeddelanden en användare kan skicka per timme."
+
+#: print_mail/print_mail.admin.inc:130
+#: print_mail/print_mail.inc:97
+msgid "Send only the teaser"
+msgstr "Skicka enbart förhandstitt"
+
+#: print_mail/print_mail.admin.inc:132
+msgid "If selected, the default choice will be to send only the node's teaser instead of the full content."
+msgstr "Om valt så kommer det förvalda alternativet vara att enbart skicka nodens förhandstitt istället för det fullständiga innehållet."
+
+#: print_mail/print_mail.admin.inc:137
+msgid "Enable teaser/full mode choice"
+msgstr "Aktivera valet förhands/fullständig version"
+
+#: print_mail/print_mail.admin.inc:139
+msgid "If checked, the user will be able to choose between sending the full content or only the teaser at send time."
+msgstr "Om valt så kommer användaren kunna välja mellan att skicka det fullständiga innehållet eller enbart en förhandstitt vid skickandet."
+
+#: print_mail/print_mail.admin.inc:145
+msgid "Send e-mails using Job Queue"
+msgstr "Skicka e-post genom att använda Job Queue"
+
+#: print_mail/print_mail.admin.inc:147
+msgid "Selecting this option, e-mail delivery will be performed by the Job Queue module during each cron run. Leaving this unselected, the e-mail will be sent immediately, but the site will take slightly longer to reply to the user."
+msgstr "Väljs denna inställning så kommer e-postleverans att genomföras av modulen Job Queue under varje körning av schemalagda aktiviteter. Lämnas detta ej valt så kommer e-post att skickas omedelbart, men webbplatsen kommer att reagera lite långsammare för att svara användaren."
+
+#: print_mail/print_mail.admin.inc:170
+#: print_mail/print_mail.module:274;362
+msgid "Send to friend"
+msgstr "Skicka till vän"
+
+#: print_mail/print_mail.admin.inc:171
+msgid "Text used in the link to the send by-email form."
+msgstr "Text som används i länken för att skicka formulär per e-post"
+
+#: print_mail/print_mail.admin.inc:176
+msgid "Message Subject"
+msgstr "Rubrik"
+
+#: print_mail/print_mail.admin.inc:177
+#: print_mail/print_mail.inc:131
+msgid "!user has sent you a message from !site"
+msgstr "!user har skickat ett meddelande till dig från !site"
+
+#: print_mail/print_mail.admin.inc:178
+msgid "e-mail subject line. The sender's name will appear in place of !user in the subject. The web site name will be inserted in place of !site. The page title replaces !title."
+msgstr "Rubrik för e-post. Avsändarens namn kommer att visas istället för !user i rubriken. Webbplatsens namn kommer att visas istället för !site. Sidrubriken ersätter !title."
+
+#: print_mail/print_mail.admin.inc:182
+msgid "Message Preamble"
+msgstr "Inledande meddelande"
+
+#: print_mail/print_mail.admin.inc:183
+#: print_mail/print_mail.inc:247
+msgid "Message from sender"
+msgstr "Meddelande från avsändare"
+
+#: print_mail/print_mail.admin.inc:184
+msgid "e-mail message preamble. The sender will be able to add their own message after this."
+msgstr "Inledande meddelande i e-post. Avsändaren kommer att kunna lägga till sitt eget meddelande efter detta."
+
+#: print_mail/print_mail.admin.inc:188
+msgid "Message Content"
+msgstr "Innehåll för meddelande"
+
+#: print_mail/print_mail.admin.inc:190
+msgid "Set the default contents of the message."
+msgstr "Ange det förvalda innehållet för meddelandet."
+
+#: print_mail/print_mail.admin.inc:194
+msgid "Thank You Message"
+msgstr "Tackmeddelande"
+
+#: print_mail/print_mail.admin.inc:195
+#: print_mail/print_mail.inc:303
+msgid "Thank you for spreading the word about !site."
+msgstr "Tack för att du sprider informationen om !site."
+
+#: print_mail/print_mail.admin.inc:196
+msgid "This message will be displayed after the user successfully submits the form."
+msgstr "Detta meddelande kommer att visas efter att användaren skickat formuläret"
+
+#: print_mail/print_mail.inc:29
+msgid "You cannot send more than %number messages per hour. Please try again later."
+msgstr "Du kan inte skicka fler än %number meddelanden per timme. Var vänlig försök igen senare."
+
+#: print_mail/print_mail.inc:63
+msgid "Your e-mail"
+msgstr "Din e-post"
+
+#: print_mail/print_mail.inc:68
+msgid "Your name"
+msgstr "Ditt namn"
+
+#: print_mail/print_mail.inc:73
+msgid "Send to"
+msgstr "Skicka till"
+
+#: print_mail/print_mail.inc:76
+msgid "Enter multiple addresses separated by commas and/or different lines."
+msgstr "Ange flera adresser separerade med komma och/eller olika rader."
+
+#: print_mail/print_mail.inc:80
+msgid "Subject"
+msgstr "Ämne"
+
+#: print_mail/print_mail.inc:85
+msgid "Page to be sent"
+msgstr "Sida att skicka"
+
+#: print_mail/print_mail.inc:86
+msgid "View page"
+msgstr "Visa sida"
+
+#: print_mail/print_mail.inc:90
+msgid "Your message"
+msgstr "Ditt meddelande"
+
+#: print_mail/print_mail.inc:108
+msgid "Send e-mail"
+msgstr "Skicka e-post"
+
+#: print_mail/print_mail.inc:112
+msgid "Clear form"
+msgstr "Rensa formulär"
+
+#: print_mail/print_mail.inc:117
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: print_mail/print_mail.inc:128
+msgid "Someone"
+msgstr "Någon"
+
+#: print_mail/print_mail.inc:130
+msgid "an interesting site"
+msgstr "en intressant sida"
+
+#: print_mail/print_mail.inc:205
+msgid "You cannot send more than %number messages per hour. Please reduce the number of recipients."
+msgstr "Du kan inte skicka fler än %number meddelanden per timme. Var vänlig minska antalet mottagare."
+
+#: print_mail/print_mail.inc:217
+msgid "You must enter a subject."
+msgstr "Du måste ange en rubrik."
+
+#: print_mail/print_mail.inc:221
+msgid "You must enter a message."
+msgstr "Du måste ange ett meddelande."
+
+#: print_mail/print_mail.inc:285
+msgid "print_mail: From %from"
+msgstr "print_mail: Från %from"
+
+#: print_mail/print_mail.inc:302
+msgid "us"
+msgstr "oss"
+
+#: print_mail/print_mail.inc:301
+msgid "print_mail"
+msgstr "print_mail"
+
+#: print_mail/print_mail.inc:301
+msgid "%name [%from] sent %page to [%to]"
+msgstr "%name [%from] skickade %page till [%to]"
+
+#: print_mail/print_mail.module:102;112
+msgid "Most emailed"
+msgstr "Flest gånger e-postad"
+
+#: print_mail/print_mail.module:239
+#: print_mail/print_mail.info:0
+msgid "Send by e-mail"
+msgstr "Skicka per e-post"
+
+#: print_mail/print_mail.module:365
+msgid "Send this page by e-mail."
+msgstr "Skicka den här sidan per e-post"
+
+#: print_mail/print_mail.module:33
+msgid "access send to friend"
+msgstr "åtkomst till att skicka till vän"
+
+#: print_mail/print_mail.module:58
+msgid "Send page by e-mail"
+msgstr "Skicka sida per e-post"
+
+#: print_mail/print_mail.module:70
+msgid "e-mail"
+msgstr "E-post"
+
+#: print_mail/print_mail.info:0
+msgid "Provides the capability to send the web page by e-mail"
+msgstr "Tillhandahåller möjligheten att skicka webbsidan per e-post"
+
+#: print_pdf/print_pdf.admin.inc:26
+msgid "PDF options"
+msgstr "Alternativ för PDF"
+
+#: print_pdf/print_pdf.admin.inc:31
+msgid "PDF generation tool"
+msgstr "Verktyg för generering av PDF"
+
+#: print_pdf/print_pdf.admin.inc:34
+msgid "This option selects the PDF generation tool being used by this module to create the PDF version."
+msgstr "Detta alternativ väljer vertyg för generering av PDF som används av den här modulen för att skapa PDF-versionen."
+
+#: print_pdf/print_pdf.admin.inc:39
+msgid "PDF version link"
+msgstr "Länk till PDF-version"
+
+#: print_pdf/print_pdf.admin.inc:42
+msgid "Choose the location of the link(s) to the PDF version. The Links area is usually below the node content, whereas the Content corner is placed in the upper-right corner of the node content. Unselect all options to disable the link. Even if the link is disabled, you can still view the PDF version of a node by going to !path/nid where nid is the numeric id of the node."
+msgstr "Välj plats för länk(ar) till PDF-version. Länkområdet är vanligtvis nedanför nodinnehåll, och hörn för innehåll är placerat i det övre högra hörnet för nodens innehåll. Avbocka alla alternativ för att inaktivera länken. Även om länken är inaktiverad så kan du fortfarande visa PDF-versionen av en nod genom att gå till !path/nid där nid är det numeriska ID-numret för en nod."
+
+#: print_pdf/print_pdf.admin.inc:112
+msgid "Setting this option will add a PDF version page link on pages created by Drupal or the enabled modules."
+msgstr "Genom att välja det här alternativet läggs en länk till på en PDF-version på de sidor som skapats av Drupal eller de aktiverade modulerna."
+
+#: print_pdf/print_pdf.admin.inc:134
+msgid "Open PDF in"
+msgstr "Öppna PDF i"
+
+#: print_pdf/print_pdf.admin.inc:135
+msgid "Same browser window"
+msgstr "Samma webbläsarfönster"
+
+#: print_pdf/print_pdf.admin.inc:135
+msgid "New browser window"
+msgstr "Nytt webbläsarfönster"
+
+#: print_pdf/print_pdf.admin.inc:135
+msgid "Save dialog"
+msgstr "Sparande"
+
+#: print_pdf/print_pdf.admin.inc:137
+msgid "Select the desired method for opening the PDF in the user's browser."
+msgstr "Välj önskad metod för öppnande av PDF i användarens webbläsare."
+
+#: print_pdf/print_pdf.admin.inc:142
+msgid "Paper size"
+msgstr "Pappersstorlek"
+
+#: print_pdf/print_pdf.admin.inc:159
+msgid "Choose the paper size of the generated PDF."
+msgstr "Välj pappersstorlek för den genererade PDF:en."
+
+#: print_pdf/print_pdf.admin.inc:164
+msgid "Page orientation"
+msgstr "Sidorientering"
+
+#: print_pdf/print_pdf.admin.inc:165
+msgid "Portrait"
+msgstr "Stående"
+
+#: print_pdf/print_pdf.admin.inc:165
+msgid "Landscape"
+msgstr "Liggande"
+
+#: print_pdf/print_pdf.admin.inc:167
+msgid "Choose the page orientation of the generated PDF."
+msgstr "Välj sidorienteringen för den genererade PDF:en."
+
+#: print_pdf/print_pdf.admin.inc:171
+msgid "Auto-configure the TCPDF settings"
+msgstr "Automatisk konfigurering av inställningar för TCPDF"
+
+#: print_pdf/print_pdf.admin.inc:173
+msgid "(TCPDF only) If you disable this option, the TCDPF settings in tcpdf/config/tcpdf_config.php file must be configured manually."
+msgstr "(enbart TCPDF) Om du inaktiverar detta alternativ så måste inställningarna för TCPDF konfigureras manuellt i filen tcpdf/config/tcpdf_config.php."
+
+#: print_pdf/print_pdf.admin.inc:177
+msgid "Font Family"
+msgstr "Fontfamilj"
+
+#: print_pdf/print_pdf.admin.inc:181
+msgid "(TCPDF only) Set the font family to be used. Examples: %examples."
+msgstr "(enbart TCPDF) Ange fontfamilj som skall användas. Exempel %examples."
+
+#: print_pdf/print_pdf.admin.inc:182
+msgid "CAUTION: TCPDF embeds the complete font in the generated PDF. If you're not using Unicode, then helvetica or times are safe choices that will keep the PDF small. Unicode fonts can increase the size of the PDF to the 1MB region."
+msgstr "OBSERVERA: TCPDF bäddar in den kompletta fonten i den genererade PDF:en. Om du inte använder Unicode så är Helvetica eller Times säkra val för att se till att PDF:en blir liten. Fonter i Unicode kan öka storleken på PDF:er i området runt 1 MB."
+
+#: print_pdf/print_pdf.admin.inc:186
+msgid "Font Size"
+msgstr "Fontstorlek"
+
+#: print_pdf/print_pdf.admin.inc:190
+msgid "(TCPDF only) Set the font size to be used for normal text. This is the base value for the scaling applied to other text styles."
+msgstr "(enbart TCPDF) Ange fontstorlek som skall användas för normal text. Detta är ursprungsvärdet för skalningen som gäller för andra textstilar."
+
+#: print_pdf/print_pdf.admin.inc:194
+msgid "wkhtmltopdf options"
+msgstr "alternativ för wkhtmltopdf"
+
+#: print_pdf/print_pdf.admin.inc:196
+msgid "(wkhtmltopdf only) Set any additional options to be passed to the wkhtmltopdf executable. Tokens may be used in these options (see list below)."
+msgstr "(enbart wkhtmltopdf) Ange tillhörande alternativ som skall skickas till exekveringen av wkhtmltopdf. Ersättningstecken kan användas i dessa inställningar (se listan nedan)."
+
+#: print_pdf/print_pdf.admin.inc:200
+msgid "Xvfb options"
+msgstr "Alternativ för Xvfb"
+
+#: print_pdf/print_pdf.admin.inc:202
+msgid "(wkhtmltopdf only) Set any additional options to be passed to the Xvfb executable."
+msgstr "(enbart wkhtmltopdf) Ange tillhörande alternativ som skall skickas till exekveringen av Xvfb."
+
+#: print_pdf/print_pdf.admin.inc:208
+msgid "PDF File Name"
+msgstr "Filnamn för PDF"
+
+#: print_pdf/print_pdf.admin.inc:210
+msgid "If left empty the generated filename defaults to the node's path. Tokens may be used to build the filename (see following list). The .pdf extension will be appended automatically."
+msgstr "Om lämnat tomt så kommer det genererade filnamnet som standard att vara nodens sökväg. Ersättningstecken kan användas för att bygga filnamnet (se den följande listan. Filändelsen .pdf kommer att tillfogas automatisk."
+
+#: print_pdf/print_pdf.admin.inc:214
+msgid "Replacement Patterns"
+msgstr "Ersättningsmönster"
+
+#: print_pdf/print_pdf.admin.inc:235
+msgid "No PDF generation tool found! Please dowload a supported PHP PDF generation tool. Check this module's INSTALL.txt for more details."
+msgstr "Inget verktyg för generering av PDF funnet! Var vänlig ladda ned ett genereringsverktyg som stöder PHP PDF. Titta i den här modulens INSTALL.txt för mer information."
+
+#: (duplicate) print_pdf/print_pdf.admin.inc:247
+#: print_pdf/print_pdf.module:168
+msgid "No PDF tool selected"
+msgstr "Inget verktyg för PDF valt"
+
+#: print_pdf/print_pdf.admin.inc:250
+msgid "Font size must be at least 1."
+msgstr "Fontstorlek måste vara minst 1."
+
+#: (duplicate) print_pdf/print_pdf.admin.inc:301
+#: print_pdf/print_pdf.module:289;374;167
+#: print_pdf/print_pdf.info:0
+msgid "PDF version"
+msgstr "PDF-version"
+
+#: print_pdf/print_pdf.admin.inc:302
+msgid "Text used in the link to the PDF version."
+msgstr "Text som används i länken till PDF-versionen."
+
+#: print_pdf/print_pdf.pages.inc:540
+msgid "Page !n of !total"
+msgstr "Sida !n av !total"
+
+#: print_pdf/print_pdf.module:129;139
+msgid "Most PDFd"
+msgstr "Flest gånger konverterad till PDF"
+
+#: print_pdf/print_pdf.module:377
+msgid "Display a PDF version of this page."
+msgstr "Visar en PDF-version för den här sidan."
+
+#: (duplicate) print_pdf/print_pdf.module:169
+msgid "Please configure it in the <a href=\"@url\">PDF settings page</a>."
+msgstr "Var vänlig konfigurera det på inställningssidan för <a href=\"@url\">PDF</a>."
+
+#: print_pdf/print_pdf.module:42
+msgid "access PDF version"
+msgstr "åtkomst till PDF-version"
+
+#: print_pdf/print_pdf.module:87
+msgid "Printer-friendly PDF"
+msgstr "Utskriftsvänlig PDF"
+
+#: print_pdf/print_pdf.module:97
+msgid "PDF"
+msgstr "PDF"
+
+#: print_pdf/print_pdf.info:0
+msgid "Adds the capability to export pages as PDF."
+msgstr "Lägg till möjligheten att exportera sidor som PDF."
+

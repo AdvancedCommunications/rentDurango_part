@@ -1,0 +1,17 @@
+/* $Id: fix-ie.css,v 1.1 2007/10/14 20:46:30 frjo Exp $ */
+
+body {
+  font-size: 80%;
+}
+.clear-block,
+.content,
+#top-nav,
+#header,
+#footer {
+  height: 1%;
+}
+
+* html #primary a:hover,
+* html #secondary a:hover {
+  text-decoration: underline;
+}

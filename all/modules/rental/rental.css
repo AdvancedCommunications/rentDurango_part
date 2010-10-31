@@ -1,0 +1,171 @@
+div#header { border-bottom: 20px solid #054b81 }
+img#for_rent_sign { height: 80px; position: relative; top: 10px; left: 10px }
+img#RD_Logo_Blue  { position: relative; left: 40px }
+#iconlinks { position: relative; left: 500px }
+.bubblewrap { list-style-type:none; margin: 0; padding: 0; }
+.bubblewrap li { display:inline-block;
+   zoom:1; /*Trigger haslayout in IE7 and less*/
+   * display:inline; /*For IE7 and less*/
+   position:relative; width: 100px; height:60px; }
+.bubblewrap li img { position:absolute; width: 55px; /*default of each image.*/
+   height: 60px; /*default height of each image.*/
+   left: 0; top: 0; border:0; }
+.bubblewrap .tooltip { /* CSS for image tooltip (alt attribute of image) */
+   position:absolute; font:bold 12px Arial; padding:2px; width:100px;
+   text-align:center; background:transparent; }
+#orbs li { width: 65px; height:60px; padding: 15px }
+#orbs li img { width: 55px; height: 60px; }
+
+table tbody { border-style: none; margin: 0; padding: 0 }
+
+table#search { line-height: 0; font-size: .9em }
+table#search .fillin .form-item { vertical-align: middle; line-height: .6em }
+table#search .fillin label { margin: 1px; width: 110px; 
+                    display: inline-block; text-align: right; font-size: .9em; }
+table#search .fillin input { margin: 1px; padding: 0; font-size: .8em;
+                     display: inline; text-align: right; }
+table#search .form-radios, table#search .form-checkboxes { padding: 0 5px 1px}
+
+table#search td#permits { vertical-align: top; text-align: right; padding-top: 10px }
+table#search td#permits div.form-radios { margin: 0; width: 80px; padding: 0;
+                 position: relative; left: 120px; top: -8px }
+table#search td#permits .form-radio { margin: 0; }
+table#search td#permits div.form-item { margin-top: 10px; width: 160px }
+table#search td#permits div div div.form-item { display: inline }
+table#search td#permits label { text-align: right; width: 110px; 
+    margin: 0; padding: 0; font-size: .9em; font-weight: bold; }
+table#search td#permits label input { margin: 0 }
+table#search td#available { margin: 10px; width: 200px }
+table#search td#available div div div.form-item { display: inline }
+table#search td#available div#edit-date-available-wrapper input {
+  position: relative; top: -28px; left: -40px }
+
+#primary div#list h3 { margin-bottom: 10px }
+#primary div.step { padding: 0 0 20px 40px }
+#primary div.step h4 { font-style: italic; color: #73d216;  margin: 0 }
+#primary div.step p { font-family: Arial, Helvetica, sans-serif; float: clear; font-style: italic }
+
+#primary div#list { margin-left: 120px; font-size: 1.1em }
+#primary div#list h3, #primary div.step h4 {
+  font-family: Arial, Helvetica, sans-serif; font-size: 1.2em; font-weight:900}
+#primary div#list h3 { color: #054b81; }
+#primary div#list p { padding-left: 40px; text-align: justify }
+#primary div#list img.right_float { margin: 0 0 0 20px; float: right; height: 130px }
+#primary div#list img.left_float  { margin: 0 20px 0 0; float: left;  height: 130px }
+ 
+div.wrapper #primary div#sitemission p {
+  font-family:Georgia,"Times New Roman",Times,serif;
+  font-size:1.4em; font-style:italic; line-height:120%; text-align:center }
+
+div.wrapper fieldset {border: 1px solid #054b81;}
+
+table#teasers { margin: 0; padding: 0; width: 100%; font-size: .8em }
+table#teasers tr.even { background-color: #cff }
+table#teasers tr.even:hover { background-color: #ffe }
+table#teasers tr.odd { background-color: #eff }
+table#teasers tr.odd:hover { background-color:#ffe }
+table#teasers div.browse_post { width: 130px }
+table#teasers div.browse_post span { 
+  display: inline-block; width: 45px; text-align: right; font-weight: bold }
+img.thumb { height: 50px }
+
+fieldset.ad_post { padding: 20px 12px; font-size: 1.6em; line-height: 1.4em;
+                   font: arial }
+fieldset.ad_post span { font-weight: bold }
+fieldset.ad_unit { padding: 20px 12px; font-size: 1.2em; line-height: 1.2em; }
+ 
+ 
+table#rental { line-height: 0; font-size: .9em }
+table#rental .form-radios, table#rental .form-checkboxes { padding: 0 5px 1px}
+table#rental .form-item { vertical-align: middle; line-height: .6em }
+table#rental #edit-square-feet-wrapper label,
+table#rental #edit-acreage-wrapper label { margin: 0; padding: 5px 0 5px 30px;
+              font-size: .8em; font-weight: normal; float: left }
+table#rental #edit-square-feet,
+table#rental #edit-acreage { margin: 0 0 0 5px; float: right }
+table#rental #edit-section-8-wrapper label { margin: 5px 0 5px 30px; 
+          float: left; font-size: .8em; font-weight: normal; }
+table#rental #edit-section-8-wrapper label input {
+          margin: -5px 0 0 25px; float: right }
+table#rental #edit-street-address-wrapper {margin:15px 0 0 0; line-height:100%} 
+table#rental #edit-street-address-wrapper label { line-height: 120% } 
+table#rental #edit-street-address-wrapper .description { line-height: 100% }
+table .form-item { margin-bottom: .5em }
+td.fillin { vertical-align: top; padding: 0 10px; margin: 0 }
+td.no_yes { vertical-align: top; padding: 0 10px; margin: 0; width: 20%}
+td.rent   { vertical-align: top; padding: 0 10px; margin: 0; width: 20%}
+td.cb { border: 1px; vertical-align: top; margin: 0; padding: 0 10px;}
+td.cb > div { border: 1px solid #054b81; padding-bottom: 3px }
+td.cb .form-checkboxes .form-item, td.cb .form-radios .form-item {margin:1px 0}
+td.cb .form-checkboxes, td.cb .form-radios { margin: 1px 0 }
+td.cb div label { vertical-align: middle; margin: 0; padding: 10px 5px; color: white; background-color: #054b81; }
+td.cb label.option { padding: 1px 0; font-size: .7em; 
+                     color: #054b81; background-color: white; }
+* td.cb div label { font-size: .8em }
+td#rp { width: 15%; margin: 10px }
+
+.adcount td, .adcount th { padding: 0 5px 0 }
+table.contact td.label { text-align: right; font-weight: bold }
+table.rental td, table.contact td, table.search td { padding: 1px 10px }
+.end-fieldset { margin: 15px 10px 0 0 }
+.standout { margin: 50px }
+.street { font-weight: bold }
+
+#rental-quick-search-form .form-item { margin: 0; padding: 0; line-height: 1em }
+#rental-quick-search-form label { margin: 1px; width: 70px; 
+                    display: inline-block; text-align: right; font-size: .8em; }
+#rental-quick-search-form input { margin: 1px; padding: 0; font-size: .8em;
+                     display: inline; text-align: right; }
+#rental-quick-search-form #edit-search {
+    font-size: .8em; margin: 10px 0 0 75px; padding: 2px }
+* #edit-search { font-size: 1em }
+
+#rental-quick-search-form select { margin: 1px; padding: 0; font-size: .7em;
+                     display: inline; text-align: right; }
+#rental-quick-search-form #edit-search { font-size: .6em }
+
+#rental-image-form span,
+  #ad_post_images span { float: left; font-size: .8em }
+#rental-image-form span input,
+  #ad_post_images span input { font-size: .8em }
+#rental-image-form span.image,
+  #ad_post_images span.image { margin:5px; text-align:center }
+#rental-image-form img.thumb { height: 60px; margin: 5px 0px }
+#ad_post_images img.thumb    { height: 80px; margin: 5px 0px }
+#xxrental-image-form div.hovertip img,
+  #xxad_post_images div.hovertip img { height: 300 }
+
+div#landlords, div#tenants { line-height: 1.3em; font-size: 1.1em }
+.hovertip, .hoverinfo {	width: auto; }
+
+#rental-post-form h2 { margin: 10px 0 20px }
+#edit-rent-wrapper,
+#edit-deposit-wrapper,
+#edit-date-available-wrapper {
+            width: 240px; height: 30px }
+#edit-rent-wrapper label,
+#edit-deposit-wrapper label,
+#edit-date-available-wrapper label { 
+     margin: 0; padding: 0; text-align: right; float: left }
+#edit-rent, #edit-deposit, #edit-date-available { margin: 0; float: right }
+#edit-for-sale-wrapper label, #edit-ap-required-wrapper label,
+#edit-last-month-wrapper label {
+     margin: 0; padding: 5px 0 5px 30px; float: left; width: 300px }
+#edit-for-sale, #edit-last-month, #edit-ap-required { 
+     margin: 0 15px 0 5px; float: right }
+
+.clear { overflow: hidden; width: 100%;}
+.butt { 
+  background: transparent url('http://rentdurango.net/misc/button_right.gif')
+    no-repeat scroll top right;
+  color: #444; display: block; float: left; font: normal 12px arial, sans-serif;
+  height: 24px; margin-right: 6px; padding-right: 13px; text-decoration: none;}
+.butt span {
+  background: transparent url('http://rentdurango.net/misc/button_left.gif')
+    no-repeat; display: block; line-height: 14px; padding: 5px 0 5px 18px;}
+.butt:hover { background-position: right -24px; color: #000; outline: none;}
+.butt:hover span { background-position: 0 -24px; padding: 6px 0 4px 18px;}
+.butt:active { background-position: bottom right; color: #444; outline: none;}
+.butt:active span { background-position: bottom left; padding: 6px 0 4px 18px;} 
+
+

@@ -1,0 +1,118 @@
+<?php
+// $Id: uicarousel.module,v 1.6 2010/02/17 17:28:55 neclimdul Exp $
+/**
+ * @file
+ * Module code for jQuery UI Carousel module.
+ */
+
+
+/**
+ * Implementation of hook_theme().
+ */
+function uicarousel_theme($existing, $type, $theme, $path) {
+  return array(
+    'uicarousel' => array(
+      'arguments' => array(
+        'items' => array(),
+        'options' => array(),
+        //'skin' => 'tango',
+        //'skin_path' => NULL,
+        'carousel_id' => 'uicarousel',
+      ),
+      'path' => drupal_get_path('module', 'uicarousel') . '/theme',
+      'template' => 'uicarousel',
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_views_api().
+ */
+function uicarousel_views_api() {
+  return array(
+    'api' => 2,
+    'path' => drupal_get_path('module', 'uicarousel') . '/views',
+  );
+}
+
+function theme_uicarousel_view($view, $options = array(), $rows = array()) {
+  // Force to bool. Views won't be giving us a bool value.
+  $options['circular'] = (bool) $options['circular'];
+
+  return theme('uicarousel', $rows, $options, form_clean_id('uicarousel-' . $view->name . '-' . $view->current_display));
+}
+
+/**
+ * Base preprocess function for the uicarousel template.
+ *
+ * @param $vars
+ * Template variables.
+ * @return
+ * Return by reference on $vars.
+ */
+function template_preprocess_uicarousel(&$vars) {
+
+  $options = &$vars['options'];
+
+  // Remove any empty options and convert any numbers to float values.
+  foreach ($options as $key => $value) {
+    if (is_numeric($value)) {
+      $options[$key] = (float)$value;
+    }
+    if ($key != 'circular' && empty($value)) {
+      unset($options[$key]);
+    }
+  }
+
+  // Make sure our js has been included.
+  uicarousel_add('#' . $vars['carousel_id'], $options);
+
+  $vars['previous'] = t('Previous');
+  $vars['next'] = t('Next');
+}
+
+/**
+ * Add a uicarousel to the page.
+ *
+ * Sets up the javascript variables and information for a carousel. the html
+ * must still exist on the page.
+ *
+ * @param unknown_type $selector
+ * @param unknown_type $options
+ * @return unknown_type
+ */
+function uicarousel_add($selector, $options) {
+  static $init = false;
+
+  if (!$init) {
+    $init = true;
+    jquery_ui_add('ui.core');
+
+    $js_path = drupal_get_path('module', 'uicarousel') . '/js';
+    switch($compression = variable_get('jquery_update_compression_type', 'mini')) {
+      case 'mini':
+        if (file_exists($js_path . '/lib/jquery.ui.carousel.min.js')) {
+          drupal_add_js($js_path . '/lib/jquery.ui.carousel.min.js');
+          break;
+        }
+        // else drop though and include the uncompressed.
+
+      default:
+        if (file_exists($js_path . '/lib/jquery.ui.carousel.js')) {
+          drupal_add_js($js_path . '/lib/jquery.ui.carousel.js');
+          break;
+        }
+        drupal_set_message("Failed to load ui carousel library");
+    }
+
+    // This file handles adding our behavior to attach carousels.
+    drupal_add_js($js_path . '/uicarousel.js');
+
+    // Add in basic styling.
+    drupal_add_css($js_path . '/lib/css/ui.carousel.css');
+    drupal_add_css(drupal_get_path('module', 'uicarousel') . '/theme/uicarousel.css');
+  }
+
+  // Pass information to our behaviour about how to attach the carousels.
+  drupal_add_js(array('uicarousel' => array($selector => $options)), 'setting');
+}

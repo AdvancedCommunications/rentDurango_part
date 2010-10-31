@@ -1,0 +1,20 @@
+; $Id: slash_blue.info,v 1.1 2008/09/12 19:06:09 frjo Exp $
+name = Slash blue
+description = The Slash theme as seen on Slashcode (blue).
+core = 6.x
+engine = phptemplate
+base theme = slash
+regions[left] = Left sidebar
+regions[right] = Right sidebar
+regions[content_top] = Content top
+regions[content_bottom] = Content bottom
+regions[header] = Header
+regions[footer] = Footer
+stylesheets[all][]   = style.css
+
+; Information added by drupal.org packaging script on 2009-04-21
+version = "6.x-1.0"
+core = "6.x"
+project = "slash"
+datestamp = "1240300999"
+

@@ -1,0 +1,7 @@
+<?php
+// $Id: rental-looker.install,v 1.0 2010/05/06 15:06:56 LLL Exp $
+
+function rental_looker_install() {
+}
+function rental_looker_uninstall() {
+}

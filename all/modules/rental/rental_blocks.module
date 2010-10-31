@@ -1,0 +1,109 @@
+<?php
+// $Id$
+
+// -------------------------------- hook block ---------------------------------
+function rental_block($op = 'list', $delta = NULL, $edit = array()) {
+  global $user;
+  switch ($op) {
+    case 'list':
+      $blocks['quick_search']['info']   = t('Quick Search');
+      $blocks['landlords']['info']      = t('Tenants');
+      $blocks['tenants']['info']        = t('Landlords');
+      $blocks['special_offers']['info'] = t('Special Offers');
+      return $blocks;
+    case 'configure':
+      return $form;
+    case 'save':
+      break;
+    case 'view':
+      if ($delta == 'quick_search' and $user->uid == 0) { 
+        $block['subject'] = 'Quick Search';
+        global $user;
+        $block['content'] = drupal_get_form('rental_quick_search_form'); }
+      elseif ($delta == 'landlords' and $user->uid == 0) { 
+        $block['subject'] = 'Landlords';
+        $block['content'] = 
+               "\n<div id='landlords' class='frontpageblock'>\n"
+             . "  <ul>\n"
+             . "    <li>" . l('Post a Rental Ad', 'list') . "</li>\n"
+//             . "    <li>" . l('Ad Rates', 'ad/rates')     . "</li>\n"
+//             . "    <li>" . l('Login', 'user')            . "</li>\n"
+             . "  </ul>\n</div>\n"; }
+      elseif ($delta == 'tenants' and $user->uid == 0) { 
+        $block['subject'] = 'Tenants';
+        $block['content'] = 
+               "<div id='tenants' class='frontpageblock'>\n"
+             . "  <ul>\n"
+             . "    <li>" . l('Detailed Search','rental/search') . "</li>\n"
+//             . "    <li>" . l('Register Your Profile','look')    . "</li>\n"
+//             . "    <li>" . l('Login', 'user')                   . "</li>\n"
+             . "  </ul>\n</div>\n";  }
+      elseif ($delta == 'special_offers') { 
+        $block['subject'] = 'Special Offers';
+        $block['content'] = 
+               "<p>SW Moving Service</p>\n"
+             . "<img src='misc/swmovingservice.jpg'>\n"
+             . "<p>3 guys and a truck: Only $75 per hour!</p>\n"; }
+      return $block;
+  }
+}
+function rental_quick_search_form () { // ----------- quick search form -------
+  global $user;
+  $sid = $user->uid > 0? $user->uid : session_id();
+  $s = "SELECT * FROM {renter} WHERE sid = '%s' or sid = 'zzz' ORDER BY sid";
+  $q = db_query($s, $sid);
+  $r = db_fetch_object($q);
+  $from = array(0=>'0', 500=>'500', 1000=>'1,000', 1500=>'1,500',
+             2000=>'2,000', 2500=>'2,500');
+  $to   = array(500=>'500', 1000=>'1,000', 1500=>'1,500', 2000=>'2,000',
+               3000=>'3,000', 999999=>'Any');
+  $bed  = $bath = array(0=>'Any', 1=>'1 or more', 2=>'2 or more',
+                  3=>'3 or more', 4=>'4 or more', 5=>'5 or more');
+  $form['rent_from'] = rental_select($from, 'Monthly Rent From', $r->rent_from);
+  $form['rent_to']   = rental_select($to,                  'To', $r->rent_to);
+  $form['bedroom']   = rental_select($bed,           'Bedrooms', $r->bedroom);
+  $form['bathroom']  = rental_select($bath,         'Bathrooms', $r->bathroom);
+/*
+  $form['rent_from'] = array('#type'  => 'textfield', '#size' => 3, 
+        '#title' => 'Monthly Rent From', '#default_value' => $r->rent_from );
+
+  $form['rent_to'] =   array('#type'  => 'textfield', '#size' => 3, 
+        '#title' => 'To', '#default_value' => $r->rent_to );
+  $form['bedroom'] =  array('#type'  => 'textfield', '#size' => 1, 
+        '#title' => 'Bedrooms', '#default_value' => $r->bedroom );
+  $form['bathroom'] = array('#type'  => 'textfield', '#size' => 1, 
+        '#title' => 'Bathrooms', '#default_value' => $r->bathroom );
+*/
+  $form['search']   = array('#type' => 'submit', '#value' => t('Search') );
+  return $form;
+}
+function rental_select($o, $t, $d) {
+  return array('#type'  => 'select', '#options' => $o, '#title' => t($t),
+       '#default_value' => $d );
+}
+function rental_quick_search_form_validate($form, &$form_state) {
+  $f = $form_state['values'];
+  if ($f['op'] == 'Search') {
+    if ($f['rent_from'] > $f['rent_to']) {
+      form_set_error('rent_from',
+                   t('Sorry, the range of rents does not make sense.') ); } }
+}
+function rental_quick_search_form_submit($form, &$form_state) {
+  $f = $form_state['values'];   //  dsm($fsv);
+  $s = "DELETE FROM {renter} WHERE sid = '%s'";
+  $result = db_query($s, session_id());
+  $s = "INSERT INTO {renter}"
+     . " (sid, time_of_last_update,"
+     . " rent_from,rent_to,bedroom,bathroom,building,furnishing,area)"
+     . " VALUES ('%s', %d, %d, %d, %d, %d, '%s', '%s', '%s')";
+  $result = db_query($s, session_id(), time(), $f['rent_from'], $f['rent_to'],
+                     $f['bedroom'], $f['bathroom'],
+                     $f['building'], $f['furnishing'], $f['area'] );
+}
+function theme_rental_quick_search_form($form) {
+   return drupal_render($form['rent_from'])
+   . drupal_render($form['rent_to'])
+   . drupal_render($form['bedrooms'])
+   . drupal_render($form['bathrooms'])
+   . drupal_render($form);
+}

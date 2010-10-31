@@ -1,0 +1,52 @@
+/* $Id: navigation.css,v 1.1 2009/10/31 22:51:31 geerlingguy Exp $ */
+
+/**
+ * @file
+ * Navigation Styling
+ */
+
+
+/*
+ * The active item in a Drupal menu
+ */
+li a.active
+{
+  color: #000;
+  text-decoration: none;
+}
+
+/*
+ * Navigation bar
+ */
+#navbar
+{
+}
+
+#navbar-inner
+{
+}
+
+/*
+ * Primary and Secondary links
+ */
+#primary
+{
+}
+
+#secondary
+{
+}
+
+/*
+ * Menu blocks
+ */
+.block-menu
+{
+}
+
+/*
+ * "Menu block" blocks. See http://drupal.org/project/menu_block
+ */
+.block-menu_block
+{
+}

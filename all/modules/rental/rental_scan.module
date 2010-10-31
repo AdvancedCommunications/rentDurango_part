@@ -1,0 +1,281 @@
+<?php
+function rental_scan_menu() {
+  return array(
+    'lead' => array( 
+        'access arguments' => array('access content'),  
+        'page callback' => 'rental_lead_summary',             
+        'title' => 'Sales Leads',
+        'type' => MENU_CALLBACK ),           
+    'scan' => array( 
+        'access arguments' => array('access content'),  
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('rental_scan_form'),              
+        'title' => 'Scanning Competitive Ads',
+        'type' => MENU_CALLBACK ),           
+    'scanupdate' => array( 
+        'access arguments' => array('access content'),  
+        'page callback' => 'rental_scan_update',              
+        'title' => 'Scanning Competitive Ads',
+        'type' => MENU_CALLBACK ),           
+    'ajax/get-ad_sources' => array(  
+        'access arguments' => array('access content'),
+        'page callback' => 'rental_get_pick_list',
+        'page arguments' => array('lead_source', 'source'), 
+        'type' => MENU_CALLBACK ),     
+    'ajax/get-ad_contacts' => array(  
+        'access arguments' => array('access content'),
+        'page callback' => 'rental_get_pick_list',
+        'page arguments' => array('lead', 'contact_info'),
+        'type' => MENU_CALLBACK ) );     
+}
+function rental_lead_form(&$form_state) {
+  $f = $form_state['values']; 
+  $form['lead-summary'] = array( '#value' => rental_lead_summary($f) );
+  return $form;
+}
+function rental_lead_summary($lid = NULL) {
+  global $total_leads, $total_ads;
+  if ($lid) { return rental_lead_detail($lid); } 
+  $n = 20; // items shown per page
+  $c = rental_get_ad_count_array();
+  $d = rental_get_ad_date_range_array();
+  $s = "SELECT * FROM { lead } ORDER BY lid DESC";
+  $q = pager_query(db_rewrite_sql($s), $n, 0, NULL);
+  while ($p = db_fetch_object($q)) {
+    $url = 'http://rentdurango.net/lead/' . $p->lid;
+    $ads = $c[$p->lid] > 1? ' (' . $c[$p->lid] . ' ads)' : '';
+    $r[] = array( 'data' => array("<div>" . $p->contact_info . "$ads<div>"), 
+     'onclick' => "document.location.href='$url';",
+     'style'=> 'cursor:pointer'); }
+  $a = array('id' => 'teasers', 'align' => 'center');
+$xxx = date('M/d/y',1285909200);
+
+  $hd = '<h3>' . "$xxx is 1285909200" . '</h3>'; 
+
+//  $hd = '<h3>' . "$total_ads ads placed by $total_leads leads" . '</h3>'; 
+  $tb = '<table class="adcount">'
+      . '<tr><th> Date </th><th> Count </th><th> New </th><th> Exp </th></tr>';
+  krsort($d['ad_count']); 
+  foreach ( $d['ad_count'] as $date=>$value) { // cut off at 10 or so
+    $dt = date('M/d', $date);
+    $ex = $d['ad_count'][$date];
+    $st = isset($d['ad_started'][$date])? $d['ad_started'][$date] : 0;
+    $xp = isset($d['ad_expired'][$date])? $d['ad_expired'][$date] : 0;
+    $tb .= "<tr><td> $dt </td><td> $ex </td><td> $st </td><td> $xp </td></tr>";}
+  $tb .= '</table>';
+//     . '<h3>' . $d['new_today'] . ' new today, '
+//              . $d['today'] . ' total ads today.' . '</h3>'; 
+  return $hd . $tb . theme('table', NULL, $r, $a) . theme('pager', NULL, $n,0); 
+}
+function rental_get_ad_count_array() {
+  global $total_leads, $total_ads;
+  $a = array();
+  $s = "SELECT * FROM { lead } l JOIN {lead_ad} a"
+     . " WHERE l.lid = a.lid ORDER BY l.lid";
+  $q = db_query($s);
+  while ($p = db_fetch_object($q)) {
+    $total_ads++;
+    if ($p->lid == $last_lead) { $i++; continue; }
+    $total_leads++;
+    $a[$last_lead] = $i + 1; 
+    $last_lead = $p->lid;
+    $i = 0;  }
+  $a[$last_lead] = $i + 1; 
+  return $a;
+}
+function rental_get_ad_date_range_array() {
+  $d = array();
+  $d['new_today'] = 0;
+  $d['today'] = 0;
+  $d['ad_count'] = array();
+  $f = 'Y/m/d';
+  $t = date($f, time() );                // today
+  $y = date($f, time() -24 * 60 * 60 );  // yesterday
+  $last_ad = 0;
+  $q = db_query("SELECT * FROM { lead_ad_date } ORDER by aid, date");
+  while ($p = db_fetch_object($q)) {
+    $ad_date = date($f, $p->date);
+    if ($p->aid == $last_ad and $p->date == $last_dt) { continue; }
+    if ($p->aid == $last_ad) { 
+       $d['ad_count'][$p->date]++;
+       $d[$p->aid]['last'] = $p->date;
+       continue; }
+    $d['ad_started'][$p->date]++;
+    if ($last_ad > 0) { $d['ad_expired'][$last_dt]++; }
+    if (date($f, $d[$last_ad]['first']) == $t) {$d['new_today']++;}
+    if (date($f, $d[$last_ad]['last']) == $t)  {$d['today']++;}
+    $d[$p->aid]['first'] = $d[$p->aid]['last'] = $p->date;  
+    $last_ad = $p->aid;
+    $last_dt = $p->date;  }
+  if ($last_ad > 0) { $d['ad_expired'][$last_dt]++; }
+  return $d;
+}
+function rental_lead_detail($lid) {
+  $n = 20; // items shown per page
+  $d = rental_get_ad_date_range_array();
+  $s = "SELECT * FROM { lead } WHERE lid = %d";
+  $q = db_query($s, $lid);
+  $t = db_fetch_object($q);
+  $h = '<h3>Info For ' . $t->contact_info . '</h3>';  
+  $s = "SELECT * FROM { lead_ad } a JOIN { lead_source } s"
+     . " WHERE a.sid = s.sid and a.lid = %d ORDER by aid";
+  $q = db_query($s, $lid);
+  while ($p = db_fetch_object($q)) {
+    $first = substr(date('m/d/Y', $d[$p->aid]['first']),0,5);
+    $last  = substr(date('m/d/Y', $d[$p->aid]['last']),0,5);
+    if ($first == $last) { $last = ''; }
+    $r[] = array( 'data' => array($p->source, $first, $last, $p->ad_copy)); } 
+  $a = array('id' => 'teasers', 'align' => 'center');
+  return $h . theme('table', NULL, $r, $a) . theme('pager', NULL, $n, 0); 
+}
+// ----------------------------------------------------------------------------
+function rental_scan_form(&$form_state) {
+  $f = $form_state['values']; 
+  jquery_ui_add('ui.datepicker');
+  drupal_add_js('$(function() {$(".datepicker").datepicker();});','inline');
+  drupal_add_js(drupal_get_path('module', 'rental_scan') . '/rental_scan.js');
+
+  if (isset($form_state['scan']['searched'])) {
+    variable_set('ad_date', rental_date_convert($f['ad_date']));
+    variable_set('source', $f['source']);
+    $form['direct']   = array( '#value' => rental_scan_directions(2) );
+    $form['ad_date']  = array( '#type'  => 'value', '#value' => $f['ad_date'] );
+    $form['source']   = array( '#type'  => 'value', '#value' => $f['source']  );
+    $form['original'] = array( '#type'  => 'value', '#value' => $f['contact']);
+    $form['contact']  = array( 
+        '#autocomplete_path' => 'ajax/get-ad_contacts',  
+        '#title' => t('Contact Info'),
+        '#type' => 'textfield',
+        '#default_value' => isset($f['contact'])? $f['contact'] : '',
+        '#description' => t('Enter part of phone number or other info given') );
+    $form['update']  = array(
+             '#type' => 'submit', '#value' => t('Update Contact Info') );
+    $form['ad-area'] = array( '#value' => rental_scan_get_ads($f) );
+    $form['ad_copy'] = array(
+            '#type'  => 'textarea', '#cols'  => 40, '#rows' => 3,
+            '#title' => t('Ad copy'),
+      '#description' => t('Enter the ad verbatim.') );
+    $form['new lead']= array(
+             '#type' => 'submit', '#value' => t('Save New Ad'));
+    $form['cancel']  = array(
+             '#type' => 'submit', '#value' => t('Cancel') ); }
+  else {
+    $form['direct']   = array( '#value' => rental_scan_directions(1) );
+    $form['ad_date'] = array(
+        '#type' => 'textfield', 
+        '#title' => 'Ad Date', '#size'  => 8,
+        '#attributes' => array('class' => 'datepicker'),
+        '#default_value' => isset($f['ad_date'])?
+             $f['ad_date'] : date('m/d/Y', variable_get('ad_date', time() )));
+    $form['source'] = array( 
+        '#autocomplete_path' => 'ajax/get-ad_sources',  
+        '#title' => t('Ad Source'),
+        '#type' => 'textfield',
+        '#default_value' => isset($f['source'])?
+             $f['source'] : variable_get('source', ''),
+        '#description' => t('Enter source of ad placement') );
+    $form['contact'] = array( 
+        '#autocomplete_path' => 'ajax/get-ad_contacts',  
+        '#title' => t('Contact Info'),
+        '#type' => 'textfield',
+        '#default_value' => isset($f['contact'])? $f['contact'] : '',
+        '#description' => t('Enter part of phone number or other info given') );
+    $form['search'] = array(
+        '#type' => 'submit', '#value' => t('Search') );
+    $form['finish']= array(
+             '#type' => 'submit', '#value' => t('Finish')); }
+  return $form;
+}
+function rental_scan_directions($section) {
+  if ($section == 1) { return 
+     "<ul>\n"
+   . "  <li>If available, type in last four digits of phone number. </li>\n"
+   . "  <li>If phone number is found, select and press SEARCH. </li>\n"
+   . "  <li>If number is not found, erase and enter all contact information"
+   . "available, phone number first, including area code "
+   . "ONLY if it is NOT local, then press SEARCH. </li>\n"
+   . "  <li>If ad does not contain phone number, "
+   . "type in any other available contact information. </li>\n"
+   . "  <li>If information is found, select and press SEARCH.</li>\n "
+   . "  <li>If none is found, enter all contact info and hit SEARCH.</li>\n"
+   . "</ol>\n"; }
+  else { return
+     "<ol>\n"
+   . "  <li>Update contact information to include all that is available, "
+   . "then press UPDATE CONTACT INFORMATION.</li>\n"
+   . "  <li>If ad is found and is EXACTLY the same, select it. </li>\n"
+   . "  <li>If not found or it has been updated to include new information, " 
+   . "copy ad EXACTLY as it is listed and select SAVE NEW AD.</li>\n"
+   . "</ol>\n"; }
+}
+
+function rental_scan_form_validate(&$form, &$form_state) {
+  $f = $form_state['values'];
+  if ($f['op'] == 'Search') {
+    $form_state['rebuild']  = TRUE;
+    $form_state['scan']['searched'] = TRUE; }
+  if ($f['op'] == 'Update Contact Info') {
+    $form_state['rebuild']  = TRUE;
+    $form_state['scan']['searched'] = TRUE;
+    $s = "UPDATE { lead } SET contact_info = '%s' WHERE contact_info = '%s'";
+    $r = db_query($s, $f['contact'], $f['original']);
+  }
+}
+function rental_scan_form_submit($form, &$form_state) {
+  global $user;
+  $f = $form_state['values'];
+  switch ($f['op']) {
+    case 'Finish' :
+      $s = "DELETE FROM {variable} WHERE name = 'source' or name = 'ad_date'";
+      db_query($s);
+      cache_clear_all('variables', 'cache');
+      $form_state['redirect'] = 'user';
+      break;
+    case 'Cancel' :
+      break;
+    case 'Save New Ad' :
+      $lid = rental_insert_when_new('lead','lid','contact_info',$f['contact']);
+      $sid = rental_insert_when_new('lead_source','sid','source',$f['source']);
+
+      $i = "INSERT INTO {lead_ad} (uid,lid,sid,ad_copy) VALUES (%d,%d,%d,'%s')";
+      db_query($i, $user->uid, $lid, $sid, $f['ad_copy']);
+      $s = "SELECT aid FROM {lead_ad}"
+         . " WHERE lid = %d AND sid = %d AND ad_copy = '%s'"; 
+      $aid = db_result(db_query($s, $lid, $sid, $f['ad_copy'])); 
+      rental_insert_lead_ad_date($aid, rental_date_convert($f['ad_date']));
+      break;
+  }
+}
+function rental_scan_update($aid, $date) {
+  rental_insert_lead_ad_date($aid, $date);
+  return drupal_get_form('rental_scan_form');
+}
+function rental_insert_lead_ad_date($aid, $date) {
+  global $user;
+  if (!($date > 1000000)) { return; } // temporary fix
+  $i = "INSERT INTO {lead_ad_date} (uid, aid, date) VALUES (%d, %d, %d)";
+  $s = "SELECT COUNT(did) FROM {lead_ad_date} WHERE aid = %d AND date = %d";
+  if ( !db_result(db_query($s, $aid, $date)) ) { // temporary fix
+                  db_query($i, $user->uid, $aid, $date ); }
+} 
+function rental_scan_get_ads($f) {
+  $n = 20; // items shown per page
+  $d = variable_get('ad_date', time());
+  $s = "SELECT sid FROM {lead_source} WHERE source = '%s'";
+  $sid = db_result(db_query($s, $f['source']));
+  $s = "SELECT * FROM { lead } l JOIN {lead_ad} a"
+     . " WHERE l.lid = a.lid and contact_info = '%s' and sid = %d"
+     . " ORDER BY a.aid DESC";
+  $q = pager_query(db_rewrite_sql($s), $n, 0, NULL, $f['contact'], $sid);
+  while ($p = db_fetch_object($q)) {
+    $url = 'http://rentdurango.net/scanupdate/' . "$p->aid/$d";
+    $r[] = array(
+     'data' => array("<div>" . $p->ad_copy . "</div>" ),
+     'onclick' => "document.location.href='$url';",
+     'style'=> 'cursor:pointer');}
+  $a = array('id' => 'teasers', 'align' => 'center');
+  return "<h3>" . $f['ad_date'] . "</h3>\n"
+       . "<h3>" . $f['source']  . "</h3>\n"
+       . "<h3>" . $f['contact'] . "</h3>\n"
+       . theme('table', NULL, $r, $a);  // header is NULL, rows, & attributes
+}

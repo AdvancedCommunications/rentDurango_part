@@ -1,0 +1,12 @@
+; $Id: jtooltips.info,v 1.4 2007/11/20 09:48:04 psicomante Exp $
+name = jtooltips
+description =  Add tooltips to links using JQuery
+core = 6.x
+
+
+; Information added by drupal.org packaging script on 2007-11-20
+version = "6.x-1.8"
+core = "6.x"
+project = "jtooltips"
+datestamp = "1195552808"
+

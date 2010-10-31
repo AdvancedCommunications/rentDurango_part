@@ -1,0 +1,342 @@
+/* $Id: layout.css,v 1.6 2010/01/16 18:54:09 geerlingguy Exp $ */
+
+/**
+ * @file
+ * Layout Styling (DIV Positioning)
+ *
+ * Define CSS classes to create a table-free, 3-column, 2-column, or single
+ * column layout depending on whether blocks are enabled in the left or right
+ * columns.
+ *
+ * This layout is based on the Zen Columns layout method.
+ *   http://drupal.org/node/201428
+ *
+ * Only CSS that affects the layout (positioning) of major elements should be
+ * listed here.  Such as:
+ *   display, position, float, clear, width, height, min-width, min-height
+ *   margin, border, padding, overflow
+ */
+
+*
+{
+	margin: 0;
+	padding: 0;
+}
+
+/*
+ * Body
+ */
+body
+{
+	text-align: center;
+}
+
+#body-wrapper
+{
+}
+
+#page,
+#closure-blocks
+{
+  /*
+   * If you want to make the page a fixed width and centered in the viewport,
+   * this is the standards-compliant way to do that. See also the ie6.css file
+   * for the necessary IE5/IE6quirks hack to center a div.
+   */
+  margin: 0 auto;
+	padding: 0;
+	text-align: left;
+	width: 960px;
+}
+
+#page-inner
+{
+  margin: 0 10px;
+  position: relative;
+}
+
+#navigation-top,
+#navigation
+{
+  position: absolute; /* Take the named anchors out of the doc flow    */
+  left: -10000px;     /* and prevent any anchor styles from appearing. */
+}
+
+#skip-to-nav
+{
+  float: right; /* LTR */
+  margin: 0 !important;
+  font-size: 0.8em;
+}
+
+#skip-to-nav a, #skip-to-nav a:hover, #skip-to-nav a:visited
+{
+  position: absolute;
+  left: 0;
+  top: -500px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+#skip-to-nav a:active, #skip-to-nav a:focus
+{
+  position: static;
+  width: auto;
+  height: auto;
+}
+
+/*
+ * Header
+ */
+#header
+{
+  height:171px;
+  width: 960px;
+  margin: 0;
+  position: relative;
+}
+
+#header-inner
+{
+  height: 114px;
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+  width: 100%;
+}
+
+#logo-title
+{
+}
+
+#logo
+{
+  float: left; /* LTR */
+}
+
+#site-name
+{
+}
+
+#site-slogan
+{
+}
+
+#search-box
+{
+}
+
+#header-blocks
+{
+  clear: both; /* Clear the logo */
+}
+
+/*
+ * Main (container for everything else)
+ */
+#main
+{
+  position: relative;
+}
+
+#main-inner
+{
+	position: relative;
+}
+
+/*
+ * Content
+ */
+#content
+{
+  margin-top: 10px;
+	overflow: scroll; /* Allow main area to display content wider than main area */
+}
+#content,
+.no-sidebars #content
+{
+  float: left; /* LTR */
+  width: 940px;
+  margin-left: 0; /* LTR */
+  margin-right: -960px; /* LTR */ /* Negative value of #content's width + left margin. */
+  padding: 0; /* DO NOT CHANGE. Add padding or margin to #content-inner. */
+}
+
+.sidebar-first #content
+{
+  display: inline; /* Bug fix for IE - content overlaps left sidebar without this */
+  width: 700px;
+  margin-right: -700px; /* LTR */ /* Negative value of #content's width + left margin. */
+}
+
+.sidebar-second #content
+{
+  width: 720px;
+  margin-left: 0; /* LTR */
+  margin-right: -720px; /* LTR */ /* Negative value of #content's width + left margin. */
+}
+
+.two-sidebars #content
+{
+  display: inline; /* Bug fix for IE - content overlaps left sidebar without this */
+  width: 500px;
+  margin-right: -500px; /* LTR */ /* Negative value of #content's width + left margin. */
+}
+
+#content-inner
+{
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Navbar
+ */
+#navbar
+{
+	float: left;
+  width: 760px;
+  height: 65px;
+  position: absolute;
+  top: 122px;
+  left: 5px;
+  margin-left: 0; /* LTR */
+  padding: 0; /* DO NOT CHANGE. Add padding or margin to #navbar-inner. */
+}
+
+/* --- Removed because of weirdness
+.with-navbar #content,
+.with-navbar #sidebar-first,
+.with-navbar #sidebar-second
+{
+  margin-top: 3.6em;
+}
+*/
+
+#navbar-inner
+{
+}
+
+#primary
+{
+}
+
+#secondary
+{
+}
+
+#navbar ul /* Primary and secondary links */
+{
+  margin: 0;
+  padding: 0;
+  text-align: left; /* LTR */
+}
+
+#navbar li /* A simple method to get navbar links to appear in one line. */
+{
+  float: left; /* LTR */
+  padding: 0 10px 0 0; /* LTR */
+}
+
+/*
+ * First sidebar
+ */
+#sidebar-first
+{
+  float: left; /* LTR */
+  width: 220px;
+  margin-top: 10px;
+  margin-left: 0; /* LTR */
+  padding: 0; /* DO NOT CHANGE. Add padding or margin to #sidebar-first-inner. */
+}
+
+#sidebar-first-inner
+{
+  margin: 0 18px 0 0; /* LTR */
+  padding: 0;
+}
+
+/*
+ * Second sidebar
+ */
+#sidebar-second
+{
+  float: right;
+  width: 220px;
+  margin-left: 0px; /* LTR */ /* Width of content + sidebar-first. */
+  margin-right: 0px; /* LTR */ /* Negative value of #sidebar-second's width + left margin. */
+  padding: 0; /* DO NOT CHANGE. Add padding or margin to #sidebar-second-inner. */
+}
+
+#sidebar-second-inner
+{
+  margin: 10px 0 0 20px; /* LTR */
+  padding: 0;
+}
+
+/*
+ * Footer
+ */
+#footer
+{
+	clear: both;
+}
+
+#footer-inner
+{
+}
+
+/*
+ * Closure
+ */
+#closure-blocks /* See also the #page declaration above that this div shares. */
+{
+}
+
+/*
+ * Markup free clearing (See: http://www.positioniseverything.net/easyclearing.html )
+ */
+.clearfix:after
+{
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+/*
+ * Prevent overflowing content
+ */
+#header,
+#content,
+#navbar,
+#sidebar-first,
+#sidebar-second,
+#footer,
+#closure-blocks
+{
+  overflow: visible;
+  word-wrap: break-word; /* A very nice CSS3 property */
+}
+
+#navbar
+{
+  overflow: hidden; /* May need to be removed if using a dynamic drop-down menu */
+}
+
+/*
+ * If a div.clear-block doesn't have any content after it and its bottom edge
+ * touches the bottom of the viewport, Firefox and Safari will mistakenly
+ * place several pixels worth of space between the bottom of the div and the
+ * bottom of the viewport. Uncomment this CSS property to fix this.
+ * Note: with some over-large content, this property might cause scrollbars
+ * to appear on the #page div.
+ */
+/*
+#page
+{
+  overflow-y: hidden;
+}
+*/

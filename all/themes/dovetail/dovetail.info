@@ -1,0 +1,24 @@
+name = Dovetail
+description = Dovetail is a theme built on the Framework themei
+version = VERSION
+core = 6.x
+engine = phptemplate
+stylesheets[all][] = style.css
+stylesheets[print][] = print.css
+
+regions[right] = Right sidebar
+regions[content] = Content
+regions[header] = Header
+regions[nav] = Navigation
+regions[footer] = Footer
+
+
+
+
+
+; Information added by drupal.org packaging script on 2009-09-26
+version = "6.x-0.4"
+core = "6.x"
+project = "dovetail"
+datestamp = "1253994627"
+

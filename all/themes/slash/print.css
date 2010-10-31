@@ -1,0 +1,46 @@
+/* $Id: print.css,v 1.2 2008/09/12 19:06:09 frjo Exp $ */
+
+#top-nav, #top-nav2, #logo, #search,
+.sidebar, .tabs,
+#comment_controls, #comment_form,
+.node .links, .comment .links,
+.pager {
+  display: none;
+}
+
+a:link,
+a:visited,
+.node .content a:link,
+.node .content a:visited {
+  color: #000;
+  text-decoration: none;
+}
+
+body,
+.node .content, .node .meta,
+.node .title1, .node .title2,
+.comment,
+#header, #mission, #footer,
+.sticky {
+  border: 0;
+  color: #000;
+  background: transparent;
+}
+
+.node h1.title {
+  font-size: 1.5em;
+  border: 0;
+  color: #000;
+  background: transparent;
+  margin: 0;
+}
+
+.node h1.title a:link,
+.node h1.title a:visited,
+.node h1.title a:hover,
+.node h1.title a:active {
+  border: 0;
+  color: #000;
+  background: transparent;
+  margin: 0;
+}

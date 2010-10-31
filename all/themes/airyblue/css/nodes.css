@@ -1,0 +1,139 @@
+/* $Id: nodes.css,v 1.1 2009/10/31 22:51:31 geerlingguy Exp $ */
+
+/**
+ * @file
+ * Node Styling
+ *
+ * Style anything that isn't in the $content variable.
+ */
+
+.node /* Node wrapper */
+{
+}
+
+.node-inner /* Additional wrapper for node */
+{
+}
+
+.sticky /* A sticky node (displayed before others in a list) */
+{
+}
+
+.node-unpublished /* Unpublished nodes */
+{
+  /* background-color: #fff4f4; */ /* Drupal core uses a #fff4f4 background */
+}
+
+.node-unpublished div.unpublished, /* The word "Unpublished" displayed underneath the content. */
+.comment-unpublished div.unpublished
+{
+  height: 0;
+  overflow: visible;
+  color: #d8d8d8;
+  font-size: 75px;
+  line-height: 1;
+  font-family: Impact, "Arial Narrow", Helvetica, sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  word-wrap: break-word; /* A very nice CSS3 property */
+}
+
+.node-mine /* A node created by the current user */
+{
+}
+
+.node-teaser /* A node displayed as teaser */
+{
+}
+
+/* All nodes are given a node-type-FOO class that describes the type of
+ * content that it is. If you create a new content type called
+ * "my-custom-type", it will receive a "node-type-my-custom-type" class.
+ */
+.node-type-page /* Page content node */
+{
+}
+
+.node-type-story /* Story content node */
+{
+}
+
+.node h2.title /* Node title */
+{
+  font-size: 1.75em;
+}
+
+.node h2.title a
+{
+  text-decoration: none;
+}
+
+.marker /* "New" or "Updated" marker for content that is new or updated for the current user */
+{
+  color: #c00;
+}
+
+.node .picture /* The picture of the node author */
+{
+}
+
+.node.node-unpublished .picture,
+.comment.comment-unpublished .picture
+{
+  position: relative; /* Otherwise floated pictures will appear below the "Unpublished" text. */
+}
+
+.node .meta /* Wrapper for submitted and terms data */
+{
+  color: #999;
+  font-size: .9em;
+  text-align: right;
+}
+
+.node .meta a
+{
+  color: #777;
+}
+
+.node .meta a:hover
+{
+  color: #999;
+}
+
+.node .submitted /* The "posted by" information */
+{
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.node .terms /* Node terms (taxonomy) */
+{
+}
+
+.node .content /* Node's content wrapper */
+{
+  clear: both;
+}
+
+.node .forum-post-wrapper .content /* Remove clearing for forum postings */
+{
+	clear: none;
+}
+
+.node .node-end-links /* Node Links wrapper */
+{
+  border-top: 1px solid #999;
+  padding-top: 5px;
+  text-align: right;
+}
+
+.node ul.links /* Node links. See also the ul.links declaration in the pages.css. */
+{
+}
+
+.preview .node /* Preview of the content before submitting new or updated content */
+{
+  /* background-color: #ffffea; */ /* Drupal core uses a #ffffea background */
+}

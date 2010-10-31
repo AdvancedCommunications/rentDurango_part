@@ -1,0 +1,499 @@
+<?php
+/* 
+*@file
+*Rental lister components of the rental advertising application.
+*/
+function rental_post() {
+ return "<div id='list'>"
+      . "<h3>It takes just three easy steps:</h3>\n"
+      . "<img class='right_float' src='/misc/433_11th_st_n.jpg' />"
+      . "<div class='step'><h4>Start your account</h4>"
+      . "<p>Enter a user name, your email address, and any other contact information that you want to use. Instantly you will receive an email that includes a temporary password. Just click on the button to log into your account.</p></div>\n"
+      . "<div class='step'><h4>Describe your rental</h4>"
+      . "<p>Fill out a short questionnaire about the rental unit. You can also upload pictures of your property, which is strongly recommended for maximum rentability.  Give it a try -- it is surprisingly easy to do.</p></div>\n"
+      . "<div class='step'><h4>Activate an ad</h4>"
+      . "<p>Enter the current rent, deposit, date available and instantly your ad is activated.  </p></div>\n"
+      . "<img class='left_float' src='/misc/1900_w_3rd_ave_w.jpg' />"
+      . "<p>That's all there is to it! Once your unit is rented, cancel your ad instantly by logging in and clicking on the de-activate button. All of your information (including pictures) remains ready for the next time.</p>" 
+      . rental_button('Start Here', 'user/register/role/5')
+      . rental_button('Cancel', '')
+      . "</div>";
+
+}
+function rental_image_form() {   // ---------- rental_image_form --------------
+  global $rid, $edit;
+  $d = 'Attach an image from your computer or camera. Exterior'
+     . ' or interior photos, maps, floor plans, etc. files up to 100kb';
+  $form['#attributes']['enctype'] = 'multipart/form-data';
+  $form['image_upload'] = array('#type'  => 'file', '#size'  => 60,
+               '#title' => t('Image'), 
+         '#description' => t( $d ) );
+  $form['caption']      = array('#type'  => 'textfield', '#size'  => 60,
+               '#title' => t('Caption'),
+         '#description' => t('Enter a caption for this image.') );
+  $form['save']         = array('#type' => 'submit', '#value' => t('Save') );
+  return $form;
+}
+function rental_image_form_validate($form, &$form_state) {
+  global $rid, $edit;
+  $f = $form_state['values'];
+  $image_folder = variable_get('rental_image_folder', '/rental' );
+  if ($f['op'] == 'Save') {
+    $validators = array(
+     'file_validate_is_image' => array(),
+     'file_validate_image_resolution' => array('400x400'),
+     'file_validate_size' => array(256 * 1024) );
+  if ($file = file_save_upload('image_upload', $validators, FALSE)) {
+      $info = image_get_info($file->filepath);
+      $destination = 'rental/r' . $rid . '_' . substr(time(),2,8) . '.'
+                                . $info['extension'];
+      if (file_copy($file, $destination, FILE_EXISTS_REPLACE)) {
+         $form_state['values']['filename'] = $file->filepath;  }
+      else { form_set_error('image_upload',
+                          t('Image folder not available.')); } } }
+}
+function rental_image_form_submit($form, $form_state) {
+  global $rid;
+  $f = $form_state['values'];
+  $q = "INSERT INTO { image } (rid, filename, caption) VALUES (%d, '%s', '%s')";
+  db_query($q, $rid, $f['filename'], $f['caption']); 
+}
+function theme_rental_image_form($form) {
+  global $rid, $edit, $user;
+  //$image_folder = variable_get('rental_image_folder', '/images/rental' );
+  $result = db_query("SELECT street_address FROM {rental} WHERE rid = %d",$rid);
+  $rental = db_fetch_object($result);
+  $title  = "<h2>$rental->street_address</h2>";
+  $gallery  = rental_gallery('Current Images', $rid, 'edit');
+  $getNewImg= rental_get_new_image($form);
+  $rButton = rental_button("Return to Account Summary", "user/$user->uid");
+  return "\n$title\n$gallery\n$getNewImg $rButton\n"; 
+}
+function rental_get_new_image($form) {
+  $maxImages= variable_get('rental_maximum_images_per_unit', 8);
+  $nLegend  = "<legend>Add a new image</legend>";
+  return $i < $maxImages?
+              "<fieldset>\n  $nLegend\n"
+            . drupal_render($form['image_upload'])
+            . drupal_render($form['caption'])
+            . drupal_render($form)
+            . "\n</fieldset>\n" : '';
+}
+function rental_remove_image($iid) { 
+  $result = db_query("SELECT * FROM {image} WHERE iid = %d", $iid);
+  while ($image = db_fetch_object($result)) { 
+    if (file_exists($image->filename)) { unlink($image->filename); }} 
+  db_query("DELETE FROM {image} WHERE iid = %d", $iid); 
+  return drupal_get_form('rental_image_form'); 
+}
+function rental_unpost_ad($pid) {
+  global $user;
+  $s = "UPDATE {post} SET cancelled = %d WHERE pid = %d";
+  $result = db_query($s, time(), $pid);
+  drupal_goto("/user/$user->uid");
+}
+function rental_post_form() {   // ---------- rental_post_form --------------
+  global $pid, $rid, $process, $edit;
+  $process = 'add'; // temporary until edit process is created
+  if (isset($pid)) { 
+    $result = db_query("SELECT * FROM { post } WHERE pid = %d", $pid);
+    $edit = db_fetch_object($result); }
+  $form['rent'] = array('#type'  => 'textfield',
+      '#default_value' => isset($edit->rent) ? $edit->rent : '',
+        '#title' => t('Monthly rent'), '#size'  => 3);
+  $form['deposit'] = array('#type'  => 'textfield',
+      '#default_value' => isset($edit->deposit) ? $edit->deposit : '',
+        '#title' => t('Deposit'), '#size'  => 3);
+  $form['date_available'] = array(
+     '#type' => 'textfield', 
+     '#title' => 'Date available', '#size'  => 8,
+    '#attributes' => array('class' => 'datepicker'),
+     '#default_value' => isset($edit->date_available) ?
+                 date('m/d/Y', $edit->date_available) : date('m/d/Y', time() ));
+  $form['for_sale']    = rental_no_yes($edit->for_sale,
+        "Is property currently being marketed for sale?");
+  $form['last_month']  = rental_no_yes($edit->last_month,
+        "Is last month's rent also required at move-in?");
+  $form['ap_required'] = rental_no_yes($edit->ap_required or !isset($pid),
+        "Should renters supply their info when contacting you?");
+/*
+  $form['for_sale'] = array('#type'  => 'checkbox',
+    '#attributes' => $edit->for_sale == 1 ? array('checked'=>'checked') : '',
+        '#title' => t("Is property currently being marketed for sale?") );
+
+  $form['last_month'] = array('#type'  => 'checkbox',
+    '#attributes' => $edit->last_month == 1 ? array('checked'=>'checked') : '',
+        '#title' => t("Is last month's rent also required at move-in?") );
+
+  $form['ap_required'] = array('#type'  => 'checkbox',
+    '#attributes' => (($edit->ap_required == 1) or (!isset($pid)))? 
+                           array('checked'=>'checked') : '',
+    '#title' => t("Should renters supply their info when contacting you?") );
+*/
+  $form['lease']    = rental_box('radios', 'lease');
+  $form['owner_pays'] = rental_box('cb','expense', 'Owner pays', 'owner_pays');
+  $form['renter_pays']= rental_box('cb','expense', 'Renter pays','renter_pays');
+  $form['ad_info'] = array('#type'=>'textarea', '#cols' => 10, '#rows' => 1, 
+              '#default_value' => isset($edit->ad_info) ? $edit->ad_info : '',
+                      '#title' => t('Any other important information') );
+  $form['save']   = array('#type' => 'submit', '#value' => t('Save') );
+  if ($process == 'edit') {
+    $form['cancel ad'] = array('#type'=>'submit', '#value'=>t('Cancel Ad') ); }
+  $form['return'] = array('#type' => 'submit',
+                         '#value' => t('Return to Summary') );
+  return $form;
+}
+function theme_rental_post_form($form) {
+  global $user, $rid;
+  $result = db_query("SELECT * FROM { rental } WHERE rid = %d", $rid);
+  $rental = db_fetch_object($result); 
+  jquery_ui_add('ui.datepicker');
+  drupal_add_js('$(function() {$(".datepicker").datepicker();});','inline');
+  return 
+    '<h2>Posting an Ad for ' . $rental->street_address . "</h2>\n" 
+  . '<table id="post">'
+  . '  <tr>'
+  . '    <td class="rent">'
+  .        drupal_render($form['rent'])
+  .        drupal_render($form['deposit'])
+  .        drupal_render($form['date_available'])
+  . '    </td>'
+  . '    <td class="no_yes">'
+  .        drupal_render($form['for_sale'])
+  .        drupal_render($form['last_month'])
+  .        drupal_render($form['ap_required'])
+  . '    </td>'
+  . '    <td class="cb">' . drupal_render($form['lease'])    . '</td>'
+  . '    <td class="cb">' . drupal_render($form['owner_pays']) . '</td>'
+  . '    <td id="rp" class="cb">' . drupal_render($form['renter_pays']). '</td>'
+  . '  </tr>'
+  . '</table>'
+  . '<div>' . drupal_render($form['ad_info']) 
+  .           drupal_render($form)
+  . '</div>';
+}
+function rental_post_form_validate($form,&$form_state) {
+  $f = $form_state['values'];
+  if ($f['op'] == 'Save') {
+    if ($f['rent'] == '' or $f['rent'] == 0) {
+      form_set_error('rent',
+                   t('You must enter a figure for monthly rent.') ); } }
+}
+function rental_post_form_submit($form, &$form_state) {
+  global $pid, $rid;
+  $process = $form_state['values']['process'];
+  $form_state['redirect'] = 'user/' . $user->uid;
+  $f = $form_state['values'];   //  dsm($f);
+  if ($f['op'] == 'Save') {
+    $sql = "UPDATE { post } SET cancelled = %d"
+         . " WHERE pid = %d and cancelled = 0 and activated > %d";
+    $x = variable_get('rental_post_days_until_expiration', 30);
+    db_query( $sql, time(), $pid, time() - $x * 24 * 60 * 60);
+    $sql = "INSERT INTO {post} ( rid, activated, cancelled,
+      rent, deposit, date_available, for_sale, last_month, lease, owner_pays, renter_pays, ad_info)
+      VALUES (%d, %d, %d, %d, %d, '%s', %d, %d, '%s', '%s', '%s', '%s')";
+    db_query( $sql, $rid, time(), 0,
+      $f['rent'], $f['deposit'], rental_date_convert($f['date_available']),
+      $f['for_sale'], $f['last_month'], $f['lease'],
+      repack($f['owner_pays']), repack($f['renter_pays']),
+      t($f['info'])); }
+  if ($f['op'] == 'Cancel Ad') {
+    db_query("UPDATE {post} SET cancelled = %d WHERE pid =  %d", time(), $pid);}
+  if ($f['op'] == 'Save' and $process == 'edit') {
+    $sql = "UPDATE {post} SET rent = %d, deposit = %d, date_available = '%s',"
+         . " for_sale = %d, last_month = %d, lease = '%s',"
+         . " owner_pays = '%s', renter_pays = '%s',"
+         . " ad_info = '%s'"
+         . " WHERE pid = %d";
+    db_query( $sql, $f['rent'], $f['deposit'], $dav,
+      $f['for_sale'], $f['last_month'], $f['lease'],
+      repack($f['owner_pays']), repack($f['renter_pays']),
+      $f['ad_info'],
+      $pid ); }
+}
+function rental_post_edit_sql() {
+  return "UPDATE {rental} SET rent = %d, deposit = %d, date_available = '%s',
+    for_sale = %d, last_month = %d, lease = '%s', ad_info = '%s'
+         WHERE pid = %d";
+}
+// ----------------------------------------- rental unit ----------------------
+function rental_unit($proc = NULL, $id = NULL, $type = NULL, $i2 = NULL) {
+  global $process, $rid;
+  $process = $proc;
+  $rid     = $id;
+  // check that the user $user->uid has permission to list rentals
+  // and that the rental $rid (if set) belongs to the user $user->uid
+  if ($process == 'add')   { return drupal_get_form('rental_form');}
+  if ($process == 'edit')  { return drupal_get_form('rental_form');}
+  if ($process == 'clone') { return drupal_get_form('rental_form');}
+  if ($process == 'image') { return drupal_get_form('rental_image_form');}
+  if ($process == 'search') {return drupal_get_form('rental_search_form');}
+  if ($process == 'post')  { return drupal_get_form('rental_post_form');}
+  if ($process == 'unpost')  { return rental_unpost_ad($id);}
+  if (($process == 'remove') and ($type == 'image')) {
+                             return rental_remove_image($i2); }
+}
+
+function rental_form() {         // ---------- rental_form --------------------
+  global $rental, $process, $rid, $edit;
+  if (isset($rid)) { 
+    $result = db_query("SELECT * FROM { rental } WHERE rid = %d", $rid);
+    $edit = db_fetch_object($result); }
+  $clone_prefix = $process == 'clone' ? 'Clone of ' : '';
+  $form['process'] = array( '#type'  => 'value', '#value'  => $process );
+  $form['street_address'] = array('#type'  => 'textfield',
+        '#title' => t('Street address'), '#size'  => 22,
+      '#default_value' => isset($edit->street_address) ?
+                $clone_prefix . $edit->street_address : '',
+        '#description' => t('Include unit number if applicable.') );
+  $form['square_feet'] = array('#type'  => 'textfield',
+      '#default_value' => isset($edit->square_feet) ?
+                                $edit->square_feet : '',
+        '#title' => t('Sq ft of living space'), '#size'  => 3 );
+  $form['acreage']   = array( '#type' => 'textfield',
+      '#default_value' => isset($edit->acreage) ?
+                                $edit->acreage : '',
+        '#title' => t('Acreage of included land'), '#size'  => 3 );
+  $form['section_8'] = array( '#type' => 'checkbox',
+    '#attributes' => $edit->section_8 == 1 ? array('checked' => 'checked') : '',
+        '#title' => t('Available for Section 8?') );
+  $form['bedroom']    = rental_box('radios', 'bedroom');
+  $form['bathroom']   = rental_box('radios', 'bathroom');
+  $form['parking']    = rental_box('radios', 'parking');
+  $form['storage']    = rental_box('radios', 'storage');
+  $form['building']   = rental_box('radios', 'building');
+  $form['furnishing'] = rental_box('radios', 'furnishing');
+  $form['appliance']=rental_box('cb','appliance','Appliances Included');
+  $form['student']    = rental_box('radios', 'student');
+  $form['smoker']     = rental_box('radios', 'smoker');
+  $form['pet']        = rental_box('radios', 'pet');
+  $form['area']       = rental_box('radios', 'area', 'General Area');
+  $form['feature']    = rental_box('cb','feature', 'Extra Features');
+  $form['heat']       = rental_box('radios', 'heat', 'Primary Heat Source');
+  $form['info'] = array('#type'=>'textarea', '#cols' => '10', '#rows' => '1', 
+              '#default_value' => isset($edit->info) ? $edit->info : '',
+                      '#title' => t('Any other important information') );
+  $form['save']   = array('#type' => 'submit', '#value' => t('Save') );
+  if ($process == 'edit') {
+    $form['delete'] = array('#type' => 'submit', '#value' => t('Delete') ); }
+  $form['cancel'] = array('#type' => 'submit', '#value' => t('Cancel') );
+  return $form;
+}
+function theme_rental_form($form) {
+  global $user;
+  return 
+    '<table id="rental">'
+  . '  <tr>'
+  . '    <td class="fillin">'
+  .        drupal_render($form['street_address'])
+  .        drupal_render($form['square_feet'])
+  .        drupal_render($form['acreage'])
+  .        drupal_render($form['section_8'])
+  . '    </td>'
+  . '    <td class="cb">' . drupal_render($form['bedroom'])        . '</td>'
+  . '    <td class="cb">' . drupal_render($form['bathroom'])       . '</td>'
+  . '    <td class="cb">' . drupal_render($form['building'])       . '</td>'
+  . '    <td class="cb">' . drupal_render($form['heat'])           . '</td>'
+  . '  </tr>'
+  . '  <tr>'
+  . '    <td class="cb" rowspan=2>' . drupal_render($form['area']) . '</td>'
+  . '    <td class="cb">' . drupal_render($form['furnishing'])     . '</td>'
+  . '    <td class="cb">' . drupal_render($form['storage'])        . '</td>'
+  . '    <td class="cb">' . drupal_render($form['parking'])        . '</td>'
+  . '    <td class="cb">' . drupal_render($form['student'])        . '</td>'
+  . '  </tr>'
+  . '  <tr>'
+  . '    <td class="cb">' . drupal_render($form['feature'])        . '</td>'
+  . '    <td class="cb">' . drupal_render($form['appliance'])      . '</td>'
+  . '    <td class="cb">' . drupal_render($form['pet'])            . '</td>'
+  . '    <td class="cb">' . drupal_render($form['smoker'])         . '</td>'
+  . '  </tr>'
+  . '</table>'
+  . '<div>' . drupal_render($form['info']) 
+  .           drupal_render($form)
+  . '</div>';
+}
+function rental_form_validate($form,&$form_state) {
+//                should be checking to insure that 
+//                either $process is 'edit' or 'street_address' is unique
+  $f = $form_state['values'];
+  if ($f['op'] == 'Save') {
+    if ($f['street_address'] == '') {
+      form_set_error('street_address',
+                   t('You must enter a unique street address.') ); } }
+}
+function rental_form_submit($form, &$form_state) {
+  global $user, $rid;
+  $u = $user->uid;
+  $process = $form_state['values']['process'];
+  $form_state['redirect'] = 'user/' . $user->uid;
+  $f = $form_state['values'];   //  dsm($f);
+  if ($f['op'] == 'Save' and ($process == 'add' or $process == 'clone')) {
+    db_query( rental_add_sql(),
+      $user->uid, t($f['street_address']),
+      t($f['square_feet']), t($f['acreage']), $f['section_8'],
+      $f['bedroom'], $f['bathroom'], $f['parking'], $f['storage'],
+      $f['building'], $f['furnishing'], repack($f['appliance']),
+      $f['student'], $f['smoker'], $f['pet'],
+      $f['area'], repack($f['feature']), $f['heat'],
+      $f['info']); }
+  if ($f['op'] == 'Delete') {
+    db_query("DELETE FROM {rental} WHERE uid = '%d' and rid =  '%d'", $u,$rid);}
+  if ($f['op'] == 'Save' and $process == 'edit') {
+    db_query( rental_edit_sql(), t($f['street_address']),
+      t($f['square_feet']), t($f['acreage']), $f['section_8'],
+      $f['bedroom'], $f['bathroom'], $f['parking'], $f['storage'],
+      $f['building'], $f['furnishing'], repack($f['appliance']),
+      $f['student'], $f['smoker'], $f['pet'],
+      $f['area'], repack($f['feature']), $f['heat'],
+      $f['info'], $rid ); }
+}
+function rental_add_sql() {
+  return "INSERT INTO {rental} (
+    uid, street_address, square_feet, acreage, section_8,
+    bedroom, bathroom, parking, storage,
+    building, furnishing, appliance, student, smoker, pet, 
+    area, feature, heat, info )
+    VALUES (%d, '%s', %d, '%s', %d, '%s','%s','%s','%s','%s',
+           '%s','%s','%s','%s','%s','%s','%s','%s','%s' )";
+}
+function rental_edit_sql() {
+  return "UPDATE {rental} SET street_address = '%s',
+    square_feet = %d, acreage = '%s', section_8 = %d,
+    bedroom = '%s', bathroom = '%s', parking = '%s', storage = '%s',
+    building = '%s', furnishing = '%s', appliance = '%s',
+    student = '%s', smoker = '%s', pet = '%s', 
+    area = '%s', feature = '%s', heat = '%s', info = '%s'
+         WHERE rid = %d";
+}
+function rental_contact_info_list($u, $account) {  // -------------------------
+  $fields = db_query("SELECT title FROM {profile_fields}");
+  while ($f = db_fetch_object($fields)) { $fName[] = $f->title; }
+  $values = db_query("SELECT value FROM {profile_values} WHERE uid = %d", $u);
+  $i = 0;
+  $rows = '';
+  while ($v = db_fetch_object($values)) { 
+    $rows .= "  <tr>\n"
+           . rental_td( $fName[$i++] . ':', 'label' )
+           . rental_td( $v->value )
+           . "  </tr>\n"; }
+    $rows .= "  <tr>\n"
+           . rental_td( t('Email Address:'), 'label' )
+           . rental_td( $account->mail )
+           . "  </tr>\n";
+  return '<fieldset class=" collapsible contact">' . "\n"
+       . '  <legend>Contact Information</legend>' . "\n"
+       . '    <table class="contact">' . "\n" . $rows . '    </table>' . "\n"
+       . rental_button('Change Email or Password', "user/$u/edit", 
+                       'end-fieldset')
+       . rental_button('Change Contact Info', "user/$u/edit/Contact Info", 
+                       'end-fieldset')
+       . '</fieldset>' . "\n";
+}
+function rental_unit_list($u) {   // ------------------------------------------ 
+  $rows = '';
+  $r = 0;
+  $propertyArray = "SELECT rid, street_address FROM {rental} "
+                 . "WHERE uid = %d ORDER BY street_address";
+  $result = db_query($propertyArray, $u);
+  while ($rental = db_fetch_object($result)) {
+    $r++;
+    $rid = $rental->rid;
+    $rows .= "  <tr>\n"
+     . rental_td( l($rental->street_address, "rental/edit/$rid"), 'street' )
+     . rental_td( rental_button('Clone', "rental/clone/$rid") ) 
+     . rental_td( rental_button('Pictures', "rental/image/$rid") ) 
+     . rental_check_active_status($rid) 
+           . "  </tr>\n"; }
+
+  return $r == 0? 
+       rental_button("Click Here to Enter a Rental Unit",
+                     "rental/add", 'standout')
+     : '<fieldset class=" collapsible rental">' . "\n"
+       . '  <legend>Rental Units</legend>' . "\n"
+       . '    <table class="rental">' . "\n" . $rows . '    </table>' . "\n"
+       . rental_button("Add a Rental Unit", "rental/add", 'end-fieldset')
+       . '</fieldset>' . "\n";
+}
+function rental_check_active_status($rid) {
+  // if an ad is active for this property,
+  // return a link to the ad with an option to cancel it
+  $exp = variable_get('rental_post_days_until_expiration', 30) * 24 * 60 * 60;  
+  $sql = "SELECT * FROM { post } "
+       . "WHERE rid = %d and cancelled = 0 and activated > %d";
+  $result = db_query($sql, $rid, time() - $exp);
+  $post = db_fetch_object($result);
+  if (isset($post->pid)) {
+    $exp = $post->activated + $exp; 
+    return rental_td( l("Ad #$post->pid expires "
+                    . date('M d', $exp),"ad/$post->pid"))
+         . rental_td( rental_button("De-activate",
+                     "rental/unpost/$post->pid"));} 
+  return rental_td(rental_button("Activate An Ad", "rental/post/$rid"));
+}
+function rental_posting_list() {  // ------------------------------------------
+//  if (not isset($post->pid)) { return ''; }
+  global $user;
+  $sql = "SELECT * FROM { post } p JOIN { rental } r"
+       . " WHERE p.rid = r.rid and r.uid = %d"
+       . " ORDER BY p.pid DESC" ;
+  $pager = 1;
+  $last_post_date = 0;
+  $last_balance   = 0;
+  $rows = '';
+  $r = 0;
+  $result = pager_query(db_rewrite_sql($sql, 'post', 'pid'), 20, 1, NULL, $user->uid);
+  while ($post = db_fetch_object($result)) {
+    $pmts = rental_get_payments($last_post_date, $post->activated);
+    $balance = $last_balance + $pmts - $post->cost;
+    $pr = $post->rate;
+    $note = $pr == 9? 'Comp'
+          : $pr == 2? 'Bulk Rate'
+          : $pr == 3? 'XL Bulk Rate' : ' ';
+    $r++;
+    $rows .= "  <tr>\n"
+     . rental_td( $post->pid )
+     . rental_td( date('Y M d', $post->activated) ) 
+     . rental_post_termination($post) 
+     . rental_td( $post->street_address )
+     . rental_td( $post->cost, 'number' )
+     . rental_td( $note, 'rate' )
+     . rental_td( $pmts, 'number' ) 
+     . rental_td( $balance, 'number' )
+           . "  </tr>\n";
+    $last_balance   = $balance;
+    $last_post_date = $post->activated; }
+  $head = "  <tr>\n    <th>Ad#</th><th>Activated</th><th> </th><th>Ended</th>"
+        . "<th> </th><th>Cost</th><th> </th>"
+        . "<th>Pmt</th><th>Balance</th>\n  </tr>\n";
+  return $r == 0? ''
+       : '<fieldset class=" collapsible post">' . "\n"
+       . '  <legend>Ad Posting History</legend>' . "\n"
+       . "    <table class='rental'>\n$head$rows    </table>\n"
+       . theme('pager', NULL, 20, $pager)
+       . '</fieldset>' . "\n";
+}
+function rental_post_termination($post) {
+  $x = variable_get('rental_post_days_until_expiration', 30) * 24 * 60 * 60;  
+  $t = ' '; // termination: c for cancelled, x for expired, blank is active
+  $w = ' '; // date when terminated, blank for active
+  if ( isset($post->cancelled) and $post->cancelled > 0 ) {
+    $t = 'Cancelled'; $w = date('Y M d', $post->cancelled); }
+  elseif ( time() > $post->activated + $x ) {
+    $t = 'Expired'; $w = date('Y M d', $post->activated + $x ); }
+  return rental_td($t) . rental_td($w);
+}
+function rental_get_payments($start, $end) {
+  // search payment file for all user's pmts between last to current posts
+  // return total amount
+  global $user;
+  $amount = 0;
+  $start_date = date('Ymd',$start_time);
+  $end_date   = date('Ymd',$end_time);
+  $sql = "SELECT * FROM { payment }"
+       . " WHERE uid = %d and date_stamp > '%s' and date_stamp >= '%s'";
+  $result = db_query($sql, $user->uid, date('Ymd',$start), date('Ymd',$end));   
+  while ($pmt = db_fetch_object($result)) {
+    $amount += $pmt->amount;}
+  return $amount;
+}

@@ -1,0 +1,426 @@
+/* $Id: pages.css,v 1.7 2010/01/16 18:54:09 geerlingguy Exp $ */
+
+/**
+ * @file
+ * Page Styling
+ *
+ * Style the markup found in page.tpl.php. Also includes some styling of
+ * miscellaneous Drupal elements that appear in the $content variable, such as
+ * ul.links, .pager, .more-link, etc.
+ */
+
+
+/*
+ * Body
+ */
+body
+{
+}
+
+#page
+{
+}
+
+#page-inner
+{
+}
+
+/*
+ * Header
+ */
+#header
+{
+}
+
+#header-inner
+{
+}
+
+#logo-title /* Wrapper for logo, website name, and slogan */
+{
+  position: relative;
+}
+
+#logo /* Wrapper for logo - adjust positioning by changing 'top' and 'left' values */
+{
+  position: absolute;
+  top: 14px;
+  left: 10px;
+}
+
+#logo-image /* The actual logo image */
+{
+}
+
+h1#site-name, div#site-name /* The name of the website */
+{
+  color: #FFF;
+	font-family: "Warnock Pro", Georgia, Times, serif;
+  margin: 0;
+  padding-top: 25px;
+  font-size: 3.5em;
+  font-weight: normal;
+  line-height: 1.3em;
+  text-shadow: #666 3px 3px 3px; /* CSS3 - Works only in webkit browsers */
+}
+
+#site-name a:link,
+#site-name a:visited,
+#site-name a:hover
+{
+  color: #FFF;
+  text-decoration: none;
+}
+
+#site-slogan /* The slogan (or tagline) of a website */
+{
+}
+
+#search-box
+{
+  position: absolute;
+  top: 123px;
+  right: 10px;
+  width: 250px;
+  text-align: right;
+}
+
+#header-blocks /* Wrapper for any blocks placed in the header region */
+{
+}
+
+/*
+ * Main (container for everything else)
+ */
+#main
+{
+}
+
+#main-inner
+{
+}
+
+/*
+ * Content
+ */
+#content
+{
+}
+
+#content-inner
+{
+}
+
+#mission /* The mission statement of the site (displayed on homepage) */
+{
+  border: 2px solid #DDDDFF;
+  background: #EEEEFF;
+  margin-bottom: 20px;
+  padding: 10px 12px;
+  border-radius: 10px; /* Doesn't work in silly IE yet */
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+}
+
+#mission p
+{
+  margin: 0 0 1em 0;
+}
+
+#mission p.last
+{
+  margin-bottom: 0;
+}
+
+/* Rules for the display of different node listings */
+.front #content-inner .node, /* Nodes listed on the front page */
+.page-articles #content-inner .node, /* Nodes listed on the articles page */
+.page-blog #content-inner .node /* Nodes listed on the blogs page */
+{
+  margin: 0 0 20px;
+  border-top: 1px solid #DDD;
+  background: transparent url(../images/node-list-bg.png) 0px 1px repeat-x;
+  padding: 15px;
+}
+
+
+#content-top /* Wrapper for any blocks placed in the "content top" region */
+{
+}
+
+#content-header /* Wrapper for breadcrumb, title, messages, tabs, and help */
+{
+}
+
+.breadcrumb /* The path to the current page in the form of a list of links */
+{
+  padding-bottom: 0; /* Undo system.css */
+}
+
+h1.title /* Page title */
+{
+}
+
+h2.title, /* Block title or the title of a piece of content when it is given in a list of content */
+h3.title /* Comment title */
+{
+  margin: 0;
+}
+
+tr.even /* Some tables have rows marked even or odd. */
+{
+  background-color: #fff;
+}
+
+tr.odd
+{
+  /* background-color: #eee; */ /* Drupal core uses a #eee background */
+}
+
+.system-status-report tr.ok /* Leave these rows on the status report alone */
+{
+  background: #dfd;
+  color: #020;
+}
+
+.system-status-report tr.warning /* Leave these rows on the status report alone */
+{
+	background: #ffd;
+  color: #220;
+}
+
+.system-status-report tr.error /* Leave these rows on the status report alone */
+{
+  background: #fcc;
+  color: #200;
+}
+
+div.messages /* Important messages (status, warning, and error) for the user. See also the declarations in messages.css. */
+{
+}
+
+div.status /* Normal priority messages */
+{
+}
+
+div.warning, tr.warning /* Medium priority messages */
+{
+  /* border: 1px solid #f0c020; */ /* Drupal core uses: 1px solid #f0c020 */
+}
+
+div.error, tr.error /* High priority messages. See also the .error declaration below. */
+{
+}
+
+.error /* Errors that are separate from div.messages status messages. */
+{
+  /* color: #e55; */ /* Drupal core uses a #e55 background */
+}
+
+.warning /* Warnings that are separate from div.messages status messages. */
+{
+  /* color: #e09010; */ /* Drupal core uses a #e09010 background */
+}
+
+div.tabs /* See also the tabs.css file. */
+{
+	width: 100%;
+}
+
+.help /* Help text on a page */
+{
+  margin: 1em 0;
+}
+
+.more-help-link /* Link to more help */
+{
+  font-size: 0.85em;
+  text-align: right;
+}
+
+#content-area /* Wrapper for the actual page content */
+{
+  margin-bottom: 1em;
+	clear: both;
+}
+
+#primary ul.links li /* Primary link list */
+{
+  margin: 0 2px 0 0;
+}
+
+#primary ul.links li a
+{
+  display: block;
+  padding: 3px 7px;
+  text-decoration: none;
+  color: #555;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+#primary ul.links li a:hover
+{
+  background: #FFF url(../images/navbar-button-bg.png) top left repeat-x;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  color: #333;
+}
+
+#primary ul.links li a.active
+{
+  background: #FFF url(../images/navbar-button-bg.png) top left repeat-x;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  color: #333;
+}
+
+ul.links /* List of links */
+{
+  margin: 1em 0;
+  padding: 0;
+}
+
+ul.links.inline
+{
+  margin: 0;
+  display: inline;
+}
+
+ul.links li
+{
+  display: inline;
+  list-style-type: none;
+  padding: 0 0.25em;
+}
+
+.pager { /* A list of page numbers when more than 1 page of content is available */
+	clear:both;
+  margin: 1em 0;
+  text-align: center;
+}
+
+.pager div {
+	padding:0em;
+	display:inline;
+}
+
+.pager strong,
+.pager a {
+	padding: 4px 7px;
+	background: #eeeeff;
+	border: 1px solid #565698;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	text-decoration: none;
+}
+.pager a:hover {
+	text-decoration: none;
+	background: #fff;
+}
+
+.pager strong {
+	background: #0174bb;
+	color: #fff;
+}
+
+.item-list .pager li {
+	padding: .25em;
+}
+
+.feed-icons /* The links to the RSS or Atom feeds for the current list of content */
+{
+  margin: 1em 0;
+}
+
+.feed-icon /* RSS/Atom links for Views-created blocks and such */
+{
+	text-align: right; /* LTR */
+	margin-right: 1px;
+}
+
+.more-link /* Aggregator, blog, and forum more link */
+{
+  text-align: right; /* LTR */
+}
+
+#content-bottom /* Wrapper for any blocks placed in the "content bottom" region */
+{
+}
+
+/*
+ * First sidebar (on left in LTR languages, on right in RTL)
+ *
+ * Remember to NOT add padding or margin to your #sidebar-first
+ * (see the layout.css file.)
+ */
+#sidebar-first
+{
+}
+
+#sidebar-first-inner
+{
+}
+
+/*
+ * Second sidebar (on right in LTR languages, on left in RTL)
+ *
+ * Remember to NOT add padding or margin to your #sidebar-second
+ * (see the layout.css file.)
+ */
+#sidebar-second
+{
+}
+
+#sidebar-second-inner
+{
+}
+
+/*
+ * Footer
+ */
+#footer
+{
+	margin-top: 20px;
+}
+
+#footer-inner
+{
+}
+
+#footer-message /* Wrapper for the footer message from Drupal's "Site information"
+                   and for any blocks placed in the footer region */
+{
+}
+
+/*
+ * Closure
+ */
+#closure-blocks /* Wrapper for any blocks placed in the closure region */
+{
+}
+
+/*
+ * Drupal boxes
+ *
+ * Wrapper for Comment form, Comment viewing options, Menu admin, and
+ * Search results.
+ */
+.box /* Wrapper for box */
+{
+}
+
+.box-inner /* Additional wrapper for box */
+{
+}
+
+.box h2.title /* Box title */
+{
+}
+
+.box .content /* Box's content wrapper */
+{
+}

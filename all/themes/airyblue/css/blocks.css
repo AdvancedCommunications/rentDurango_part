@@ -1,0 +1,168 @@
+/* $Id: blocks.css,v 1.2 2010/01/16 18:54:09 geerlingguy Exp $ */
+
+/**
+ * @file
+ * Block Styling
+ */
+
+.block-wrapper /* To add a pixel of white inside the border */
+{
+  border: 1px solid #999;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  margin-bottom: 1em;
+}
+
+.block-wrapper .block /* Block div */
+{
+  padding: 10px;
+  background: transparent url(../images/block-bg.png) top left repeat-x;
+  border: 1px solid #FFF;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+}
+
+.block-region
+{
+  margin: 0;
+  padding: 0;
+}
+
+.block.region-odd /* Zebra striping for each block in the region */
+{
+}
+
+.block.region-even /* Zebra striping for each block in the region */
+{
+}
+
+.block.odd /* Zebra striping independent of each region */
+{
+}
+
+.block.even /* Zebra striping independent of each region */
+{
+}
+
+.region-count-1 /* Incremental count for each block in the region */
+{
+}
+
+.count-1 /* Incremental count independent of each region */
+{
+}
+
+.block-inner /* Additional wrapper for block */
+{
+}
+
+.block h2.title /* Block title */
+{
+  text-align: center;
+  font-size: 1.6em;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #BBB;
+}
+
+.block .content /* Block's content wrapper */
+{
+	font-size: .8em;
+	line-height: 1.3em;
+}
+
+.block .content li /* Lists inside of blocks */
+{
+	margin: 6px 0;
+}
+
+#block-aggregator-category-1 /* Block for the latest news items in the first category */
+{
+}
+
+#block-aggregator-feed-1 /* Block for the latest news items in the first feed */
+{
+}
+
+#block-block-1 /* First administrator-defined block */
+{
+}
+
+#block-blog-0 /* "Recent blog posts" block */
+{
+}
+
+#block-book-0 /* "Book navigation" block for the current book's table of contents */
+{
+}
+
+#block-comment-0 .content /* "Recent comments" block */
+{
+  font-size: .7em;
+  color: #999;
+  line-height: 1.3em;
+}
+
+#block-comment-0 .content a
+{
+  font-size: 1.2em;
+  line-height: 1.3em;
+}
+
+#block-forum-0 /* "Active forum topics" block */
+{
+}
+
+#block-forum-1 /* "New forum topics" block */
+{
+}
+
+#block-menu-primary-links /* "Primary links" block */
+{
+}
+
+#block-menu-secondary-links /* "Secondary links" block */
+{
+}
+
+#block-node-0 /* "Syndicate" block for primary RSS feed */
+{
+}
+
+#block-poll-0 /* "Most recent poll" block */
+{
+}
+
+#block-profile-0 /* "Author information" block for the profile of the page's author */
+{
+}
+
+#block-search-0 /* "Search form" block */
+{
+}
+
+#block-search-0 #search-block-form {
+	margin-top: 1em;
+	text-align: center;
+}
+
+#block-statistics-0 /* "Popular content" block */
+{
+}
+
+#block-user-0 /* "User login form" block */
+{
+}
+
+#block-user-1 /* "Navigation" block for Drupal navigation menu */
+{
+}
+
+#block-user-2 /* "Who's new" block for a list of the newest users */
+{
+}
+
+#block-user-3 /* "Who's online" block for a list of the online users */
+{
+}

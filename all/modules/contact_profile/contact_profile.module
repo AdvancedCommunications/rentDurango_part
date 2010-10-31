@@ -1,0 +1,38 @@
+<?php
+/**
+ * @file
+ * 
+ * Adds user profile data to the contact form message
+ */
+
+/************************************************
+* Drupal hooks
+* ***********************************************/
+
+/**
+ * Implementation of hook_help().
+ */
+function contact_profile_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#contact_profile':
+      return '<p>'. t('Adds user profile data to the contact form message.') .'</p>';
+      break;
+    case "admin/modules#description":
+      return '<p>'. t('Adds user profile data to the contact form message.') .'</p>';
+  }
+}
+
+/**
+ * This function adds the data to the email
+ */
+function contact_profile_mail_alter(&$message) {
+if($message['id'] == 'contact_page_mail'){
+  global $user;
+  $message['body'][] = t('from');
+  $message['body'][] = t('Username: @name', array('@name' => $user->name ));
+  $message['body'][] = t('User e-mail address: @mail', array('@mail' => $user->mail ));
+  foreach ($user->roles as $user_role){
+      $message['body'][] = t('User role: @role', array('@role' => $user_role));
+  }
+ }
+}

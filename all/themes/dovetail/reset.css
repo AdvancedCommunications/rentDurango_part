@@ -1,0 +1,39 @@
+/* $Id: reset.css,v 1.1 2009/06/15 10:59:41 stevejb Exp $ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td, thead th, tbody th {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+/* common styling */
+:focus { outline: 1px dotted; }
+address, form, hr, table, ul, ol, dl, pre { margin-bottom: 1.5em; }
+abbr, acronym { text-transform: uppercase; font-size: 85%; letter-spacing: .1em; }
+abbr[title], acronym[title], dfn[title] { cursor: help; border-bottom: 1px dotted #000; }
+ins { border-bottom: 1px dotted #000; text-decoration:none; }
+del {	text-decoration: line-through; }
+q { quotes: "\201C""\201D""\2018""\2019"; }
+blockquote { color: #666; margin-left: 2.2em; }
+small, sup, sub { font-size: 85%; }
+big { font-size: 125%; line-height:80%; }
+sup { vertical-align: super; }
+sub { vertical-align: sub; }
+pre { white-space: pre; }
+cite, em, dfn { font-style: italic; }
+code { font-size: 100%; font-family: mono-space, monospace; }
+strong, th, thead td, dt { font-weight: bold; }
+table { border-collapse: collapse; border-spacing: 0; }
+hr { background: black; border: medium none; display: block; height: 1px; }
+img, a img { border: none; outline: none; }

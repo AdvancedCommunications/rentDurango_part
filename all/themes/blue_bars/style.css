@@ -1,0 +1,161 @@
+/* Global Formatting */
+
+body {	
+	height: 100%;
+	text-align: center;
+	font-family: 'Trebuchet MS', Verdana, Arial, Serif;
+	font-size: 12px;
+}
+a {
+	color: #000000;
+	text-decoration: none;
+}
+
+/* This bit makes the content be centered in both IE and FF */
+
+#container {
+	width: 760px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+}
+
+/* Misc Formatting */
+
+.code {
+	color: #000000;
+	background-color: #F0F0F0;
+	border-left: medium double #154ead;
+	font-size: 10pt;
+	font-family: "Courier New", Courier, mono;
+	margin: 10px;
+	padding-left: 1em;
+}
+blockquote {
+	border-top: 1px solid #154ead;
+	border-bottom: 1px solid #154ead;
+	font-size: 10pt;
+	margin: 10px;
+	padding-left: 1em;
+}
+/* Header Formatting */
+
+#header {
+	padding: 5px;
+	margin-bottom: 5px;
+}
+#header h1 {
+	font-weight: bold;
+	font-size: 30px;
+	padding: 0px;
+	margin: 0px;
+}
+p#subtext {
+	border-bottom: 3px solid #154ead;
+	padding: 0px;
+	margin: 0px;
+}
+
+/* Content Formatting */
+
+#content {
+	padding: 5px;
+	margin: 0px 5px 0 0;
+  float: left;
+  width: 515px;
+  overflow: hidden;
+}
+#content a {
+	border-bottom: 1px dashed #CECECE;
+	color: #000000;
+	text-decoration: none;
+}
+#content a:hover {
+	color: #FFFFFF;
+	background: #154ead;
+}
+.links {
+	text-align: right;
+	border-top: 1px solid #154ead;
+}
+#content .node h2 {
+	border-bottom: 1px solid #154ead;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	height: 30px;
+}
+#mission {
+	padding: 12px;
+	background-color: #f9f9f9;
+}
+#content .node h2 a {
+	font-size: 18px;
+	border-bottom: 0px;
+	font-weight: normal;
+	text-transform: capitalize;
+}
+.title {
+	border-bottom: 1px solid #154ead;
+	font-weight: normal;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-size: 150%;
+	height: 30px;
+	text-transform: capitalize;
+}
+div.dashboard-panel-head {
+	background-color: #154ead;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+/* Right Sidebar Formatting */
+#right {
+	float: right;
+	width: 200px;
+	margin: 0px 0px 0px 5px;
+	padding: 5px 5px 5px 5px;
+}
+
+/* Menu Formatting */
+#right ul {
+	margin: 0px;
+	padding: 0px;
+}
+#right ul li {
+	margin: 0px;
+	padding: 0px;
+	list-style-image: none;
+	list-style-type: none;
+}
+#right ul li a {
+	margin: 0px;
+	padding: 0px;
+	text-transform: capitalize;
+	display: block;
+}
+#right ul li a:hover {
+	color: #FFFFFF;
+	background-color: #154ead;
+}
+#right ul li a:link, #right ul li a:visited {
+	margin: 0px;
+	padding: 3px 3px 3px 10px;
+}
+#right ul li li a:link, #right ul li li a:visited {
+	margin: 0px;
+	padding-left: 25px;
+}
+#right ul li li li a:link, #right ul li li li a:visited {
+	margin: 0px;
+	padding-left: 40px;
+}
+/* Footer Formatting */
+
+#footer {
+	clear: both;
+	padding: 5px;
+	margin-top: 5px;
+	border-top: 3px solid #154ead;
+	text-align: center;
+}

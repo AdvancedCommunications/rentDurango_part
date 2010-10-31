@@ -1,0 +1,5 @@
+name = AJAX demo
+description = Demonstrates the use of AJAX requests and Drupal autocomplete
+package = Aardvark
+version = "6.x-0.0"
+core = 6.x
