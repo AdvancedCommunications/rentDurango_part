@@ -89,8 +89,45 @@
  *   $db_url = 'mysqli://username:password@localhost/databasename';
  *   $db_url = 'pgsql://username:password@localhost/databasename';
  */
-$db_url = 'mysql://rusty_drpl1:4IO1Y4gFkHqX@localhost/rusty_drpl1';
-$db_prefix = '';
+
+ switch ($_SERVER['HTTP_HOST']) {
+
+  case 'localrentdurango':
+
+    $a=explode("/",$_SERVER['DOCUMENT_ROOT']);
+    switch ($a[2]){
+      case 'kelsey':
+        $db_url = 'mysql://drupal:drupal@localhost/rentDurango';
+        break;
+      default:
+        $db_url = 'mysql://drupal:drupal@localhost/rentDurango';
+        break;
+      }
+      $db_prefix = '';
+      $base_url = 'http://localrentDurango';  // NO trailing slash!
+    break;
+  case 'rentDurango.net':
+    $db_url = 'mysql://rusty_drpl1:4IO1Y4gFkHqX@localhost/rusty_drpl1';
+    $db_prefix = '';
+    $base_url = 'http://rentDurango.net';  // NO trailing slash!
+    break;
+
+  case 'test.rentDurango.net':
+    $db_url = 'mysql://:@localhost/';
+    $db_prefix = '';
+    $base_url = 'http://test.rentDurango.net';  // NO trailing slash!
+    break;
+
+  default:
+    $db_url = 'mysql://rusty_drpl1:4IO1Y4gFkHqX@localhost/rusty_drpl1';
+    $db_prefix = '';
+    $base_url = 'http://rentDurango.net';  // NO trailing slash!
+}
+
+/*    $db_url = 'mysql://drupal:drupal@localhost/rentDurango';
+    $db_prefix = '';
+    $base_url = 'http://localrentDurango';  // NO trailing slash!
+*/
 
 /**
  * Access control for update.php script
